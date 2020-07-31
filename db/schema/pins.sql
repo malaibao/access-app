@@ -5,6 +5,6 @@ CREATE TABLE pins (
   creator_user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   name VARCHAR(255) NOT NULL,
   address VARCHAR(255) NOT NULL,
-  longitude FLOAT,
-  latitude FLOAT
+  longitude FLOAT NOT NULL,
+  latitude FLOAT NOT NULL
  )
