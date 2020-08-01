@@ -67,11 +67,11 @@ As an administrator, I can create, edit or delete pins from
 
 ### admins have data visualization on pins added over a period
 
-As an administrator, I can view charts to highlight how many pinned locations have been added over a period because data is the oil of the internet and we gotta get that \$\$
+As an administrator, I can view charts to highlight how many pinned locations have been added over a period because data is the oil of the internet and we gotta get that \\\\$\$
 
 ### admins have data visualization on % of places that are deemed accessible vs. not
 
-As an administrator, I can view charts to highlight how many pinned locations have been deemed accessible or not over a period because data is the oil of the internet and we gotta get that \$\$
+As an administrator, I can view charts to highlight how many pinned locations have been deemed accessible or not over a period because data is the oil of the internet and we gotta get that \\\\$\$
 
 # FEATURES
 
@@ -104,17 +104,20 @@ As an administrator, I can view charts to highlight how many pinned locations ha
 
 - follow REST:
   HTTP method | URL pattern | Use
-  GET | /locations | show all pins
-  GET | /locations/new | show create new pin form  
-  POST | /locations | create new pin
-  GET | /locations/:id | show a pinned location/details
+  GET | /pins | show all pins
+  GET | /pins/new | show create new pin form  
+  POST | /pins | create new pin
+  GET | /pins/:id | show a pinned location/details
   DELETE | /locations/:id | delete a pin
 
-  GET | /login | retrieves the login form
-  POST | /login | sends user credentials to db
+Server-side
+GET /pins get pins
+POST /pins create a new pin
+UPDATE /pins/:id update pin (user of that pin)
+DELETE /pins delete pin (admin)
 
-GET | / |
-GET | / |
+POST /login authenticate user
+POST /register register user
 
 # STACK CHOICE
 
