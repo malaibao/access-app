@@ -8,7 +8,8 @@
     "server": "nodemon server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:reset": "node bin/resetdb.js"
   },
   "author": "Bobby Brice, Erica Sun, Maribelle Leong",
   "license": "ISC",
