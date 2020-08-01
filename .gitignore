@@ -1,4 +1,3 @@
 /node_modules
 /client/node_modules
-/helpers/cleanedData.js
-/helpers/sqlString.js
+/helpers/data.js
