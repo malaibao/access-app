@@ -101,7 +101,7 @@ const cleanedData = data.map((d) => {
 
 const fs = require('fs');
 
-fs.writeFile('helpers/cccccleanData.js', JSON.stringify(cleanedData), (err) => {
+fs.writeFile('helpers/cleanData.js', JSON.stringify(cleanedData), (err) => {
   if (err) {
     throw err;
   }
@@ -110,25 +110,47 @@ fs.writeFile('helpers/cccccleanData.js', JSON.stringify(cleanedData), (err) => {
 
 // INSERT INTO pins (creator_user_id, name, address, longitude, latitude) VALUES (1, d.name, d.address, d.longitude, d.latitude)
 
-let str = '';
+let pinStr = '';
+let ratingStr = '';
 const makeSQLString = (cleanedData) => {
-  const beginStr = `INSERT INTO pins (creator_user_id, name, address, longitude, latitude) VALUES `;
+  const pinBeginStr = `INSERT INTO pins (user_id, name, address, longitude, latitude) VALUES`;
+  const ratingBeginStr = `INSERT INTO ratings (pin_id, user_id, accessible_parking, accessible_washroom, alternative_entrance, automatic_door, elevator, braille, gender_neutral_washroom, large_print, outdoor_access_only, quiet, ramp, scent_free,service_animal_friendly, sign_language, spacious, stopgap_ramp) VALUES`;
 
   for (let i = 0; i < cleanedData.length; i++) {
-    str += `${beginStr}(1, "${cleanedData[i].name}", "${cleanedData[i].address}", ${cleanedData[i].longitude}, ${cleanedData[i].latitude})\n`;
+    pinStr += `${pinBeginStr} (${(i % 7) + 1}, "${cleanedData[i].name}", "${
+      cleanedData[i].address
+    }", ${cleanedData[i].longitude}, ${cleanedData[i].latitude})\n`;
+
+    ratingStr += `${ratingBeginStr} (${i + 1}, ${(i % 7) + 1}, `;
+
+    const tags = cleanedData[i].tags;
+    const tagStr = getBooleanStr(tags);
+    ratingStr += tagStr;
+    ratingStr += `)\n`;
   }
 };
-/*
+
+const getBooleanStr = (tags) => {
+  return types
+    .map((type) => (tags.includes(type) ? 'True' : 'False'))
+    .join(', ');
+};
 
 makeSQLString(cleanedData);
 
-fs.writeFile('sqlString.txt', str, (err) => {
+fs.writeFile('helpers/pins_seed.txt', pinStr, (err) => {
   if (err) {
     throw err;
   }
-  console.log('SQL string is saved.');
+  console.log('pins_seed is saved.');
 });
-*/
+
+fs.writeFile('helpers/ratings_seed.txt', ratingStr, (err) => {
+  if (err) {
+    throw err;
+  }
+  console.log('ratings_seed is saved.');
+});
 
 ///////////////////////////////////////////////////
 /*
