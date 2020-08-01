@@ -13,7 +13,10 @@
   "author": "Bobby Brice, Erica Sun, Maribelle Leong",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "chalk": "^4.1.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg-native": "^3.0.0"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
