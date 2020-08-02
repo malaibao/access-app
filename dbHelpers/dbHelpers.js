@@ -56,14 +56,14 @@ module.exports = (db) => {
   };
 
     //add a user to the db
-    const addUser = (email, username, password) => {
+    const addUser = (email, password, username) => {
       const query = {
         text: `
-        INSERT INTO users(email, username, password)
+        INSERT INTO users(email, password, username)
         VALUES ($1, $2, $3)
         RETURNING *;
       `,
-        values: [email, username, password]
+        values: [email, password, username]
       };
       return db.query(query).then((result) => result.rows[0]);
     };

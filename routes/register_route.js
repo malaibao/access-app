@@ -30,7 +30,7 @@ module.exports = ({
     } = req.body;
     isUserRegistered(email).then(function (user) {
       if (!user) {
-        addUser(email, username, password).then(() => {
+        addUser(email, username, password).then((email) => {
           getUserByEmail(email).then((returndUser) => {
             const payload = {
               user: {
