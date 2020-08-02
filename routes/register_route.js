@@ -23,8 +23,10 @@ module.exports = ({ addUser, isUserRegistered, getUserByEmail }) => {
     isUserRegistered(email).then(function (user) {
       if (!user) {
         const hashedPassword = bcrypt.hashSync(password, 10);
-        addUser(email, username, hashedPassword).then((email) => {
-          getUserByEmail(email).then((returnedUser) => {
+        addUser(email, hashedPassword, username).then(row => {
+          const userEmail = row.email 
+          getUserByEmail(userEmail).then((returnedUser) => {
+            console.log("email line 35:",userEmail)
             const payload = {
               user: {
                 id: returnedUser.id,
