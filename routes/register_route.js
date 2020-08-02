@@ -1,17 +1,13 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-const jwt = require('jsonwebtoken');
-
-module.exports = ({
-  addUser,
-  isUserRegistered,
-  getUserByEmail
-}) => {
+module.exports = ({ addUser, isUserRegistered, getUserByEmail }) => {
   // gets the registration route and passes the cookie session
-  router.get('/', (req, res) => {
+  router.get("/", (req, res) => {
     // const templateVars = {
     //   user: req.session["user"],
     //   userId: req.session["user_id"],
@@ -22,6 +18,7 @@ module.exports = ({
   // checks whether the users email already exists in the db
   // either redirects them to home or asks them to login
   router.post("/", (req, res) => {
+
     console.log('hello from register');
     const {
       email,
@@ -30,35 +27,36 @@ module.exports = ({
     } = req.body;
     isUserRegistered(email).then(function (user) {
       if (!user) {
-        addUser(email, password, username).then(row => {
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        addUser(email, hashedPassword, username).then(row => {
           
           const userEmail = row.email 
           console.log("email line 35:",userEmail)
           getUserByEmail(userEmail).then((returndUser) => {
+
             const payload = {
               user: {
-                id: returndUser.id,
+                id: returnedUser.id,
               },
             };
 
             jwt.sign(
               payload,
-              process.env.JWTSECRET, {
-                expiresIn: 360000
+              process.env.JWTSECRET,
+              {
+                expiresIn: 360000,
               }, //optional
               (err, token) => {
                 if (err) throw err;
                 res.json({
-                  token
+                  token,
                 });
               }
             );
           });
         });
       } else {
-        res
-          .status(400)
-          .send("Please login.");
+        res.status(400).send("Please login.");
         return;
       }
     });

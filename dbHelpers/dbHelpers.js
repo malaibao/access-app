@@ -55,18 +55,18 @@ module.exports = (db) => {
     return db.query(query).then((res) => res.rows[0]);
   };
 
-    //add a user to the db
-    const addUser = (email, password, username) => {
-      const query = {
-        text: `
+  //add a user to the db
+  const addUser = (email, password, username) => {
+    const query = {
+      text: `
         INSERT INTO users(email, password, username)
         VALUES ($1, $2, $3)
         RETURNING *;
       `,
-        values: [email, password, username]
-      };
-      return db.query(query).then((result) => result.rows[0]);
+      values: [email, password, username],
     };
+    return db.query(query).then((result) => result.rows[0]);
+  };
 
   return {
     getPins,

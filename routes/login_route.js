@@ -1,24 +1,23 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 module.exports = ({ isUserRegistered, getUserByEmail }) => {
-  router.get('/', (req, res) => {
+  router.get("/", (req, res) => {
     // passed templateVars to the header partial from cookie session
     const templateVars = {
-      user: req.session['user'],
-      userId: req.session['user_id'] ? req.session['user_id'] : undefined,
+      user: req.session["user"],
+      userId: req.session["user_id"] ? req.session["user_id"] : undefined,
       homepage: false,
     };
-    res.render('login', templateVars);
+    res.render("login", templateVars);
   });
 
   // checks the users email to validate login and sets the cookie session
-  router.post('/', (req, res) => {
-    console.log('hello from login');
+  router.post("/", (req, res) => {
+    console.log("hello from login");
     const { email, password } = req.body;
 
     isUserRegistered(email).then(function (user) {
@@ -46,7 +45,7 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
         res
           .status(400)
           .send(
-            'The login information provided does not match a registered user account. Please try again, or register for a new account.'
+            "The login information provided does not match a registered user account. Please try again, or register for a new account."
           );
         return;
       }
