@@ -19,7 +19,7 @@ module.exports = ({ addUser, isUserRegistered, getUserByEmail }) => {
   // either redirects them to home or asks them to login
   router.post("/", (req, res) => {
     console.log("hello from register");
-    const { email, username, password } = req.body;
+    const { email, password, username } = req.body;
     isUserRegistered(email).then(function (user) {
       if (!user) {
         const hashedPassword = bcrypt.hashSync(password, 10);
