@@ -55,6 +55,19 @@ module.exports = (db) => {
     return db.query(query).then((res) => res.rows[0]);
   };
 
+    //add a user to the db
+    const addUser = (email, username, password) => {
+      const query = {
+        text: `
+        INSERT INTO users(email, username, password)
+        VALUES ($1, $2, $3)
+        RETURNING *;
+      `,
+        values: [email, username, password]
+      };
+      return db.query(query).then((result) => result.rows[0]);
+    };
+
   return {
     getPins,
     getRatings,
@@ -62,5 +75,7 @@ module.exports = (db) => {
     addRating,
     isUserRegistered,
     getUserByEmail,
+    getPinsById,
+    addUser,
   };
 };
