@@ -25,13 +25,16 @@ module.exports = ({
     console.log('hello from register');
     const {
       email,
-      username,
-      password
+      password,
+      username
     } = req.body;
     isUserRegistered(email).then(function (user) {
       if (!user) {
-        addUser(email, username, password).then((email) => {
-          getUserByEmail(email).then((returndUser) => {
+        addUser(email, password, username).then(row => {
+          
+          const userEmail = row.email 
+          console.log("email line 35:",userEmail)
+          getUserByEmail(userEmail).then((returndUser) => {
             const payload = {
               user: {
                 id: returndUser.id,
