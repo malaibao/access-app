@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = ({
   addUser,
-  isUser,
+  isUserRegistered,
   getUserByEmail
 }) => {
   // gets the registration route and passes the cookie session
@@ -28,7 +28,7 @@ module.exports = ({
       username,
       password
     } = req.body;
-    isUser(email).then(function (user) {
+    isUserRegistered(email).then(function (user) {
       if (!user) {
         addUser(email, username, password).then(() => {
           getUserByEmail(email).then((returndUser) => {
