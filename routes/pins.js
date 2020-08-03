@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
+const { categoryMajority } = require("../dbHelpers/utilities");
 
 // TODO: change the db
-module.exports = ({ getPins, addPin, addRating, getPinById }) => {
+module.exports = ({ getPins, addPin, addRating, getPinById, getRatings }) => {
   /*
   @desc   GET all pins
   @access public
@@ -133,10 +134,14 @@ module.exports = ({ getPins, addPin, addRating, getPinById }) => {
       );
 
       const pin = await getPinById(pinId);
+      const ratings = await getRatings(pinId);
+      const tags = categoryMajority(ratings);
+
+      console.log(ratings); // array of objects
 
       const pinInfo = {
         ...pin,
-        rating: newRating,
+        tags,
       };
 
       res.json(pinInfo);

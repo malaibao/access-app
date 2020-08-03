@@ -28,14 +28,6 @@ module.exports = (db) => {
     return db.query(query).then((res) => res.rows[0]);
   };
 
-  const getRatings = (pinId) => {
-    const query = {
-      text: `SELECT * FROM ratings WHERE pin_id = $1`,
-      values: [pinId],
-    };
-    return db.query(query).then((result) => result.rows);
-  };
-
   const addPin = (userId, name, address, latitude, longitude) => {
     const query = {
       text: `
@@ -46,6 +38,31 @@ module.exports = (db) => {
     };
 
     return db.query(query).then((res) => res.rows[0]);
+  };
+
+  const getRatings = (pinId) => {
+    const query = {
+      text: `SELECT 
+      accessible_parking,
+      accessible_washroom,
+      alternative_entrance,
+      automatic_door,
+      elevator,
+      braille,
+      gender_neutral_washroom,
+      large_print,
+      outdoor_access_only,
+      quiet,
+      ramp,
+      scent_free,
+      service_animal_friendly,
+      sign_language,
+      spacious,
+      stopgap_ramp
+      FROM ratings WHERE pin_id = $1`,
+      values: [pinId],
+    };
+    return db.query(query).then((result) => result.rows);
   };
 
   const addRating = (
@@ -70,26 +87,26 @@ module.exports = (db) => {
   ) => {
     const query = {
       text: `
-  INSERT INTO ratings(
-  pin_id,
-  user_id,
-  accessible_parking,
-  accessible_washroom,
-  alternative_entrance,
-  automatic_door,
-  elevator,
-  braille,
-  gender_neutral_washroom,
-  large_print,
-  outdoor_access_only,
-  quiet,
-  ramp,
-  scent_free,
-  service_animal_friendly,
-  sign_language,
-  spacious,
-  stopgap_ramp) 
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) RETURNING *;
+        INSERT INTO ratings(
+        pin_id,
+        user_id,
+        accessible_parking,
+        accessible_washroom,
+        alternative_entrance,
+        automatic_door,
+        elevator,
+        braille,
+        gender_neutral_washroom,
+        large_print,
+        outdoor_access_only,
+        quiet,
+        ramp,
+        scent_free,
+        service_animal_friendly,
+        sign_language,
+        spacious,
+        stopgap_ramp) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) RETURNING *;
       `,
       values: [
         pinId,
