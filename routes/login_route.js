@@ -26,37 +26,37 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
         if (isRegistered) {
           // TODO: CHECK PASSWORD
 
-          getUserByEmail(email)
-            .then((returnedUser) => {
-              return bcrypt.compare(password, returnedUser.password);
-            })
-            .then((result) => {
-              if (result) {
-                const payload = {
-                  user: {
-                    id: returnedUser.id,
-                  },
-                };
+          getUserByEmail(email).then((returnedUser) => {
+            const hash = returnedUser.password;
+            bcrypt
+              .compare(password, hash)
+              .then((result) => {
+                if (result) {
+                  const payload = {
+                    user: {
+                      id: returnedUser.id,
+                    },
+                  };
 
-                jwt.sign(
-                  payload,
-                  process.env.JWTSECRET,
-                  { expiresIn: 360000 }, //optional
-                  (err, token) => {
-                    if (err) throw err;
-                    res.json({ token });
-                  }
-                );
-              } else {
-                res
-                  .status(400)
-                  .send("The password is incorrect. Please try again.");
-                return;
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+                  jwt.sign(
+                    payload,
+                    process.env.JWTSECRET,
+                    { expiresIn: 360000 }, //optional
+                    (err, token) => {
+                      if (err) throw err;
+                      res.json({ token });
+                    }
+                  );
+                } else {
+                  res
+                    .status(400)
+                    .send("The password is incorrect. Please try again.");
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          });
         } else {
           res
             .status(400)
