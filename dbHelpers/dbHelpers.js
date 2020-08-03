@@ -30,15 +30,19 @@ module.exports = (db) => {
   const addPin = (userId, name, address, latitude, longitude) => {
     const query = {
       text: `
-        INSERT INTO pins(user_id, name, address, latitude, longitude) 
+        INSERT INTO pins(user_id, name, address, latitude, longitude)
         VALUES ($1, $2, $3, $4, $5) RETURNING *;
       `,
-      values: [userId, name, address, latitude, longitude],
+      // values: [userId, name, address, latitude, longitude],
+      values: [2, 'Resto', '333 Fake', 44.6487096, -80.3744405],
     };
+
     return db.query(query).then((res) => res.rows[0]);
   };
 
   const addRating = (
+    pinId,
+    userId,
     accessible_parking,
     accessible_washroom,
     alternative_entrance,
@@ -58,7 +62,11 @@ module.exports = (db) => {
   ) => {
     const query = {
       text: `
-        INSERT INTO ratings(accessible_washroom,
+  INSERT INTO ratings(
+  pin_id,
+  user_id,
+  accessible_parking,
+  accessible_washroom,
   alternative_entrance,
   automatic_door,
   elevator,
@@ -73,9 +81,12 @@ module.exports = (db) => {
   sign_language,
   spacious,
   stopgap_ramp) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *;
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) RETURNING *;
       `,
       values: [
+        pinId,
+        userId,
+        accessible_parking,
         accessible_washroom,
         alternative_entrance,
         automatic_door,

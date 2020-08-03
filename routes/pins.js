@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const auth = require("../middleware/auth");
+const auth = require('../middleware/auth');
 
 // TODO: change the db
 module.exports = ({ getPins, addPin, addRating }) => {
@@ -8,13 +8,13 @@ module.exports = ({ getPins, addPin, addRating }) => {
   @desc   GET all pins
   @access public
   */
-  router.get("/", async (req, res) => {
+  router.get('/', async (req, res) => {
     try {
       const allPins = await getPins();
 
       res.status(200).json(allPins);
     } catch (e) {
-      console.log("Error in getting pins", e);
+      console.log('Error in getting pins', e);
     }
   });
 
@@ -22,12 +22,8 @@ module.exports = ({ getPins, addPin, addRating }) => {
   @desc   CREATE a pin
   @access private
   */
-  router.post("/", (req, res) => {
-    res.send("ello from post pins");
-  });
-  /*
-  router.post("/", async (req, res) => {
-    console.log("whattt????");
+
+  router.post('/', async (req, res) => {
     //gets the location, name, address from the google api call on search
     const {
       name,
@@ -52,7 +48,8 @@ module.exports = ({ getPins, addPin, addRating }) => {
       stopgap_ramp,
     } = req.body;
 
-    const userId = req.user.id;
+    // TODO: get from req.user.id
+    const userId = 2;
 
     try {
       // create pins
@@ -87,24 +84,23 @@ module.exports = ({ getPins, addPin, addRating }) => {
 
       res.json(pinInfo);
     } catch (err) {
-      console.log("Something went wrong during pin creation", err);
-      res.status(500).json({ error: "Server error" });
+      console.log('Something went wrong during pin creation', err);
+      res.status(500).json({ error: 'Server error' });
     }
   });
-  */
 
   /*
   @desc   GET pin by id
   @access public
   */
-  router.get("/:id", async (req, res) => {
+  router.get('/:id', async (req, res) => {
     const { latitude, longitude } = req.body;
     try {
       const getPinId = await getPinsById(longitude, latitude);
 
       res.status(200).json(getPinId);
     } catch (e) {
-      console.log("Error in getting pin by Id", e);
+      console.log('Error in getting pin by Id', e);
     }
   });
 
