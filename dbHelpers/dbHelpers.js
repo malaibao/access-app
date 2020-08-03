@@ -59,7 +59,8 @@ module.exports = (db) => {
       sign_language,
       spacious,
       stopgap_ramp
-      FROM ratings WHERE pin_id = $1`,
+      FROM ratings 
+      WHERE pin_id = $1`,
       values: [pinId],
     };
     return db.query(query).then((result) => result.rows);
