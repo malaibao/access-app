@@ -78,9 +78,12 @@ module.exports = ({ getPins, addPin, addRating, getPinById, getRatings }) => {
         stopgap_ramp
       );
 
+      const ratings = await getRatings(newPin.id);
+      const tags = categoryMajority(ratings);
+
       const pinInfo = {
         ...newPin,
-        rating: newRating,
+        tags,
       };
 
       res.json(pinInfo);
