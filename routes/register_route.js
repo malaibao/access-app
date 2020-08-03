@@ -6,15 +6,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 module.exports = ({ addUser, isUserRegistered, getUserByEmail }) => {
-  // gets the registration route and passes the cookie session
-  router.get("/", (req, res) => {
-    // const templateVars = {
-    //   user: req.session["user"],
-    //   userId: req.session["user_id"],
-    // };
-    // res.render("register", templateVars);
-  });
-
   // checks whether the users email already exists in the db
   // either redirects them to home or asks them to login
   router.post("/", (req, res) => {

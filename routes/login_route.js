@@ -37,7 +37,7 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
                     }
                   );
                 } else {
-                  res.status(400).send("Wrong credential. Please try again.");
+                  res.status(400).send("Wrong credentials. Please try again.");
                 }
               })
               .catch((err) => {
@@ -45,11 +45,7 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
               });
           });
         } else {
-          res
-            .status(400)
-            .send(
-              "The email does not match a registered user account. Please try again, or register for an account."
-            );
+          res.status(400).send("Wrong credentials. Please try again.");
           return;
         }
       })

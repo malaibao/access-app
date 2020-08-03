@@ -31,13 +31,70 @@ module.exports = (db) => {
     const query = {
       text: `
         INSERT INTO pins(user_id, name, address, latitude, longitude) 
-        VALUES ($1, $2, $3, $4, $5)
+        VALUES ($1, $2, $3, $4, $5) RETURNING *;
       `,
       values: [userId, name, address, latitude, longitude],
     };
+    return db.query(query).then((res) => res.rows[0]);
   };
 
-  const addRating = () => {};
+  const addRating = (
+    accessible_parking,
+    accessible_washroom,
+    alternative_entrance,
+    automatic_door,
+    elevator,
+    braille,
+    gender_neutral_washroom,
+    large_print,
+    outdoor_access_only,
+    quiet,
+    ramp,
+    scent_free,
+    service_animal_friendly,
+    sign_language,
+    spacious,
+    stopgap_ramp
+  ) => {
+    const query = {
+      text: `
+        INSERT INTO ratings(accessible_washroom,
+  alternative_entrance,
+  automatic_door,
+  elevator,
+  braille,
+  gender_neutral_washroom,
+  large_print,
+  outdoor_access_only,
+  quiet,
+  ramp,
+  scent_free,
+  service_animal_friendly,
+  sign_language,
+  spacious,
+  stopgap_ramp) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *;
+      `,
+      values: [
+        accessible_washroom,
+        alternative_entrance,
+        automatic_door,
+        elevator,
+        braille,
+        gender_neutral_washroom,
+        large_print,
+        outdoor_access_only,
+        quiet,
+        ramp,
+        scent_free,
+        service_animal_friendly,
+        sign_language,
+        spacious,
+        stopgap_ramp,
+      ],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
 
   //validation to determine whether someone has an existing email registered
   const isUserRegistered = (email) => {
