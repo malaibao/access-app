@@ -89,6 +89,56 @@ module.exports = ({ getPins, addPin, addRating }) => {
     }
   });
 
+  router.post("/:id", auth, async (req, res) => {
+    const {
+      accessible_parking,
+      accessible_washroom,
+      alternative_entrance,
+      automatic_door,
+      elevator,
+      braille,
+      gender_neutral_washroom,
+      large_print,
+      outdoor_access_only,
+      quiet,
+      ramp,
+      scent_free,
+      service_animal_friendly,
+      sign_language,
+      spacious,
+      stopgap_ramp,
+    } = req.body;
+    const userId = req.user.id;
+    const pinId = req.params.id;
+    try {
+      const newRating = await addRating(
+        pinId,
+        userId,
+        accessible_parking,
+        accessible_washroom,
+        alternative_entrance,
+        automatic_door,
+        elevator,
+        braille,
+        gender_neutral_washroom,
+        large_print,
+        outdoor_access_only,
+        quiet,
+        ramp,
+        scent_free,
+        service_animal_friendly,
+        sign_language,
+        spacious,
+        stopgap_ramp
+      );
+
+      res.json(newRating);
+    } catch (err) {
+      console.log("Something went wrong during rating creation", err);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
   /*
   @desc   GET pin by id
   @access public
