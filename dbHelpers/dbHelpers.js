@@ -33,8 +33,7 @@ module.exports = (db) => {
         INSERT INTO pins(user_id, name, address, latitude, longitude)
         VALUES ($1, $2, $3, $4, $5) RETURNING *;
       `,
-      // values: [userId, name, address, latitude, longitude],
-      values: [2, 'Resto', '333 Fake', 44.6487096, -80.3744405],
+      values: [userId, name, address, latitude, longitude],
     };
 
     return db.query(query).then((res) => res.rows[0]);
