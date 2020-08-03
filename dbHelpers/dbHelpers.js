@@ -27,7 +27,15 @@ module.exports = (db) => {
     return db.query(query).then((result) => result.rows);
   };
 
-  const addPin = () => {};
+  const addPin = (userId, name, address, latitude, longitude) => {
+    const query = {
+      text: `
+        INSERT INTO pins(user_id, name, address, latitude, longitude) 
+        VALUES ($1, $2, $3, $4, $5)
+      `,
+      values: [userId, name, address, latitude, longitude],
+    };
+  };
 
   const addRating = () => {};
 

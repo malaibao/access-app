@@ -6,17 +6,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 module.exports = ({ isUserRegistered, getUserByEmail }) => {
-  router.get("/", (req, res) => {
-    // passed templateVars to the header partial from cookie session
-    const templateVars = {
-      user: req.session["user"],
-      userId: req.session["user_id"] ? req.session["user_id"] : undefined,
-      homepage: false,
-    };
-    res.render("login", templateVars);
-  });
-
-  // checks the users email to validate login and sets the cookie session
+  // checks the users email to validate login
   router.post("/", (req, res) => {
     console.log("hello from login");
     const { email, password } = req.body;
@@ -24,9 +14,8 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
     isUserRegistered(email)
       .then((isRegistered) => {
         if (isRegistered) {
-          // TODO: CHECK PASSWORD
-
           getUserByEmail(email).then((returnedUser) => {
+            // Check if user password is correct
             const hash = returnedUser.password;
             bcrypt
               .compare(password, hash)
@@ -48,9 +37,7 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
                     }
                   );
                 } else {
-                  res
-                    .status(400)
-                    .send("The password is incorrect. Please try again.");
+                  res.status(400).send("Wrong credential. Please try again.");
                 }
               })
               .catch((err) => {
