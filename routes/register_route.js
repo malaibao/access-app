@@ -21,8 +21,8 @@ module.exports = ({ addUser, isUserRegistered, getUserByEmail }) => {
     console.log("hello from register");
     const { email, password, username } = req.body;
     isUserRegistered(email)
-      .then((user) => {
-        if (!user) {
+      .then((isRegistered) => {
+        if (!isRegistered) {
           const hashedPassword = bcrypt.hashSync(password, 10);
           addUser(email, hashedPassword, username)
             .then((row) => {

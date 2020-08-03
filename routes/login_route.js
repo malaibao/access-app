@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 module.exports = ({ isUserRegistered, getUserByEmail }) => {
   router.get("/", (req, res) => {
@@ -20,36 +21,54 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
     console.log("hello from login");
     const { email, password } = req.body;
 
-    isUserRegistered(email).then(function (user) {
-      if (user) {
-        // TODO: CHECK PASSWORD
+    isUserRegistered(email)
+      .then((isRegistered) => {
+        if (isRegistered) {
+          // TODO: CHECK PASSWORD
 
-        getUserByEmail(email).then((returndUser) => {
-          const payload = {
-            user: {
-              id: returndUser.id,
-            },
-          };
+          getUserByEmail(email)
+            .then((returnedUser) => {
+              return bcrypt.compare(password, returnedUser.password);
+            })
+            .then((result) => {
+              if (result) {
+                const payload = {
+                  user: {
+                    id: returnedUser.id,
+                  },
+                };
 
-          jwt.sign(
-            payload,
-            process.env.JWTSECRET,
-            { expiresIn: 360000 }, //optional
-            (err, token) => {
-              if (err) throw err;
-              res.json({ token });
-            }
-          );
-        });
-      } else {
-        res
-          .status(400)
-          .send(
-            "The login information provided does not match a registered user account. Please try again, or register for a new account."
-          );
-        return;
-      }
-    });
+                jwt.sign(
+                  payload,
+                  process.env.JWTSECRET,
+                  { expiresIn: 360000 }, //optional
+                  (err, token) => {
+                    if (err) throw err;
+                    res.json({ token });
+                  }
+                );
+              } else {
+                res
+                  .status(400)
+                  .send("The password is incorrect. Please try again.");
+                return;
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          res
+            .status(400)
+            .send(
+              "The email does not match a registered user account. Please try again, or register for an account."
+            );
+          return;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   return router;
