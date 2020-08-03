@@ -5,10 +5,19 @@ module.exports = (db) => {
     const query = {
       text: `SELECT * FROM pins;`,
     };
-    return db.query(query).then((result) => result.rows);
+    return db.query(query).then((res) => res.rows);
   };
 
-  const getPinsById = function (lat, lon) {
+  const getPinById = (pinId) => {
+    const query = {
+      text: `SELECT * FROM pins WHERE id = $1`,
+      values: [pinId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
+  // get pins by coordinates
+  const getPinByCoordinates = function (lat, lon) {
     const query = {
       text: `
       SELECT * FROM pins
@@ -150,7 +159,8 @@ module.exports = (db) => {
     addRating,
     isUserRegistered,
     getUserByEmail,
-    getPinsById,
+    getPinById,
     addUser,
+    getPinByCoordinates,
   };
 };

@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 
 // TODO: change the db
-module.exports = ({ getPins, addPin, addRating }) => {
+module.exports = ({ getPins, addPin, addRating, getPinById }) => {
   /*
   @desc   GET all pins
   @access public
@@ -13,8 +13,8 @@ module.exports = ({ getPins, addPin, addRating }) => {
       const allPins = await getPins();
 
       res.status(200).json(allPins);
-    } catch (e) {
-      console.log("Error in getting pins", e);
+    } catch (err) {
+      console.log("Error in getting pins", err);
     }
   });
 
@@ -84,7 +84,7 @@ module.exports = ({ getPins, addPin, addRating }) => {
 
       res.json(pinInfo);
     } catch (err) {
-      console.log("Something went wrong during pin creation", err);
+      console.log("Error in creating pin and rating", err);
       res.status(500).json({ error: "Server error" });
     }
   });
@@ -132,9 +132,16 @@ module.exports = ({ getPins, addPin, addRating }) => {
         stopgap_ramp
       );
 
-      res.json(newRating);
+      const pin = await getPinById(pinId);
+
+      const pinInfo = {
+        ...pin,
+        rating: newRating,
+      };
+
+      res.json(pinInfo);
     } catch (err) {
-      console.log("Something went wrong during rating creation", err);
+      console.log("Error in creating rating", err);
       res.status(500).json({ error: "Server error" });
     }
   });
