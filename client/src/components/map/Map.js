@@ -6,6 +6,7 @@ import {
   InfoWindow,
 } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
+import mapStyles from './mapStyles';
 /*
 import usePlacesAutoComplete, {
   getGeoCode,
@@ -23,7 +24,7 @@ import {
 const libraries = ['places'];
 const mapContainerStyle = {
   width: '80vw',
-  height: '80vh',
+  height: '78vh',
 };
 
 const center = {
@@ -31,11 +32,17 @@ const center = {
   lng: -79.383186,
 };
 
+const options = {
+  styles: mapStyles,
+  disableDefaultUI: true,
+  zoomControl: true,
+};
+
 console.log(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
 export default function Map() {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyBMZ5I_ijMsmsovyqas60L0nxUzZHIA4NM',
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
@@ -48,6 +55,7 @@ export default function Map() {
         mapContainerStyle={mapContainerStyle}
         zoom={10}
         center={center}
+        options={options}
       ></GoogleMap>
     </div>
   );

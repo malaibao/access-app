@@ -6,13 +6,19 @@ const Footer = () => {
   return (
     <footer>
       <div id='footer-container'>
-        {process.env.REACT_APP_RANDOM}
         <div className='contact'>
-          <h5>Contact</h5>
-          <p>Access For You</p>
-          <p>123 Access Lane</p>
-          <p>Main, ON</p>
-          <p>123-456-7890</p>
+          <h5>Contact Us</h5>
+          <p>
+            Access For You
+            <br />
+            123 Access Lane Main, Ontario
+            <br />
+            123-456-7890
+          </p>
+        </div>
+
+        <div id='credit'>
+          Access For You by Maribelle Leong, Erica Sun, and Bobby Brice
         </div>
 
         <div className='contact-icon'>
@@ -20,9 +26,6 @@ const Footer = () => {
             <GitHubIcon />
           </a>
         </div>
-      </div>
-      <div id='credit'>
-        Access For You by Maribelle Leong, Erica Sun, and Bobby Brice
       </div>
     </footer>
   );
