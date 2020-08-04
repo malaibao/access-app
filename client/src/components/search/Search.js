@@ -13,6 +13,7 @@ import {
 } from '@reach/combobox';
 
 import '@reach/combobox/styles.css';
+import './Search.scss';
 
 export default function Search() {
   const {
@@ -46,8 +47,9 @@ export default function Search() {
 
   return (
     <div className='search'>
-      <Combobox onSelect={handleSelect}>
+      <Combobox onSelect={handleSelect} className='combo-box'>
         <ComboboxInput
+          className='combo-box__input'
           value={value}
           onChange={handleInput}
           disabled={!ready}

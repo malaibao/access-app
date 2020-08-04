@@ -11,8 +11,8 @@ import mapStyles from './mapStyles';
 
 const libraries = ['places'];
 const mapContainerStyle = {
-  width: '80vw',
-  height: '78vh',
+  width: '100%',
+  height: '100%',
 };
 
 const center = {
@@ -38,10 +38,10 @@ export default function Map() {
   if (!isLoaded) return 'Loading Maps';
 
   return (
-    <div className='map'>
+    <div className='map' className='map'>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={10}
+        zoom={13}
         center={center}
         options={options}
       ></GoogleMap>

@@ -1,4 +1,6 @@
 .map {
+  height: calc(100vh - 73px);
   display: flex;
-  flex-direction: row-reverse;
+  // flex-direction: row-reverse;
+  flex-grow: 1;
 }
