@@ -41,5 +41,4 @@ app.use('/login', loginRoute(dbHelpers));
 app.use('/pins', pinsRoute(dbHelpers));
 app.use('/register', registerRoute(dbHelpers));
 
-
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

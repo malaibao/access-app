@@ -6,7 +6,8 @@ const Footer = () => {
   return (
     <footer>
       <div id='footer-container'>
-        <div class='contact'>
+        {process.env.REACT_APP_RANDOM}
+        <div className='contact'>
           <h5>Contact</h5>
           <p>Access For You</p>
           <p>123 Access Lane</p>
@@ -14,7 +15,7 @@ const Footer = () => {
           <p>123-456-7890</p>
         </div>
 
-        <div class='contact-icon'>
+        <div className='contact-icon'>
           <a href='https://github.com/malaibao/access-app' target='_blank'>
             <GitHubIcon />
           </a>
