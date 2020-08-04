@@ -1,4 +1,5 @@
 import React from 'react';
+import './map.scss';
 import {
   GoogleMap,
   useLoadScript,
@@ -7,19 +8,6 @@ import {
 } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 import mapStyles from './mapStyles';
-/*
-import usePlacesAutoComplete, {
-  getGeoCode,
-  getLatLng,
-} from 'use-places-autocomplete';
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from '@reach/combobox';
-*/
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -50,7 +38,7 @@ export default function Map() {
   if (!isLoaded) return 'Loading Maps';
 
   return (
-    <div>
+    <div className='map'>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={10}
