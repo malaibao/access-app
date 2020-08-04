@@ -1,5 +1,5 @@
 .navbar {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   letter-spacing: 0.15rem;
   display: flex;
   justify-content: space-between;
@@ -9,6 +9,7 @@
 
   ul {
     list-style: none;
+    display: flex;
   }
 
   a {
@@ -23,6 +24,6 @@
 }
 
 .bg-dark {
-  background-color: rgb(0, 32, 82);
+  background-color: #880e4f;
   color: #fff;
 }

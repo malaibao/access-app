@@ -1,0 +1,31 @@
+#footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 25px;
+  color: #fff;
+  font-size: 1.5em;
+  background-color: #880e4f;
+
+  .contact-icon {
+    padding: 10px;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+
+  .contact p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+#credit {
+  background-color: #880e4f;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+  padding-bottom: 2rem;
+}
