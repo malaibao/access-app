@@ -3,11 +3,11 @@ import Search from '../search/Search';
 import Map from '../map/Map';
 import './MapContainer.scss';
 
-const MapContainer = () => {
+const MapContainer = ({ pins }) => {
   return (
     <div className='map-container'>
       <Search />
-      <Map />
+      <Map pins={pins} />
     </div>
   );
 };

@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import Map from './components/map/Map';
-import Search from './components/search/Search';
 import MapContainer from './components/map-container/MapContainer';
+import axios from 'axios';
 
 import './App.css';
 
 function App() {
+  const [pins, setPins] = useState({});
+
+  useEffect(() => {
+    axios
+      .get('/pins')
+      .then((res) => setPins(res.data))
+      .catch((error) => console.log(error));
+  }, []); // eventually change to include newly created pins (not just on page load)
+
   return (
     <div>
       <Navbar />
-      {/* <div className='body'>
-        <Search />
-        <Map />
-      </div> */}
-      <MapContainer />
+      <MapContainer pins={pins} />
       <Footer />
     </div>
   );
