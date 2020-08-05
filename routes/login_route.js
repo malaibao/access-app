@@ -1,14 +1,14 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 module.exports = ({ isUserRegistered, getUserByEmail }) => {
   // checks the users email to validate login
-  router.post("/", (req, res) => {
-    console.log("hello from login");
+  router.post('/', (req, res) => {
+    console.log('hello from login');
     const { email, password } = req.body;
 
     isUserRegistered(email)
@@ -37,7 +37,7 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
                     }
                   );
                 } else {
-                  res.status(400).send("Wrong credentials. Please try again.");
+                  res.status(400).send('Wrong credentials. Please try again.');
                 }
               })
               .catch((err) => {
@@ -45,7 +45,7 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
               });
           });
         } else {
-          res.status(400).send("Wrong credentials. Please try again.");
+          res.status(400).send('Wrong credentials. Please try again.');
           return;
         }
       })

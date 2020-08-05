@@ -28,13 +28,13 @@ const options = {
 };
 
 export default function Map({ pins }) {
-  // console.log('pin in Map', pins);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
   const [markers, setMarkers] = React.useState([]);
+  const [selected, setSelect] = React.useState(null);
 
   const mapRef = React.useRef();
 
@@ -43,19 +43,12 @@ export default function Map({ pins }) {
   }, []);
 
   useEffect(() => {
-    console.log('in here', pins);
     setMarkers(pins);
   }, [pins]);
 
   if (loadError) return 'Error Loading Maps';
   if (!isLoaded) return 'Loading Maps';
 
-  const getMarkers = () => {
-    return markers.map((m) => {
-      console.log('m is ', m.latitude, m.longitude);
-      return <Marker position={{ lat: m.latitude, lng: m.longitude }} />;
-    });
-  };
   console.log('this market', markers);
   return (
     <div className='map'>
@@ -88,9 +81,13 @@ export default function Map({ pins }) {
                     anchor: new window.google.maps.Point(15, 15),
                     scaledSize: new window.google.maps.Size(30, 30),
                   }}
+                  onClick={() => {
+                    // setSelected(marker);
+                  }}
                 />
               ))
             : null}
+          {/* {selected ? (<InfoWindow></InfoWindow>)} */}
         </GoogleMap>
       ) : (
         ''

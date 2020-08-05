@@ -5,7 +5,6 @@ import { action } from '@storybook/addon-actions';
 
 //COMPONENT IMPORTS
 import Map from '../components/map/Map';
-import Map2 from '../components/map/Map2';
 // import Search from '../components/map/Search';
 
 const pins = [
@@ -30,7 +29,5 @@ const pins = [
 ];
 
 //STORIES
-storiesOf('Map', module)
-  .add('Google Map', () => <Map pins={pins} />)
-  .add('Google Map - 2 ', () => <Map2 pins={pins} />);
+storiesOf('Map', module).add('Google Map', () => <Map pins={pins} />);
 //   .add('Search', () => <Search />);
