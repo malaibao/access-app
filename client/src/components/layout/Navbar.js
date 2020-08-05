@@ -9,7 +9,7 @@ const Navbar = () => {
     <nav className='navbar bg-dark'>
       <h1>
         <Link to='/'>Access for You</Link>
-        <PersonPinIcon fontSize='large' style={{paddingTop: 10px}}/>
+        <PersonPinIcon fontSize='large' style={{ paddingTop: 10 }} />
       </h1>
       <ul>
         <li>
