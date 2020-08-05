@@ -1,0 +1,27 @@
+.about {
+  background-image: url('https://images.pexels.com/photos/3009773/pexels-photo-3009773.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  color: #ffffff;
+
+  a {
+    border: 1px solid;
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  p {
+    margin-bottom: 25px;
+  }
+}
