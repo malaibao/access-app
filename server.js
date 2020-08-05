@@ -7,11 +7,7 @@ const cookieSession = require("cookie-session");
 
 // Web server config
 const PORT = process.env.PORT || 5009;
-<<<<<<< HEAD
-const ENV = process.env.ENV || 'development';
-=======
 const ENV = process.env.ENV || "development";
->>>>>>> 2e4cfb64cc87a54d39307d9941c03e31d368f032
 
 // PG database client/connection setup
 const { Pool } = require("pg");
