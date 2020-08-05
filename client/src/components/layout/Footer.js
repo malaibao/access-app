@@ -22,7 +22,11 @@ const Footer = () => {
         </div>
 
         <div className='contact-icon'>
-          <a href='https://github.com/malaibao/access-app' target='_blank'>
+          <a
+            href='https://github.com/malaibao/access-app'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             <GitHubIcon />
           </a>
         </div>
