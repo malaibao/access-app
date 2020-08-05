@@ -12,7 +12,7 @@ import mapStyles from './mapStyles';
 const libraries = ['places'];
 const mapContainerStyle = {
   width: '100%',
-  height: '100%',
+  height: '88%',
 };
 
 const center = {

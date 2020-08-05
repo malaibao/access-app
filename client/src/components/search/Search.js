@@ -53,7 +53,7 @@ export default function Search() {
           value={value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder='Search for location'
+          placeholder='   Search for location'
         />
         <ComboboxPopover>
           <ComboboxList>
