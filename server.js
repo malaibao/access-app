@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 
 // Web server config
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5009;
 const ENV = process.env.ENV || 'development';
 
 // PG database client/connection setup

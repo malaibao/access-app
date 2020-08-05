@@ -7,6 +7,7 @@ import Landing from './components/basic-pages/Landing';
 import About from './components/basic-pages/About';
 import Register from './components/basic-pages/Register';
 import Login from './components/basic-pages/Login';
+// import MapContainer from './components/map-container/MapContainer';
 
 import setAuthToken from './utils/setAuthToken';
 
