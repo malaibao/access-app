@@ -7,10 +7,12 @@ import './Navbar.scss';
 const Navbar = () => {
   return (
     <nav className='navbar bg-dark'>
-      <h1>
-        <Link to='/'>Access for You</Link>
-        <PersonPinIcon fontSize='large' style={{ paddingTop: 10 }} />
-      </h1>
+      <div classNmae='logo'>
+        <h1>
+          <Link to='/'>Access for You</Link>
+        </h1>
+        <PersonPinIcon fontSize='large' />
+      </div>
       <ul>
         <li>
           <Link to='/about'>About</Link>
