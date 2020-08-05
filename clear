@@ -1,0 +1,14 @@
+  database[m
+  db/connection[m
+  feature/loadPins[m
+  feature/map[m
+  feature/search[m
+  fix/pin-routes[m
+* [32mmaster[m
+  refactor/1[m
+  seed/pins-ratings[m
+  setup/basic-pages[m
+  setup/redux[m
+  setup/sb[m
+  setup/sb2[m
+  test/dbreset[m

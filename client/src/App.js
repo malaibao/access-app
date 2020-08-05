@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import MapContainer from './components/map-container/MapContainer';
 import Landing from './components/basic-pages/Landing';
 import About from './components/basic-pages/About';
 import Register from './components/basic-pages/Register';
+import Login from './components/basic-pages/Login';
 
 import setAuthToken from './utils/setAuthToken';
 
@@ -26,6 +26,7 @@ const App = () => {
       <Switch>
         <Route exact path='/about' component={About} />
         <Route exact path='/register' component={Register} />
+        <Route exact path='/login' component={Login} />
       </Switch>
       <Footer />
     </Router>
