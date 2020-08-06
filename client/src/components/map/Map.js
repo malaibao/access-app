@@ -13,7 +13,7 @@ const libraries = ["places"];
 // const libraries = [];
 const mapContainerStyle = {
   width: "100%",
-  height: "89%",
+  height: "100%",
 };
 
 const center = {
