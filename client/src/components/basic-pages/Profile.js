@@ -31,9 +31,6 @@ export default function DenseTable() {
     axios
       .post(url)
       .then((res) => {
-        console.log("inside handleDelete");
-        console.log("res.data", res.data);
-
         setUserRatings(res.data);
       })
       .catch((err) => console.log("Error in deleting rating", err));
@@ -96,7 +93,7 @@ export default function DenseTable() {
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
-          <TableRow className="table-head">
+          <TableRow id="table-head">
             <TableCell>Name</TableCell>
             <TableCell>Address</TableCell>
             <TableCell>Accessibility Options</TableCell>
