@@ -66,6 +66,15 @@ module.exports = (db) => {
     return db.query(query).then((result) => result.rows);
   };
 
+  getRatingById = (ratingId) => {
+    const query = {
+      text: `
+        SELECT * FROM ratings WHERE id = $1`,
+      values: [ratingId],
+    };
+    return db.query(query).then((result) => result.rows[0]);
+  };
+
   const addRating = (
     pinId,
     userId,
@@ -170,15 +179,39 @@ module.exports = (db) => {
     return db.query(query).then((result) => result.rows[0]);
   };
 
+  const getUserRatings = (userId) => {
+    const query = {
+      text: `
+        SELECT * FROM ratings 
+        WHERE user_id = $1
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((result) => result.rows);
+  };
+
+  const deleteRating = (ratingId) => {
+    const query = {
+      text: `
+        DELETE FROM ratings
+        WHERE rating_id = $1`,
+      values: [ratingId],
+    };
+    return db.query(query).then(console.log("deleted"));
+  };
+
   return {
     getPins,
-    getRatings,
     addPin,
     addRating,
+    getRatings,
+    getRatingById,
     isUserRegistered,
     getUserByEmail,
     getPinById,
     addUser,
     getPinByCoordinates,
+    getUserRatings,
+    deleteRating,
   };
 };
