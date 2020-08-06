@@ -188,7 +188,7 @@ module.exports = (db) => {
         SELECT pins.name, pins.address, ratings.*
         FROM pins, ratings
         WHERE pins.id = ratings.pin_id AND
-        ratings.user_id = $1
+              ratings.user_id = $1
       `,
       values: [userId],
     };

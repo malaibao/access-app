@@ -23,7 +23,8 @@ module.exports = ({ getUserRatings, getRatingById, deleteRating }) => {
 
       if (rating.user_id === userId) {
         await deleteRating(ratingId);
-        res.status(200).send("Rating deleted");
+        const ratings = await getUserRatings(userId);
+        res.status(200).json(ratings);
       } else {
         res.status(400).send("Not your rating. Cannot delete.");
       }
