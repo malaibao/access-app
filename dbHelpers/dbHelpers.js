@@ -180,10 +180,15 @@ module.exports = (db) => {
   };
 
   const getUserRatings = (userId) => {
+    /*
+    
+    */
     const query = {
       text: `
-        SELECT * FROM ratings 
-        WHERE user_id = $1
+        SELECT pins.name, pins.address, ratings.*
+        FROM pins, ratings
+        WHERE pins.id = ratings.pin_id AND
+        ratings.user_id = $1
       `,
       values: [userId],
     };
