@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import MapContainer from '../map-container/MapContainer';
+=======
+import React, { useState, useEffect } from "react";
+import MapContainer from "../map-container/MapContainer";
+>>>>>>> user_route
 
 import axios from 'axios';
 

@@ -35,12 +35,12 @@ app.use(
 const loginRoute = require("./routes/login_route");
 const pinsRoute = require("./routes/pins");
 const registerRoute = require("./routes/register_route");
+const userRoute = require("./routes/user_route");
 
 // Mount all resource routes
 app.use("/login", loginRoute(dbHelpers));
 app.use("/pins", pinsRoute(dbHelpers));
 app.use("/register", registerRoute(dbHelpers));
-app.use("/hello", (req, res) => {
-  res.send("one");
-});
+app.use("/user", userRoute(dbHelpers));
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
