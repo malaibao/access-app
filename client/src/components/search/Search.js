@@ -29,13 +29,6 @@ export default function Search({panTo}) {
     },
   });
 
-  // const mapRef = React.useRef();
-
-  // const panTo = useCallback(({lat, lng}) => {
-  //   mapRef.current.panTo({lat, lng});
-  //   mapRef.current.setZoom(14);
-  // }, [])
-
   const handleInput = (e) => {
     setValue(e.target.value);
   };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Locate from './Locate';
 import "./map.scss";
 import {
   GoogleMap,
@@ -27,9 +28,8 @@ const options = {
   zoomControl: true,
 };
 
-export default function Map({ pins, onMapLoad, chosen }) {
+export default function Map({ pins, onMapLoad, chosen, panTo }) {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
@@ -46,6 +46,7 @@ export default function Map({ pins, onMapLoad, chosen }) {
 
   return (
     <div className="map">
+    <Locate panTo={panTo}/>
       {markers.length > 0 ? (
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
@@ -89,9 +90,7 @@ export default function Map({ pins, onMapLoad, chosen }) {
                     scaledSize: new window.google.maps.Size(30, 30)
                   }}/>: null}
         </GoogleMap>
-      ) : (
-        ""
-      )}
+      ) : null}
     </div>
   );
 }
