@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
 import MapContainer from "../map-container/MapContainer";
-import './Landing.scss';
+
 import axios from "axios";
 
 const Landing = () => {
@@ -19,21 +19,6 @@ const Landing = () => {
 
     setChosen({lat,lng})
   }, [])
-
-  function Locate({panTo}) {
-    return (
-      <button className="location" onClick={() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-          panTo({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          })
-        }, () => null)
-      }}>
-      <img src="compass.png" alt="compass locate me" />
-      </button>
-    )
-  }
 
   useEffect(() => {
     axios
