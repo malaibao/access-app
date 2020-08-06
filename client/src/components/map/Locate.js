@@ -1,4 +1,6 @@
 import React from "react";
+import ExploreIcon from '@material-ui/icons/Explore';
+
 import './Locate.scss';
   
   const Locate = ({panTo}) => {
@@ -11,7 +13,8 @@ import './Locate.scss';
           })
         }, () => null)
       }}>
-      <img src="compass.png" alt="compass locate me" />
+      {/* <img src="compass.png" alt="compass locate me" /> */}
+      <ExploreIcon fontSize="large" />
       </button>
     )
   }

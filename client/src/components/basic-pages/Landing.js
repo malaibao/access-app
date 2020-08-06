@@ -14,8 +14,7 @@ const Landing = () => {
 
   const panTo = useCallback(({lat, lng}) => {
     mapRef.current.panTo({lat, lng});
-    mapRef.current.setZoom(20);
-    // mapRef.current.setChosen({lat,lng})
+    mapRef.current.setZoom(18);
 
     setChosen({lat,lng})
   }, [])
@@ -29,7 +28,7 @@ const Landing = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  return <div>{<MapContainer pins={pins} onMapLoad={onMapLoad} panTo={panTo} chosen={chosen} Locate={panTo}/>}</div>;
+  return <div>{<MapContainer pins={pins} onMapLoad={onMapLoad} panTo={panTo} chosen={chosen}/>}</div>;
 };
 
 export default Landing;
