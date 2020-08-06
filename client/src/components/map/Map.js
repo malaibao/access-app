@@ -89,9 +89,7 @@ export default function Map({ pins, onMapLoad, chosen }) {
                     scaledSize: new window.google.maps.Size(30, 30)
                   }}/>: null}
         </GoogleMap>
-      ) : (
-        ""
-      )}
+      ) : null}
     </div>
   );
 }
