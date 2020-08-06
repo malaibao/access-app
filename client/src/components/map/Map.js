@@ -34,7 +34,7 @@ export default function Map({ pins }) {
   });
 
   const [markers, setMarkers] = React.useState([]);
-  const [selected, setSelect] = React.useState(null);
+  const [selected, setSelected] = React.useState(null);
 
   const mapRef = React.useRef();
 
@@ -49,7 +49,7 @@ export default function Map({ pins }) {
   if (loadError) return 'Error Loading Maps';
   if (!isLoaded) return 'Loading Maps';
 
-  console.log('this market', markers);
+  // console.log('this market', markers);
   return (
     <div className='map'>
       {markers.length > 0 ? (
@@ -58,23 +58,15 @@ export default function Map({ pins }) {
           zoom={8}
           center={center}
           options={options}
-          // onLoad={getMarkers}
+          onLoad={onMapLoad}
         >
-          {/* {markers.length > 0 && getMarkers()} */}
-          <Marker
-            key={'123456'}
-            position={{
-              lat: 43.653225,
-              lng: -79.383186,
-            }}
-          />
           {markers.length > 0
             ? markers.map((marker, i) => (
                 <Marker
                   key={i}
                   position={{ lat: marker.latitude, lng: marker.longitude }}
                   icon={{
-                    // url: <Room />,
+                    
                     url:
                       'https://cdn.bulbagarden.net/upload/b/b8/025Pikachu_LG.png',
                     origin: new window.google.maps.Point(0, 0),
@@ -82,12 +74,20 @@ export default function Map({ pins }) {
                     scaledSize: new window.google.maps.Size(30, 30),
                   }}
                   onClick={() => {
-                    // setSelected(marker);
+                    setSelected(marker);
                   }}
                 />
               ))
             : null}
-          {/* {selected ? (<InfoWindow></InfoWindow>)} */}
+                  {selected ? (<InfoWindow position={{lat: selected.latitude, lng: selected.longitude}} onCloseClick={() => {
+                    setSelected(null);
+                  }}>
+                    <div>
+                      {selected.name}
+                      
+                      {selected.address}
+                    </div>
+                  </InfoWindow>) : null}
         </GoogleMap>
       ) : (
         ''
