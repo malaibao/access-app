@@ -105,14 +105,8 @@ const Login = () => {
             />
           )}
           <TextField
-<<<<<<< HEAD
-            type='email'
-            variant='outlined'
-            margin='normal'
-=======
             variant="outlined"
             margin="normal"
->>>>>>> user_route
             required
             fullWidth
             id="email"
