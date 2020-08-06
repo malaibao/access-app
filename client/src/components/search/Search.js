@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import usePlacesAutocomplete, {
   getGeocode,
@@ -15,7 +15,7 @@ import {
 import '@reach/combobox/styles.css';
 import './Search.scss';
 
-export default function Search() {
+export default function Search({panTo}) {
   const {
     ready,
     value,
@@ -29,6 +29,13 @@ export default function Search() {
     },
   });
 
+  // const mapRef = React.useRef();
+
+  // const panTo = useCallback(({lat, lng}) => {
+  //   mapRef.current.panTo({lat, lng});
+  //   mapRef.current.setZoom(14);
+  // }, [])
+
   const handleInput = (e) => {
     setValue(e.target.value);
   };
@@ -39,9 +46,14 @@ export default function Search() {
 
     try {
       const results = await getGeocode({ address });
+      
+      const placeId = results[0].place_id; //we'll need this to check the db on search
+
+      console.log(placeId);
       const { lat, lng } = await getLatLng(results[0]);
+      panTo({lat, lng})
     } catch (error) {
-      console.log('An error has occurred');
+      console.log('An error has occurred', error);
     }
   };
 
