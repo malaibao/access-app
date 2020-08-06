@@ -14,6 +14,7 @@
   "author": "Bobby Brice, Erica Sun, Maribelle Leong",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.19.2",
     "bcrypt": "^5.0.0",
     "chalk": "^4.1.0",

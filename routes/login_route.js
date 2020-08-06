@@ -37,7 +37,7 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
                     }
                   );
                 } else {
-                  res.status(400).send('Wrong credentials. Please try again.');
+                  res.status(400).json({ errMsg: 'Invalid credentials' });
                 }
               })
               .catch((err) => {
@@ -45,7 +45,7 @@ module.exports = ({ isUserRegistered, getUserByEmail }) => {
               });
           });
         } else {
-          res.status(400).send('Wrong credentials. Please try again.');
+          res.status(400).json({ errMsg: 'Invalid credentials' });
           return;
         }
       })
