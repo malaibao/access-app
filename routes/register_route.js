@@ -1,16 +1,16 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 module.exports = ({ addUser, isUserRegistered, getUserByEmail }) => {
   // checks whether the users email already exists in the db
   // either redirects them to home or asks them to login
-  router.post("/", (req, res) => {
-    console.log("hello from register");
-    const { email, password, username } = req.body;
+  router.post('/', (req, res) => {
+    console.log('hello from register');
+    const { username, email, password } = req.body;
     isUserRegistered(email)
       .then((isRegistered) => {
         if (!isRegistered) {
@@ -45,7 +45,7 @@ module.exports = ({ addUser, isUserRegistered, getUserByEmail }) => {
               console.log(err);
             });
         } else {
-          res.status(400).send("Please login.");
+          res.status(400).json({ errMsg: 'This email is already registered.' });
           return;
         }
       })
