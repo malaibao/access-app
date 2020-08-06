@@ -66,7 +66,7 @@ module.exports = (db) => {
     return db.query(query).then((result) => result.rows);
   };
 
-  getRatingById = (ratingId) => {
+  const getRatingById = (ratingId) => {
     const query = {
       text: `
         SELECT * FROM ratings WHERE id = $1`,
@@ -194,7 +194,7 @@ module.exports = (db) => {
     const query = {
       text: `
         DELETE FROM ratings
-        WHERE rating_id = $1`,
+        WHERE id = $1`,
       values: [ratingId],
     };
     return db.query(query).then(console.log("deleted"));
