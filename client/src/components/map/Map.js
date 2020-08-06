@@ -49,13 +49,13 @@ export default function Map({ pins }) {
   if (loadError) return 'Error Loading Maps';
   if (!isLoaded) return 'Loading Maps';
 
-  // console.log('this market', markers);
+
   return (
     <div className='map'>
       {markers.length > 0 ? (
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
-          zoom={8}
+          zoom={13}
           center={center}
           options={options}
           onLoad={onMapLoad}
