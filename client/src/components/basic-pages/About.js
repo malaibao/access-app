@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { useContext } from "react";
 
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
 
-import './About.scss';
+import "./About.scss";
 
 const About = () => {
   return (
-    <div className='about'>
+    <div className="about">
       {/* <h1>Our Mission</h1>
       <p>Access for You is </p> */}
 
-      <Grid container justify='center'>
+      <Grid container justify="center">
         <Grid item>
-          <Link href='/' variant='body2'>
+          <Link href="/" variant="body2">
             SEARCH
           </Link>
         </Grid>
