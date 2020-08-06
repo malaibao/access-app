@@ -11,7 +11,7 @@ import Login from './components/basic-pages/Login';
 // import MapContainer from './components/map-container/MapContainer';
 import { UserContext } from './context/UserContext';
 import setAuthToken from './utils/setAuthToken';
-import { LOGIN, LOGOUT } from './reducers/action-types';
+import { LOGIN, REGISTER, LOGOUT } from './reducers/action-types';
 
 import './App.css';
 
@@ -30,6 +30,7 @@ const reducer = (state, action) => {
 
   switch (type) {
     case LOGIN:
+    case REGISTER:
       localStorage.setItem('token', payload.token);
       return {
         ...state,

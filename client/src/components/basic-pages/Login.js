@@ -1,10 +1,8 @@
 import React, { useState, useContext } from 'react';
 import AlertTag from '../layout/AlertTag';
-import setAuthToken from '../../utils/setAuthToken';
 
 import axios from 'axios';
-import { Link as DomLink, Redirect } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
+import { Redirect } from 'react-router-dom';
 import { AuthContext } from '../../App';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -39,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+const Login = () => {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -95,7 +93,7 @@ export default function Login() {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           {errorInfo.show && (
             <AlertTag
               isOpen={errorInfo.show}
@@ -104,6 +102,7 @@ export default function Login() {
             />
           )}
           <TextField
+            type='email'
             variant='outlined'
             margin='normal'
             required
@@ -150,4 +149,6 @@ export default function Login() {
       </div>
     </Container>
   );
-}
+};
+
+export default Login;
