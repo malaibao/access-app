@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import MapContainer from "../map-container/MapContainer";
 
 import axios from "axios";
 
 const Landing = () => {
   const [markpins, setPins] = useState([]);
+
   useEffect(() => {
     axios
       .get("/pins")
