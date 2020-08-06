@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-=======
 import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
->>>>>>> feature/panZoom
 import MapContainer from "../map-container/MapContainer";
 
 import axios from "axios";
