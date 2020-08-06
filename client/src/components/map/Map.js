@@ -72,9 +72,6 @@ export default function Map({ pins, onMapLoad, chosen }) {
                 />
               ))
             : null}
-<<<<<<< HEAD
-          {}
-=======
                   {selected ? (<InfoWindow position={{lat: selected.latitude, lng: selected.longitude}} onCloseClick={() => {
                     setSelected(null);
                   }}>
@@ -91,7 +88,6 @@ export default function Map({ pins, onMapLoad, chosen }) {
                     anchor: new window.google.maps.Point(15, 15),
                     scaledSize: new window.google.maps.Size(30, 30)
                   }}/>: null}
->>>>>>> feature/panZoom
         </GoogleMap>
       ) : (
         ""
