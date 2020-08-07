@@ -1,21 +1,30 @@
-const express = require("express");
+const express = require('express');
+const fetch = require('node-fetch');
 const router = express.Router();
-const auth = require("../middleware/auth");
-const { categoryMajority } = require("../dbHelpers/utilities");
+const auth = require('../middleware/auth');
+const { categoryMajority } = require('../dbHelpers/utilities');
 
 // TODO: change the db
-module.exports = ({ getPins, addPin, addRating, getPinById, getRatings }) => {
+module.exports = ({
+  getPins,
+  addPin,
+  addRating,
+  getPinById,
+  getRatings,
+  pinExist,
+  getByPlaceId,
+}) => {
   /*
   @desc   GET all pins
   @access public
   */
-  router.get("/", async (req, res) => {
+  router.get('/', async (req, res) => {
     try {
       const allPins = await getPins();
 
       res.status(200).json(allPins);
     } catch (err) {
-      console.log("Error in getting pins", err);
+      console.log('Error in getting pins', err);
     }
   });
 
@@ -24,7 +33,7 @@ module.exports = ({ getPins, addPin, addRating, getPinById, getRatings }) => {
   @access private
   */
 
-  router.post("/", auth, async (req, res) => {
+  router.post('/', auth, async (req, res) => {
     //gets the location, name, address from the google api call on search
     const {
       name,
@@ -88,12 +97,12 @@ module.exports = ({ getPins, addPin, addRating, getPinById, getRatings }) => {
 
       res.json(pinInfo);
     } catch (err) {
-      console.log("Error in creating pin and rating", err);
-      res.status(500).json({ error: "Server error" });
+      console.log('Error in creating pin and rating', err);
+      res.status(500).json({ error: 'Server error' });
     }
   });
 
-  router.post("/:id", auth, async (req, res) => {
+  router.post('/:id', auth, async (req, res) => {
     const {
       accessible_parking,
       accessible_washroom,
@@ -149,8 +158,51 @@ module.exports = ({ getPins, addPin, addRating, getPinById, getRatings }) => {
 
       res.json(pinInfo);
     } catch (err) {
-      console.log("Error in creating rating", err);
-      res.status(500).json({ error: "Server error" });
+      console.log('Error in creating rating', err);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+
+  router.get('/location', async (req, res) => {
+    const { placeId } = req.body;
+
+    try {
+      const isFound = await pinExist(placeId);
+
+      let result = {};
+      if (isFound) {
+        const foundPin = await getByPlaceId(placeId);
+        const ratings = await getRatings(foundPin.id);
+        const tags = categoryMajority(ratings);
+
+        result = {
+          found: true,
+          pin: { ...foundPin, tags },
+        };
+      } else {
+        const pinResult = await fetch(
+          `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+        )
+          .then((res) => res.json())
+          .then((returnedData) => {
+            return {
+              name: returnedData.result.name,
+              address: returnedData.result.formatted_address,
+              longitude: returnedData.result.geometry.location.lng,
+              latitude: returnedData.result.geometry.location.lat,
+            };
+          });
+
+        result = {
+          found: false,
+          pinResult,
+        };
+      }
+      res.status(200).json(result);
+    } catch (e) {
+      res
+        .status(500)
+        .json({ errMsg: 'Server Error in finding pin with placeId' });
     }
   });
 
@@ -158,14 +210,14 @@ module.exports = ({ getPins, addPin, addRating, getPinById, getRatings }) => {
   @desc   GET pin by id
   @access public
   */
-  router.get("/:id", async (req, res) => {
+  router.get('/:id', async (req, res) => {
     const { latitude, longitude } = req.body;
     try {
       const getPinId = await getPinsById(longitude, latitude);
 
       res.status(200).json(getPinId);
     } catch (e) {
-      console.log("Error in getting pin by Id", e);
+      console.log('Error in getting pin by Id', e);
     }
   });
 

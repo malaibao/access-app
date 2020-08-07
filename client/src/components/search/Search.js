@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import axios from 'axios';
 
 import usePlacesAutocomplete, {
   getGeocode,
@@ -15,7 +16,7 @@ import {
 import '@reach/combobox/styles.css';
 import './Search.scss';
 
-export default function Search({panTo}) {
+export default function Search({ panTo }) {
   const {
     ready,
     value,
@@ -39,12 +40,17 @@ export default function Search({panTo}) {
 
     try {
       const results = await getGeocode({ address });
-      
-      const placeId = results[0].place_id; //we'll need this to check the db on search
 
-      console.log(placeId);
+      const placeId = results[0].place_id; //we'll need this to check the db on search
+      console.log('from google', results[0]);
+      // check from our db with placeId
+      const placeInfo = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+      );
+      console.log(placeInfo);
+
       const { lat, lng } = await getLatLng(results[0]);
-      panTo({lat, lng})
+      panTo({ lat, lng });
     } catch (error) {
       console.log('An error has occurred', error);
     }

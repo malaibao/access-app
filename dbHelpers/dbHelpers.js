@@ -202,7 +202,29 @@ module.exports = (db) => {
         WHERE id = $1`,
       values: [ratingId],
     };
-    return db.query(query).then(console.log("deleted"));
+    return db.query(query).then(console.log('deleted'));
+  };
+
+  const pinExist = (placeId) => {
+    const query = {
+      text: `
+      SELECT * FROM pins
+      WHERE pins.place_id = $1;
+      `,
+      values: [placeId],
+    };
+    return db.query(query).then((res) => res.rows.length > 0);
+  };
+
+  const getByPlaceId = (placeId) => {
+    const query = {
+      text: `
+      SELECT * FROM pins
+      WHERE pins.place_id = $1;
+      `,
+      values: [placeId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
   };
 
   return {
@@ -218,5 +240,7 @@ module.exports = (db) => {
     getPinByCoordinates,
     getUserRatings,
     deleteRating,
+    pinExist,
+    getByPlaceId,
   };
 };

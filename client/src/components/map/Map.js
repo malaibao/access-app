@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import Locate from './Locate';
-import "./map.scss";
+import './map.scss';
 import {
   GoogleMap,
   useLoadScript,
@@ -10,11 +10,11 @@ import {
 // import { formatRelative } from 'date-fns';
 import mapStyles from './mapStyles';
 
-const libraries = ["places"];
+const libraries = ['places'];
 // const libraries = [];
 const mapContainerStyle = {
-  width: "100%",
-  height: "100%",
+  width: '100%',
+  height: '89%',
 };
 
 const center = {
@@ -30,23 +30,23 @@ const options = {
 
 export default function Map({ pins, onMapLoad, chosen, panTo }) {
   const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
   const [markers, setMarkers] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
 
-
   useEffect(() => {
     setMarkers(pins);
   }, [pins]);
 
-  if (loadError) return "Error Loading Maps";
-  if (!isLoaded) return "Loading Maps";
+  if (loadError) return 'Error Loading Maps';
+  if (!isLoaded) return 'Loading Maps';
 
   return (
-    <div className="map">
-    <Locate panTo={panTo}/>
+    <div className='map'>
+      <Locate panTo={panTo} />
       {markers.length > 0 ? (
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
@@ -62,7 +62,7 @@ export default function Map({ pins, onMapLoad, chosen, panTo }) {
                   position={{ lat: marker.latitude, lng: marker.longitude }}
                   icon={{
                     url:
-                      "https://cdn.bulbagarden.net/upload/b/b8/025Pikachu_LG.png",
+                      'https://cdn.bulbagarden.net/upload/b/b8/025Pikachu_LG.png',
                     origin: new window.google.maps.Point(0, 0),
                     anchor: new window.google.maps.Point(15, 15),
                     scaledSize: new window.google.maps.Size(30, 30),
@@ -73,22 +73,33 @@ export default function Map({ pins, onMapLoad, chosen, panTo }) {
                 />
               ))
             : null}
-                  {selected ? (<InfoWindow position={{lat: selected.latitude, lng: selected.longitude}} onCloseClick={() => {
-                    setSelected(null);
-                  }}>
-                    <div>
-                      {selected.name}
-                      
-                      {selected.address}
-                    </div>
-                  </InfoWindow>) : null}
-                  {chosen !== null ? <Marker key={'1234'} position={chosen} icon={{
-                    url:
-                      'https://e7.pngegg.com/pngimages/72/948/png-clipart-bulbasaur-pokemon-diamond-and-pearl-pokemon-go-pokedex-ivysaur-bulbasaur-pixel-vertebrate-grass.png',
-                    origin: new window.google.maps.Point(0, 0),
-                    anchor: new window.google.maps.Point(15, 15),
-                    scaledSize: new window.google.maps.Size(30, 30)
-                  }}/>: null}
+          {selected ? (
+            <InfoWindow
+              position={{ lat: selected.latitude, lng: selected.longitude }}
+              onCloseClick={() => {
+                setSelected(null);
+              }}
+            >
+              <div>
+                {selected.name}
+
+                {selected.address}
+              </div>
+            </InfoWindow>
+          ) : null}
+          {chosen !== null ? (
+            <Marker
+              key={'1234'}
+              position={chosen}
+              icon={{
+                url:
+                  'https://e7.pngegg.com/pngimages/72/948/png-clipart-bulbasaur-pokemon-diamond-and-pearl-pokemon-go-pokedex-ivysaur-bulbasaur-pixel-vertebrate-grass.png',
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(15, 15),
+                scaledSize: new window.google.maps.Size(30, 30),
+              }}
+            />
+          ) : null}
         </GoogleMap>
       ) : null}
     </div>
