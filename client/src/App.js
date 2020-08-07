@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useState, useReducer, createContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/layout/Navbar';
@@ -21,14 +21,15 @@ import './App.css';
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
-export const AuthContext = React.createContext();
+export const AuthContext = createContext();
+export const PinContext = createContext();
 
-const initialState = {
+const authInitialState = {
   isAuthenticated: false,
   token: localStorage.getItem('token'),
 };
 
-const reducer = (state, action) => {
+const authReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -53,30 +54,33 @@ const reducer = (state, action) => {
 };
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [authState, dispatch] = useReducer(authReducer, authInitialState);
+  const [pin, setPin] = useState(null);
 
   return (
     <AuthContext.Provider
       value={{
-        state,
+        authState,
         dispatch,
       }}
     >
-      <Router>
-        <Navbar />
-        <Route exact path='/' component={Landing} />
-        <UserContext.Provider value=''>
-          <Switch>
-            <Route exact path='/about' component={About} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/profile' component={Profile} />
-            <Route exact path='/new' component={New} />
-            <Route exact path='/result' component={Result} />
-          </Switch>
-        </UserContext.Provider>
-        <Footer />
-      </Router>
+      <PinContext.Provider value={{ pin, setPin }}>
+        <Router>
+          <Navbar />
+          <Route exact path='/' component={Landing} />
+          <UserContext.Provider value=''>
+            <Switch>
+              <Route exact path='/about' component={About} />
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/profile' component={Profile} />
+              <Route exact path='/new' component={New} />
+              <Route exact path='/result' component={Result} />
+            </Switch>
+          </UserContext.Provider>
+          <Footer />
+        </Router>
+      </PinContext.Provider>
     </AuthContext.Provider>
   );
 };

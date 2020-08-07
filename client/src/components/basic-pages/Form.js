@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -6,24 +6,31 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    width: 0.25,
   },
   formControl: {
-    width: '60%',
     margin: theme.spacing(3),
   },
   form: {
-    width: '60%', // Fix IE 11 issue.
+    padding: 0,
+    margin: 0,
     marginTop: theme.spacing(1),
+  },
+  submit: {
+    backgroundColor: '#880f4f',
+    color: 'white',
+    marginLeft: 20,
   },
 }));
 
 export default function Form() {
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [rating, setRating] = useState({
     accessible_parking: false,
     accessible_washroom: false,
     alternative_entrance: false,
@@ -42,12 +49,56 @@ export default function Form() {
     stopgap_ramp: false,
   });
 
+  const [errorInfo, setErrorInfo] = useState({ errMsg: '', show: false });
+
+  // const { state, dispatch } = useContext(PinContext);
+
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    setRating({ ...rating, [event.target.name]: event.target.checked });
+  };
+
+  const handleCloseAlert = () => {
+    setErrorInfo((prev) => ({ ...prev, show: false }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // check if input is empty
+    const filled = Object.values(rating).includes(true);
+    console.log(filled);
+
+    if (filled === false) {
+      setErrorInfo((prev) => ({
+        ...prev,
+        errMsg: 'Select at least 1 option',
+        show: true,
+      }));
+      return;
+    }
+
+    const pinInfo = {
+      // name:
+      //address:
+      //longitude:
+      //latitude:
+      ...rating,
+    };
+
+    // const config = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // };
+
+    // try {
+    //   const res = await axios.post('/pins', pinInfo, config);
+    //   // dispatch({ type: , payload: res.data });
+    //   setErrorInfo({ errMsg: '', show: false });
+    // } catch (err) {
+    //   const errMsg = err.response.data.errMsg;
+    //   setErrorInfo((prev) => ({ ...prev, errMsg, show: true }));
+    // }
   };
 
   const {
@@ -67,7 +118,7 @@ export default function Form() {
     sign_language,
     spacious,
     stopgap_ramp,
-  } = state;
+  } = rating;
   const error =
     [
       accessible_parking,
@@ -86,7 +137,7 @@ export default function Form() {
       sign_language,
       spacious,
       stopgap_ramp,
-    ].filter((v) => v).length > 1;
+    ].filter((v) => v).length < 1;
 
   return (
     <div>
@@ -181,6 +232,7 @@ export default function Form() {
           error={error}
           component='fieldset'
           className={classes.formControl}
+          style={{ paddingTop: 18 }}
         >
           <FormGroup>
             <FormControlLabel
@@ -261,13 +313,8 @@ export default function Form() {
             />
           </FormGroup>
         </FormControl>
-        <Button
-          type='submit'
-          fullWidth
-          variant='contained'
-          color='primary'
-          className={classes.submit}
-        >
+        <br />
+        <Button type='submit' variant='primary' className={classes.submit}>
           Add Rating
         </Button>
       </form>

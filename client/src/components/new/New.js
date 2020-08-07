@@ -5,12 +5,14 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
+import { PinContext } from '../../App';
 import Map from '../map/Map';
 import Form from '../basic-pages/Form';
 import axios from 'axios';
 
 const New = () => {
   const [pins, setPins] = useState([]);
+  const { pin } = useContext(PinContext);
 
   const mapRef = useRef();
   const onMapLoad = React.useCallback((map) => {
@@ -36,18 +38,10 @@ const New = () => {
   // panTo({ lat: 43.6382956, lng: -79.4210971 });
   return (
     <div style={{ display: 'flex' }}>
-      <Form />
+      {pin && console.log(pin)}
+      <Form style={{ width: '30%' }} />
 
       <Map pins={pins} onMapLoad={onMapLoad} chosen={null} panTo={panTo} />
-
-      {/* {
-        <MapContainer
-          pins={pins}
-          onMapLoad={onMapLoad}
-          panTo={panTo}
-          chosen={chosen}
-        />
-      } */}
     </div>
   );
 };

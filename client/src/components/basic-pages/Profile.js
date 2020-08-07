@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DenseTable() {
+export default function Profle() {
   const classes = useStyles();
   const [userRatings, setUserRatings] = useState([]);
 
