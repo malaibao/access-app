@@ -9,6 +9,7 @@ import Register from './components/basic-pages/Register';
 import Login from './components/basic-pages/Login';
 import Profile from './components/basic-pages/Profile';
 import New from './components/new/New';
+import Result from './components/result/Result';
 
 // import MapContainer from './components/map-container/MapContainer';
 import { UserContext } from './context/UserContext';
@@ -66,12 +67,12 @@ const App = () => {
         <Route exact path='/' component={Landing} />
         <UserContext.Provider value=''>
           <Switch>
-            {/* <div><MapContainer pins={pins} /></div> */}
             <Route exact path='/about' component={About} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/profile' component={Profile} />
             <Route exact path='/new' component={New} />
+            <Route exact path='/result' component={Result} />
           </Switch>
         </UserContext.Provider>
         <Footer />

@@ -1,4 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
+import { Redirect } from 'react-router-dom';
+
 import axios from 'axios';
 
 import usePlacesAutocomplete, {
@@ -30,6 +32,8 @@ export default function Search({ panTo }) {
     },
   });
 
+  const [pinInfo, setPinInfo] = useState(null);
+
   const handleInput = (e) => {
     setValue(e.target.value);
   };
@@ -50,10 +54,29 @@ export default function Search({ panTo }) {
 
       const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
+
+      setPinInfo(pinResult);
+
+      // redirect
+      if (pinResult.data.found) {
+        // show results, with button to add rating form
+        return <Redirect to='/result' />;
+      } else {
+        // "no pins/ratings", with add pin/rating form below
+        return <Redirect to='/new' />;
+      }
     } catch (error) {
       console.log('An error has occurred', error);
     }
   };
+
+  if (pinInfo !== null) {
+    if (pinInfo.data && pinInfo.data.found) {
+      return <Redirect to='/result' />;
+    } else {
+      return <Redirect to='/new' />;
+    }
+  }
 
   return (
     <div className='search'>
