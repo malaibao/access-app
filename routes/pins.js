@@ -163,8 +163,8 @@ module.exports = ({
     }
   });
 
-  router.get('/location', async (req, res) => {
-    const { placeId } = req.body;
+  router.get('/place_id/:id', async (req, res) => {
+    const placeId = req.params.id;
 
     try {
       const isFound = await pinExist(placeId);
@@ -173,7 +173,7 @@ module.exports = ({
       if (isFound) {
         const foundPin = await getByPlaceId(placeId);
         const ratings = await getRatings(foundPin.id);
-        const tags = categoryMajority(ratings);
+        const tags = await categoryMajority(ratings);
 
         result = {
           found: true,

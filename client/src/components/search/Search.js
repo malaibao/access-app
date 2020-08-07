@@ -42,12 +42,11 @@ export default function Search({ panTo }) {
       const results = await getGeocode({ address });
 
       const placeId = results[0].place_id; //we'll need this to check the db on search
-      console.log('from google', results[0]);
+      console.log('from google', results[0].place_id);
+
       // check from our db with placeId
-      const placeInfo = await axios.get(
-        `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
-      );
-      console.log(placeInfo);
+      const pinResult = await axios.get(`/pins/place_id/${placeId}`);
+      console.log('pinResult', pinResult);
 
       const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
@@ -64,7 +63,7 @@ export default function Search({ panTo }) {
           value={value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder='   Search for location'
+          placeholder={`Search for location`}
         />
         <ComboboxPopover>
           <ComboboxList>
