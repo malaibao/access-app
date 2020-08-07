@@ -80,8 +80,8 @@ export default function Form() {
     }
 
     const pinInfo = {
-      pin,
-      rating,
+      ...pin,
+      ...rating,
     };
 
     const config = {
@@ -91,6 +91,7 @@ export default function Form() {
     };
 
     try {
+      console.log('pin info', pinInfo);
       const res = await axios.post('/pins', pinInfo, config);
 
       setErrorInfo({ errMsg: '', show: false });

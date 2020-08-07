@@ -39,6 +39,7 @@ module.exports = ({
       address,
       longitude,
       latitude,
+      place_id,
       accessible_parking,
       accessible_washroom,
       alternative_entrance,
@@ -60,9 +61,18 @@ module.exports = ({
     // TODO: get from req.user.id
     const userId = req.user.id;
 
+    console.log('PLACE______ID', place_id);
+
     try {
       // create pins
-      const newPin = await addPin(userId, name, address, latitude, longitude);
+      const newPin = await addPin(
+        userId,
+        name,
+        address,
+        latitude,
+        longitude,
+        place_id
+      );
 
       // create rating
       const newRating = await addRating(
@@ -189,6 +199,7 @@ module.exports = ({
               address: returnedData.result.formatted_address,
               longitude: returnedData.result.geometry.location.lng,
               latitude: returnedData.result.geometry.location.lat,
+              place_id: returnedData.result.place_id,
             };
           });
 
