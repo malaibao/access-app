@@ -8,7 +8,7 @@ import PersonPinIcon from '@material-ui/icons/PersonPin';
 import './Navbar.scss';
 
 const Navbar = () => {
-  const { state, dispatch } = useContext(AuthContext);
+  const { authState, dispatch } = useContext(AuthContext);
 
   const guestLink = (
     <ul>
@@ -47,7 +47,7 @@ const Navbar = () => {
         </h1>
         <PersonPinIcon fontSize='large' style={{ paddingBottom: 10 }} />
       </div>
-      {state && state.isAuthenticated ? authLink : guestLink}
+      {authState.isAuthenticated ? authLink : guestLink}
     </nav>
   );
 };

@@ -2,13 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 0.7rem 2rem;
+  padding: 1rem 2rem;
   color: #fff;
-  font-size: 1em;
+  font-size: 1.25em;
   background-color: #880e4f;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  clear: both;
+  position: relative;
+  margin-bottom: -200px;
 
   .contact-icon {
     padding: 10px;
@@ -25,6 +25,6 @@
 }
 
 #credit {
-  font-size: 0.5em;
-  margin-right: 15em;
+  font-size: 0.75em;
+  margin-right: 5em;
 }

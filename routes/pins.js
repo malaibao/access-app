@@ -34,7 +34,6 @@ module.exports = ({
   */
 
   router.post('/', auth, async (req, res) => {
-    //gets the location, name, address from the google api call on search
     const {
       name,
       address,

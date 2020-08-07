@@ -14,17 +14,26 @@ const New = () => {
   const [pins, setPins] = useState([]);
   const { pin } = useContext(PinContext);
 
-  const mapRef = useRef();
-  const onMapLoad = React.useCallback((map) => {
-    console.log('in onMapLoad 1234');
-    mapRef.current = map;
-    panTo({ lat: 43.6382956, lng: -79.4210971 });
-  }, []);
-
   const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(18);
   }, []);
+
+  const mapRef = useRef();
+
+  const [mapLoaded, setMapLoaded] = useState(false);
+
+  const onMapLoad = useCallback((map) => {
+    console.log('in onMapLoad 1234');
+    mapRef.current = map;
+    setMapLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (pin && mapLoaded) {
+      panTo({ lat: pin.latitude, lng: pin.longitude });
+    }
+  }, [pin, panTo, mapLoaded]);
 
   useEffect(() => {
     axios
@@ -35,13 +44,17 @@ const New = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  // panTo({ lat: 43.6382956, lng: -79.4210971 });
   return (
     <div style={{ display: 'flex' }}>
       {pin && console.log(pin)}
       <Form style={{ width: '30%' }} />
 
-      <Map pins={pins} onMapLoad={onMapLoad} chosen={null} panTo={panTo} />
+      <Map
+        pins={pins}
+        onMapLoad={onMapLoad}
+        chosen={pin ? { lat: pin.latitude, lng: pin.longitude } : null}
+        panTo={panTo}
+      />
     </div>
   );
 };

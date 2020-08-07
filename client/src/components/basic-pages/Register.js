@@ -45,9 +45,9 @@ const Register = () => {
     password: '',
   });
   const [errorInfo, setErrorInfo] = useState({ errMsg: '', show: false });
-  const { state, dispatch } = useContext(AuthContext);
+  const { authState, dispatch } = useContext(AuthContext);
 
-  if (state.isAuthenticated) {
+  if (authState.isAuthenticated) {
     return <Redirect to='/' />;
   }
 

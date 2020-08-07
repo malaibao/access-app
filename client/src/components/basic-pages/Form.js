@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { PinContext } from '../../App';
+
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -49,9 +51,9 @@ export default function Form() {
     stopgap_ramp: false,
   });
 
-  const [errorInfo, setErrorInfo] = useState({ errMsg: '', show: false });
+  const { pin } = useContext(PinContext);
 
-  // const { state, dispatch } = useContext(PinContext);
+  const [errorInfo, setErrorInfo] = useState({ errMsg: '', show: false });
 
   const handleChange = (event) => {
     setRating({ ...rating, [event.target.name]: event.target.checked });
@@ -78,27 +80,24 @@ export default function Form() {
     }
 
     const pinInfo = {
-      // name:
-      //address:
-      //longitude:
-      //latitude:
-      ...rating,
+      pin,
+      rating,
     };
 
-    // const config = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // };
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
 
-    // try {
-    //   const res = await axios.post('/pins', pinInfo, config);
-    //   // dispatch({ type: , payload: res.data });
-    //   setErrorInfo({ errMsg: '', show: false });
-    // } catch (err) {
-    //   const errMsg = err.response.data.errMsg;
-    //   setErrorInfo((prev) => ({ ...prev, errMsg, show: true }));
-    // }
+    try {
+      const res = await axios.post('/pins', pinInfo, config);
+
+      setErrorInfo({ errMsg: '', show: false });
+    } catch (err) {
+      const errMsg = err.response.data.errMsg;
+      setErrorInfo((prev) => ({ ...prev, errMsg, show: true }));
+    }
   };
 
   const {
@@ -119,6 +118,7 @@ export default function Form() {
     spacious,
     stopgap_ramp,
   } = rating;
+
   const error =
     [
       accessible_parking,
@@ -141,6 +141,12 @@ export default function Form() {
 
   return (
     <div>
+      {pin ? (
+        <>
+          <h3>{pin.name}</h3>
+          <p>{pin.address}</p>
+        </>
+      ) : null}
       <form className={classes.form} id='rating-form' onSubmit={handleSubmit}>
         <FormControl component='fieldset' className={classes.formControl}>
           <FormLabel component='legend'>Select all that apply:</FormLabel>
@@ -314,7 +320,7 @@ export default function Form() {
           </FormGroup>
         </FormControl>
         <br />
-        <Button type='submit' variant='primary' className={classes.submit}>
+        <Button type='submit' variant='contained' className={classes.submit}>
           Add Rating
         </Button>
       </form>

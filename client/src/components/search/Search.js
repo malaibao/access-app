@@ -1,5 +1,5 @@
-import React, { useState, useContext, useCallback } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import { PinContext } from '../../App';
 import axios from 'axios';
 
@@ -33,7 +33,7 @@ export default function Search({ panTo }) {
     },
   });
 
-  const [pinInfo, setPinInfo] = useState(null);
+  // const [pinInfo, setPinInfo] = useState(null);
 
   const handleInput = (e) => {
     setValue(e.target.value);
@@ -56,7 +56,7 @@ export default function Search({ panTo }) {
       const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
 
-      setPin(pinResult);
+      setPin(pinResult.data.pinResult);
       // setPinInfo(pinResult);
     } catch (error) {
       console.log('An error has occurred', error);

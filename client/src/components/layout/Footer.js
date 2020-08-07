@@ -6,37 +6,37 @@ import './Footer.scss';
 
 const Footer = () => {
   return (
-    // <footer>
-    //   <div id='footer-container'>
-    //     <div className='contact'>
-    //       <h5>Contact Us</h5>
-    //       <p>
-    //         Access For You
-    //         <br />
-    //         123 Access Lane Main, Ontario
-    //         <br />
-    //         123-456-7890
-    //       </p>
-    //     </div>
+    <footer>
+      <div id='footer-container'>
+        <div className='contact'>
+          <h5>Contact Us</h5>
+          <p>
+            Access For You
+            <br />
+            123 Access Lane Main, Ontario
+            <br />
+            123-456-7890
+          </p>
+        </div>
 
-    //     <div id='credit'>
-    //       Access For You by Maribelle Leong, Erica Sun, and Bobby Brice
-    //     </div>
+        <div id='credit'>
+          Access For You by Maribelle Leong, Erica Sun, and Bobby Brice
+        </div>
 
-    //     <div className='contact-icon'>
-    //       <a
-    //         href='https://github.com/malaibao/access-app'
-    //         target='_blank'
-    //         rel='noopener noreferrer'
-    //       >
-    //         <GitHubIcon />
-    //       </a>
-    //     </div>
-    //   </div>
-    // </footer>
-    <MDBFooter color='blue' className='font-small pt-4 mt-4'>
-      <MDBContainer fluid className='text-center text-md-left'>
-        <MDBRow>
+        <div className='contact-icon'>
+          <a
+            href='https://github.com/malaibao/access-app'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <GitHubIcon />
+          </a>
+        </div>
+      </div>
+    </footer>
+    // <MDBFooter color='blue' className='font-small pt-4 mt-4'>
+    //   <MDBContainer fluid className='text-center text-md-left'>
+    /* <MDBRow>
           <MDBCol md='6'>
             <h5 className='title'>Footer Content</h5>
             <p>
@@ -69,7 +69,7 @@ const Footer = () => {
           <a href='https://www.mdbootstrap.com'> MDBootstrap.com </a>
         </MDBContainer>
       </div>
-    </MDBFooter>
+    </MDBFooter> */
   );
 };
 

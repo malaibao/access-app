@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AlertTag from '../layout/AlertTag';
 import setAuthToken from '../../utils/setAuthToken';
 
@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    paddingBottom: 120,
   },
   avatar: {
     margin: theme.spacing(1),
@@ -46,9 +47,9 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const [errorInfo, setErrorInfo] = useState({ errMsg: '', show: false });
-  const { state, dispatch } = useContext(AuthContext);
+  const { authState, dispatch } = useContext(AuthContext);
 
-  if (state.isAuthenticated) {
+  if (authState.isAuthenticated) {
     return <Redirect to='/' />;
   }
 
