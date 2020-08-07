@@ -29,6 +29,7 @@ const options = {
 };
 
 export default function Map({ pins, onMapLoad, chosen, panTo }) {
+  console.log('typeof', typeof panTo);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,

@@ -6,22 +6,22 @@ import React, {
   useCallback,
 } from 'react';
 import Map from '../map/Map';
+import Form from '../basic-pages/Form';
 import axios from 'axios';
 
 const New = () => {
   const [pins, setPins] = useState([]);
-  const [chosen, setChosen] = useState(null);
 
   const mapRef = useRef();
   const onMapLoad = React.useCallback((map) => {
+    console.log('in onMapLoad 1234');
     mapRef.current = map;
+    panTo({ lat: 43.6382956, lng: -79.4210971 });
   }, []);
 
   const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(18);
-
-    setChosen({ lat, lng });
   }, []);
 
   useEffect(() => {
@@ -33,9 +33,13 @@ const New = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  // panTo({ lat: 43.6382956, lng: -79.4210971 });
   return (
-    <div>
-      {<Map pins={pins} onMapLoad={onMapLoad} panTo={panTo} chosen={chosen} />}
+    <div style={{ display: 'flex' }}>
+      <Form />
+
+      <Map pins={pins} onMapLoad={onMapLoad} chosen={null} panTo={panTo} />
+
       {/* {
         <MapContainer
           pins={pins}
