@@ -1,8 +1,9 @@
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+// import MapContainer from '../map-container/MapContainer';
+import Map from '../map/Map';
+import Search from '../search/Search';
 
-import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
-import MapContainer from "../map-container/MapContainer";
-
-import axios from "axios";
+import axios from 'axios';
 
 const Landing = () => {
   const [pins, setPins] = useState([]);
@@ -13,23 +14,28 @@ const Landing = () => {
     mapRef.current = map;
   }, []);
 
-  const panTo = useCallback(({lat, lng}) => {
-    mapRef.current.panTo({lat, lng});
+  const panTo = useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(18);
 
-    setChosen({lat,lng})
-  }, [])
+    setChosen({ lat, lng });
+  }, []);
 
   useEffect(() => {
     axios
-      .get("/pins")
+      .get('/pins')
       .then((res) => {
         setPins(res.data);
       })
       .catch((error) => console.log(error));
   }, []);
 
-  return <div>{<MapContainer pins={pins} onMapLoad={onMapLoad} panTo={panTo} chosen={chosen}/>}</div>;
+  return (
+    <div style={{ display: 'flex' }}>
+      <Search panTo={panTo} />
+      <Map onMapLoad={onMapLoad} pins={pins} chosen={chosen} panTo={panTo} />
+    </div>
+  );
 };
 
 export default Landing;

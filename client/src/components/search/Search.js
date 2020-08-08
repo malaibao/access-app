@@ -1,4 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useContext } from 'react';
+import { Redirect } from 'react-router-dom';
+import { PinContext } from '../../context';
+import axios from 'axios';
 
 import usePlacesAutocomplete, {
   getGeocode,
@@ -15,7 +18,8 @@ import {
 import '@reach/combobox/styles.css';
 import './Search.scss';
 
-export default function Search({panTo}) {
+export default function Search({ panTo }) {
+  const { pin, setPin } = useContext(PinContext);
   const {
     ready,
     value,
@@ -29,6 +33,8 @@ export default function Search({panTo}) {
     },
   });
 
+  // const [pinInfo, setPinInfo] = useState(null);
+
   const handleInput = (e) => {
     setValue(e.target.value);
   };
@@ -39,16 +45,31 @@ export default function Search({panTo}) {
 
     try {
       const results = await getGeocode({ address });
-      
-      const placeId = results[0].place_id; //we'll need this to check the db on search
 
-      console.log(placeId);
+      const placeId = results[0].place_id; //we'll need this to check the db on search
+      console.log('from google', results[0].place_id);
+
+      // check from our db with placeId
+      const pinResult = await axios.get(`/pins/place_id/${placeId}`);
+      console.log('pinResult', pinResult);
+
       const { lat, lng } = await getLatLng(results[0]);
-      panTo({lat, lng})
+      panTo({ lat, lng });
+
+      setPin(pinResult.data.pinResult);
+      // setPinInfo(pinResult);
     } catch (error) {
       console.log('An error has occurred', error);
     }
   };
+
+  if (pin) {
+    if (pin.data && pin.data.found) {
+      return <Redirect to='/result' />;
+    } else {
+      return <Redirect to='/new' />;
+    }
+  }
 
   return (
     <div className='search'>
@@ -58,7 +79,7 @@ export default function Search({panTo}) {
           value={value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder='   Search for location'
+          placeholder={`Search for location`}
         />
         <ComboboxPopover>
           <ComboboxList>

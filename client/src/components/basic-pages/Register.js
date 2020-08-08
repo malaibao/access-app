@@ -3,7 +3,7 @@ import AlertTag from '../layout/AlertTag';
 
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { AuthContext } from '../../App';
+import { AuthContext } from '../../context';
 import { REGISTER } from '../../reducers/action-types';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -45,9 +45,9 @@ const Register = () => {
     password: '',
   });
   const [errorInfo, setErrorInfo] = useState({ errMsg: '', show: false });
-  const { state, dispatch } = useContext(AuthContext);
+  const { authState, dispatch } = useContext(AuthContext);
 
-  if (state.isAuthenticated) {
+  if (authState.isAuthenticated) {
     return <Redirect to='/' />;
   }
 

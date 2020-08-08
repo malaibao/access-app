@@ -7,10 +7,7 @@ import './MapContainer.scss';
 
 const MapContainer = ({ pins, onMapLoad, panTo, chosen }) => {
   return (
-    <div className='map-container'>
-      <Search panTo={panTo}/>
-      <Map onMapLoad={onMapLoad} pins={pins} chosen={chosen} panTo={panTo}/>
-    </div>
+    <Map onMapLoad={onMapLoad} pins={pins} chosen={chosen} panTo={panTo} />
   );
 };
 

@@ -28,13 +28,13 @@ module.exports = (db) => {
     return db.query(query).then((res) => res.rows[0]);
   };
 
-  const addPin = (userId, name, address, latitude, longitude) => {
+  const addPin = (userId, name, address, latitude, longitude, place_id) => {
     const query = {
       text: `
-        INSERT INTO pins(user_id, name, address, latitude, longitude)
-        VALUES ($1, $2, $3, $4, $5) RETURNING *;
+        INSERT INTO pins(user_id, name, address, latitude, longitude, place_id)
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
       `,
-      values: [userId, name, address, latitude, longitude],
+      values: [userId, name, address, latitude, longitude, place_id],
     };
 
     return db.query(query).then((res) => res.rows[0]);
@@ -202,7 +202,29 @@ module.exports = (db) => {
         WHERE id = $1`,
       values: [ratingId],
     };
-    return db.query(query).then(console.log("deleted"));
+    return db.query(query).then(console.log('deleted'));
+  };
+
+  const pinExist = (placeId) => {
+    const query = {
+      text: `
+      SELECT * FROM pins
+      WHERE pins.place_id = $1;
+      `,
+      values: [placeId],
+    };
+    return db.query(query).then((res) => res.rows.length > 0);
+  };
+
+  const getByPlaceId = (placeId) => {
+    const query = {
+      text: `
+      SELECT * FROM pins
+      WHERE pins.place_id = $1;
+      `,
+      values: [placeId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
   };
 
   return {
@@ -218,5 +240,7 @@ module.exports = (db) => {
     getPinByCoordinates,
     getUserRatings,
     deleteRating,
+    pinExist,
+    getByPlaceId,
   };
 };
