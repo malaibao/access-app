@@ -33,29 +33,31 @@ const App = () => {
   const [pin, setPin] = useState(null);
 
   return (
-    <AuthContext.Provider
-      value={{
-        authState,
-        dispatch,
-      }}
-    >
-      <PinContext.Provider value={{ pin, setPin }}>
-        <Router>
-          <Navbar />
-          <Route exact path='/' component={Landing} />
-          <Switch>
-            <Route exact path='/about' component={About} />
-            <Route exact path='/register' component={Register} />
+    <div className='app'>
+      <AuthContext.Provider
+        value={{
+          authState,
+          dispatch,
+        }}
+      >
+        <PinContext.Provider value={{ pin, setPin }}>
+          <Router>
+            <Navbar />
+            <Route exact path='/' component={Landing} />
+            <Switch>
+              <Route exact path='/about' component={About} />
+              <Route exact path='/register' component={Register} />
 
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/profile' component={Profile} />
-            <Route exact path='/new' component={New} />
-            <Route exact path='/result' component={Result} />
-          </Switch>
-          <Footer />
-        </Router>
-      </PinContext.Provider>
-    </AuthContext.Provider>
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/profile' component={Profile} />
+              <Route exact path='/new' component={New} />
+              <Route exact path='/result' component={Result} />
+            </Switch>
+            <Footer />
+          </Router>
+        </PinContext.Provider>
+      </AuthContext.Provider>
+    </div>
   );
 };
 
