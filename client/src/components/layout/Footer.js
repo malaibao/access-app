@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBCol, MDBContainer, MDBRow, MDBFooter } from 'mdbreact';
+// import { MDBCol, MDBContainer, MDBRow, MDBFooter } from 'mdbreact';
 
 import GitHubIcon from '@material-ui/icons/GitHub';
 import './Footer.scss';

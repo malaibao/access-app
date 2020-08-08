@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../../App';
+import { AuthContext, PinContext } from '../../context';
 import { LOGOUT } from '../../reducers/action-types';
 
 import { Link } from 'react-router-dom';
@@ -9,6 +9,7 @@ import './Navbar.scss';
 
 const Navbar = () => {
   const { authState, dispatch } = useContext(AuthContext);
+  const { setPin } = useContext(PinContext);
 
   const guestLink = (
     <ul>
@@ -43,9 +44,11 @@ const Navbar = () => {
     <nav className='navbar bg-dark'>
       <div className='logo'>
         <h1>
-          <Link to='/'>Access for You</Link>
+          <Link to='/' onClick={() => setPin(null)}>
+            Access for You
+            <PersonPinIcon fontSize='large' style={{ paddingBottom: 10 }} />
+          </Link>
         </h1>
-        <PersonPinIcon fontSize='large' style={{ paddingBottom: 10 }} />
       </div>
       {authState.isAuthenticated ? authLink : guestLink}
     </nav>

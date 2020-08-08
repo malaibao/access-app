@@ -3,7 +3,7 @@ import AlertTag from '../layout/AlertTag';
 
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { AuthContext } from '../../App';
+import { AuthContext } from '../../context';
 import { REGISTER } from '../../reducers/action-types';
 
 import Avatar from '@material-ui/core/Avatar';

@@ -1,11 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import AlertTag from '../layout/AlertTag';
-import setAuthToken from '../../utils/setAuthToken';
+import { AuthContext } from '../../context';
 
 import axios from 'axios';
-import { Link as DomLink, Redirect } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
-import { AuthContext } from '../../App';
+import { Redirect } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -14,9 +12,9 @@ import TextField from '@material-ui/core/TextField';
 
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import { makeStyles } from '@material-ui/core/styles';
 

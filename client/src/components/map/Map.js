@@ -47,61 +47,59 @@ export default function Map({ pins, onMapLoad, chosen, panTo }) {
   return (
     <div className='map'>
       <Locate panTo={panTo} />
-      {markers.length > 0 ? (
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          zoom={13}
-          center={center}
-          options={options}
-          onLoad={onMapLoad}
-        >
-          {markers.length > 0
-            ? markers.map((marker, i) => (
-                <Marker
-                  key={i}
-                  position={{ lat: marker.latitude, lng: marker.longitude }}
-                  icon={{
-                    url:
-                      'https://cdn.bulbagarden.net/upload/b/b8/025Pikachu_LG.png',
-                    origin: new window.google.maps.Point(0, 0),
-                    anchor: new window.google.maps.Point(15, 15),
-                    scaledSize: new window.google.maps.Size(30, 30),
-                  }}
-                  onClick={() => {
-                    setSelected(marker);
-                  }}
-                />
-              ))
-            : null}
-          {selected ? (
-            <InfoWindow
-              position={{ lat: selected.latitude, lng: selected.longitude }}
-              onCloseClick={() => {
-                setSelected(null);
-              }}
-            >
-              <div>
-                {selected.name}
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        zoom={13}
+        center={center}
+        options={options}
+        onLoad={onMapLoad}
+      >
+        {markers.length > 0
+          ? markers.map((marker, i) => (
+              <Marker
+                key={i}
+                position={{ lat: marker.latitude, lng: marker.longitude }}
+                icon={{
+                  url:
+                    'https://cdn.bulbagarden.net/upload/b/b8/025Pikachu_LG.png',
+                  origin: new window.google.maps.Point(0, 0),
+                  anchor: new window.google.maps.Point(15, 15),
+                  scaledSize: new window.google.maps.Size(30, 30),
+                }}
+                onClick={() => {
+                  setSelected(marker);
+                }}
+              />
+            ))
+          : null}
+        {selected ? (
+          <InfoWindow
+            position={{ lat: selected.latitude, lng: selected.longitude }}
+            onCloseClick={() => {
+              setSelected(null);
+            }}
+          >
+            <div>
+              {selected.name}
 
-                {selected.address}
-              </div>
-            </InfoWindow>
-          ) : null}
-          {chosen ? (
-            <Marker
-              key={'1234'}
-              position={chosen}
-              icon={{
-                url:
-                  'https://e7.pngegg.com/pngimages/72/948/png-clipart-bulbasaur-pokemon-diamond-and-pearl-pokemon-go-pokedex-ivysaur-bulbasaur-pixel-vertebrate-grass.png',
-                origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(15, 15),
-                scaledSize: new window.google.maps.Size(30, 30),
-              }}
-            />
-          ) : null}
-        </GoogleMap>
-      ) : null}
+              {selected.address}
+            </div>
+          </InfoWindow>
+        ) : null}
+        {chosen ? (
+          <Marker
+            key={'1234'}
+            position={chosen}
+            icon={{
+              url:
+                'https://e7.pngegg.com/pngimages/72/948/png-clipart-bulbasaur-pokemon-diamond-and-pearl-pokemon-go-pokedex-ivysaur-bulbasaur-pixel-vertebrate-grass.png',
+              origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(15, 15),
+              scaledSize: new window.google.maps.Size(30, 30),
+            }}
+          />
+        ) : null}
+      </GoogleMap>
     </div>
   );
 }

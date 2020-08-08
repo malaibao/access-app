@@ -5,7 +5,7 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
-import { PinContext } from '../../App';
+import { PinContext } from '../../context';
 import Map from '../map/Map';
 import Form from '../basic-pages/Form';
 import axios from 'axios';
@@ -24,7 +24,6 @@ const New = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   const onMapLoad = useCallback((map) => {
-    console.log('in onMapLoad 1234');
     mapRef.current = map;
     setMapLoaded(true);
   }, []);
@@ -46,9 +45,7 @@ const New = () => {
 
   return (
     <div style={{ display: 'flex' }}>
-      {pin && console.log(pin)}
       <Form style={{ width: '30%' }} />
-
       <Map
         pins={pins}
         onMapLoad={onMapLoad}

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import { PinContext } from '../../App';
+import { PinContext } from '../../context';
 import axios from 'axios';
 
 import usePlacesAutocomplete, {

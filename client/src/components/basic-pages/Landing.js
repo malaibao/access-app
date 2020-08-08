@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useRef,
-  useCallback,
-} from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 // import MapContainer from '../map-container/MapContainer';
 import Map from '../map/Map';
 import Search from '../search/Search';
