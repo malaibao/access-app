@@ -5,6 +5,15 @@
   background: none;
   border: none;
   z-index: 10;
+  color: rgb(17, 82, 147);
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    border: none;
+  }
 }
 
 .location img {

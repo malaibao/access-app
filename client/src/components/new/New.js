@@ -46,12 +46,7 @@ const New = () => {
   return (
     <div style={{ display: 'flex' }}>
       <Form style={{ width: '30%' }} />
-      <Map
-        pins={pins}
-        onMapLoad={onMapLoad}
-        chosen={pin ? { lat: pin.latitude, lng: pin.longitude } : null}
-        panTo={panTo}
-      />
+      <Map pins={pins} onMapLoad={onMapLoad} chosenPin={pin} panTo={panTo} />
     </div>
   );
 };
