@@ -2,7 +2,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const { categoryMajority } = require('../dbHelpers/utilities');
+const { categoryMajority, filterType } = require('../dbHelpers/utilities');
 
 // TODO: change the db
 module.exports = ({
@@ -194,11 +194,14 @@ module.exports = ({
         )
           .then((res) => res.json())
           .then((returnedData) => {
+            console.log(returnedData.result.types);
+            const type = filterType(returnedData.result.types);
             return {
               name: returnedData.result.name,
               address: returnedData.result.formatted_address,
               longitude: returnedData.result.geometry.location.lng,
               latitude: returnedData.result.geometry.location.lat,
+              type,
               place_id: returnedData.result.place_id,
             };
           });

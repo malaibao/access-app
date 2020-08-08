@@ -7,5 +7,6 @@ CREATE TABLE pins (
   address VARCHAR(255) NOT NULL,
   longitude FLOAT NOT NULL,
   latitude FLOAT NOT NULL,
+  type VARCHAR(255) NOT NULL,
   place_id VARCHAR(255) NOT NULL
  )
