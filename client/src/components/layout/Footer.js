@@ -1,12 +1,12 @@
-import React from 'react';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import './Footer.scss';
+import React from "react";
+import GitHubIcon from "@material-ui/icons/GitHub";
+import "./Footer.scss";
 
 const Footer = () => {
   return (
-    <footer id='footer-container'>
-      <div class='footer'>
-        <div className='contact'>
+    <footer id="footer-container">
+      <div className="footer">
+        <div className="contact">
           <h5>Contact Us</h5>
           <p>
             Access For You
@@ -17,15 +17,15 @@ const Footer = () => {
           </p>
         </div>
 
-        <div id='credit'>
+        <div id="credit">
           Access For You by Maribelle Leong, Erica Sun, and Bobby Brice
         </div>
 
-        <div className='contact-icon'>
+        <div className="contact-icon">
           <a
-            href='https://github.com/malaibao/access-app'
-            target='_blank'
-            rel='noopener noreferrer'
+            href="https://github.com/malaibao/access-app"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <GitHubIcon />
           </a>

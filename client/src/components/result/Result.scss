@@ -1,0 +1,20 @@
+.search-result-details {
+  width: 38%;
+  > p {
+    padding-left: 25px;
+  }
+  > h3 {
+    padding-top: 25px;
+    padding-left: 25px;
+  }
+}
+
+.tags-container {
+  padding: 25px;
+
+  > h1,
+  > h3,
+  > p {
+    margin-bottom: 10px;
+  }
+}

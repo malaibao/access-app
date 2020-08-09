@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { PinContext } from "../../context";
 import axios from "axios";
@@ -19,7 +19,7 @@ import "@reach/combobox/styles.css";
 import "./Search.scss";
 
 export default function Search({ panTo }) {
-  const { pin, setPin } = useContext(PinContext);
+  const { pinInfo, setPinInfo } = useContext(PinContext);
   const {
     ready,
     value,
@@ -56,15 +56,14 @@ export default function Search({ panTo }) {
       const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
 
-      setPin(pinResult.data);
-      // setPinInfo(pinResult);
+      setPinInfo(pinResult.data);
     } catch (error) {
       console.log("An error has occurred", error);
     }
   };
 
-  if (pin) {
-    if (pin.found) {
+  if (pinInfo) {
+    if (pinInfo.found) {
       return <Redirect to="/result" />;
     } else {
       return <Redirect to="/new" />;

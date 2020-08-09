@@ -4,15 +4,15 @@ import React, {
   useContext,
   useRef,
   useCallback,
-} from 'react';
-import { PinContext } from '../../context';
-import Map from '../map/Map';
-import Form from '../basic-pages/Form';
-import axios from 'axios';
+} from "react";
+import { PinContext } from "../../context";
+import Map from "../map/Map";
+import Form from "../basic-pages/Form";
+import axios from "axios";
 
 const New = () => {
   const [pins, setPins] = useState([]);
-  const { pin } = useContext(PinContext);
+  const { pinInfo } = useContext(PinContext);
 
   const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
@@ -29,14 +29,14 @@ const New = () => {
   }, []);
 
   useEffect(() => {
-    if (pin && mapLoaded) {
-      panTo({ lat: pin.latitude, lng: pin.longitude });
+    if (pinInfo && mapLoaded) {
+      panTo({ lat: pinInfo.latitude, lng: pinInfo.longitude });
     }
-  }, [pin, panTo, mapLoaded]);
+  }, [pinInfo, panTo, mapLoaded]);
 
   useEffect(() => {
     axios
-      .get('/pins')
+      .get("/pins")
       .then((res) => {
         setPins(res.data);
       })
@@ -44,9 +44,14 @@ const New = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex' }}>
-      <Form style={{ width: '30%' }} />
-      <Map pins={pins} onMapLoad={onMapLoad} chosenPin={pin} panTo={panTo} />
+    <div style={{ display: "flex" }}>
+      <Form pin={pinInfo ? pinInfo : null} style={{ width: "30%" }} />
+      <Map
+        pins={pins}
+        onMapLoad={onMapLoad}
+        chosenPin={pinInfo ? pinInfo : null}
+        panTo={panTo}
+      />
     </div>
   );
 };

@@ -22,7 +22,7 @@ module.exports = ({
     try {
       const allPins = await getPins();
       const allPinsInfo = [];
-      console.log("all pins", allPins);
+      // console.log("all pins", allPins);
       for (let i = 0; i < allPins.length; i++) {
         const ratings = await getRatings(allPins[i].id);
         const tags = await categoryMajority(ratings);
@@ -32,7 +32,7 @@ module.exports = ({
         };
         allPinsInfo.push(pinInfo);
       }
-      console.log("all pins info", allPinsInfo);
+      // console.log("all pins info", allPinsInfo);
       res.status(200).json(allPinsInfo);
     } catch (err) {
       console.log("Error in getting pins", err);
@@ -72,7 +72,13 @@ module.exports = ({
     // TODO: get from req.user.id
     const userId = req.user.id;
 
-    console.log("PLACE______ID", place_id);
+    const type = await fetch(
+      `https://maps.googleapis.com/maps/api/place/details/json?placeid=${place_id}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+    )
+      .then((res) => res.json())
+      .then((returnedData) => {
+        return filterType(returnedData.result.types);
+      });
 
     try {
       // create pins
@@ -82,6 +88,7 @@ module.exports = ({
         address,
         latitude,
         longitude,
+        type,
         place_id
       );
 
@@ -169,7 +176,7 @@ module.exports = ({
       const ratings = await getRatings(pinId);
       const tags = categoryMajority(ratings);
 
-      console.log(ratings); // array of objects
+      // console.log(ratings); // array of objects
 
       const pinInfo = {
         ...pin,
@@ -205,7 +212,7 @@ module.exports = ({
         )
           .then((res) => res.json())
           .then((returnedData) => {
-            console.log(returnedData.result.types);
+            // console.log(returnedData.result.types);
             const type = filterType(returnedData.result.types);
             return {
               name: returnedData.result.name,

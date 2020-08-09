@@ -28,13 +28,21 @@ module.exports = (db) => {
     return db.query(query).then((res) => res.rows[0]);
   };
 
-  const addPin = (userId, name, address, latitude, longitude, place_id) => {
+  const addPin = (
+    userId,
+    name,
+    address,
+    latitude,
+    longitude,
+    type,
+    place_id
+  ) => {
     const query = {
       text: `
-        INSERT INTO pins(user_id, name, address, latitude, longitude, place_id)
-        VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
+        INSERT INTO pins(user_id, name, address, latitude, longitude, type, place_id)
+        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
       `,
-      values: [userId, name, address, latitude, longitude, place_id],
+      values: [userId, name, address, latitude, longitude, type, place_id],
     };
 
     return db.query(query).then((res) => res.rows[0]);
@@ -202,7 +210,7 @@ module.exports = (db) => {
         WHERE id = $1`,
       values: [ratingId],
     };
-    return db.query(query).then(console.log('deleted'));
+    return db.query(query).then(console.log("deleted"));
   };
 
   const pinExist = (placeId) => {

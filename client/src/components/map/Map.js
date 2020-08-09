@@ -12,7 +12,7 @@ import mapStyles from "./mapStyles";
 const libraries = ["places"];
 const mapContainerStyle = {
   width: "100%",
-  height: "100%",
+  height: "89%",
 };
 
 const center = {
@@ -48,7 +48,7 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
       const option = ratings[i].replace(/_/g, " ");
       options.push(option);
     }
-    return <>{options.join(", ")}</>;
+    return options.join(", ");
   };
 
   return (
@@ -67,10 +67,10 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
                 key={i}
                 position={{ lat: marker.latitude, lng: marker.longitude }}
                 icon={{
-                  url: "/pin.svg",
+                  url: "/good.svg",
                   origin: new window.google.maps.Point(0, 0),
-                  anchor: new window.google.maps.Point(14, 14),
-                  scaledSize: new window.google.maps.Size(28, 28),
+                  // anchor: new window.google.maps.Point(10, 14),
+                  scaledSize: new window.google.maps.Size(20, 28),
                 }}
                 onMouseOver={() => {
                   setSelected(marker);
@@ -96,6 +96,7 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
             onClick={() => {
               setSelected(chosenPin);
             }}
+            animation={1}
           />
         ) : null}
         {selected ? (
@@ -110,7 +111,9 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
               <br />
               {selected.address}
               <br />
-              Accessibility Options: {showOptions(selected.tags)}
+              {selected.tags && selected.tags.length > 0
+                ? `Accessibility Options: ${showOptions(selected.tags)}`
+                : null}
             </div>
           </InfoWindow>
         ) : null}
