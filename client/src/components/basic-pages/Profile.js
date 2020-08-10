@@ -34,16 +34,7 @@ export default function Profile() {
   const classes = useStyles();
   const { authState, dispatch } = useContext(AuthContext);
   const [userRatings, setUserRatings] = useState([]);
-
-  const handleDeleteInChild = (ratingId) => {
-    const url = `/user/${ratingId}`;
-    axios
-      .post(url)
-      .then((res) => {
-        setUserRatings(res.data);
-      })
-      .catch((err) => console.log("Error in deleting rating", err));
-  };
+  // const [markers, setMarkers] = React.useState([]);
 
   // useEffect(() => {
   //   if (localStorage.token) {
@@ -59,6 +50,17 @@ export default function Profile() {
       setUserRatings(res.data);
     });
   }, [setAuthToken, setUserRatings]);
+
+  const handleDeleteInChild = (ratingId) => {
+    const url = `/user/${ratingId}`;
+    axios
+      .post(url)
+      .then((res) => {
+        console.log(res);
+        setUserRatings((prev) => ({ ...prev, ratings: res.data }));
+      })
+      .catch((err) => console.log("Error in deleting rating", err));
+  };
 
   const mapRef = useRef();
   const onMapLoad = React.useCallback((map) => {

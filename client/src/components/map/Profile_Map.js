@@ -39,15 +39,14 @@ export default function Profile_Map({
     libraries,
   });
 
-  const [markers, setMarkers] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
 
-  useEffect(() => {
-    // console.log('pins in Profofile_Map', pins);
-    if (pins) {
-      setMarkers(pins);
-    }
-  }, [pins, setMarkers]);
+  // useEffect(() => {
+  //   // console.log('pins in Profofile_Map', pins);
+  //   if (pins) {
+  //     setMarkers(pins);
+  //   }
+  // }, [pins, setMarkers]);
 
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
@@ -126,8 +125,8 @@ export default function Profile_Map({
         options={options}
         onLoad={onMapLoad}
       >
-        {markers.length > 0
-          ? markers.map((marker, i) => (
+        {pins && pins.length > 0
+          ? pins.map((marker, i) => (
               <Marker
                 key={i}
                 position={{ lat: marker.latitude, lng: marker.longitude }}
@@ -188,7 +187,10 @@ export default function Profile_Map({
                 variant="outlined"
                 color="primary"
                 size="small"
-                onClick={() => handleDeleteInChild(selected.id)}
+                onClick={() => {
+                  handleDeleteInChild(selected.id);
+                  setSelected(null);
+                }}
               >
                 DELETE
               </Button>
