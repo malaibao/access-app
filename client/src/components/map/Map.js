@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
-import Locate from "./Locate";
-import "./map.scss";
+import React, { useEffect } from 'react';
+import Locate from './Locate';
+import './map.scss';
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
-} from "@react-google-maps/api";
-import mapStyles from "./mapStyles";
+} from '@react-google-maps/api';
+import mapStyles from './mapStyles';
 
-const libraries = ["places"];
+const libraries = ['places'];
 const mapContainerStyle = {
-  width: "100%",
-  height: "89%",
+  width: '100%',
+  height: '100%',
 };
 
 const center = {
@@ -39,20 +39,20 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
     setMarkers(pins);
   }, [pins]);
 
-  if (loadError) return "Error Loading Maps";
-  if (!isLoaded) return "Loading Maps";
+  if (loadError) return 'Error Loading Maps';
+  if (!isLoaded) return 'Loading Maps';
 
   const showOptions = (ratings) => {
     const options = [];
     for (let i = 0; i < ratings.length; i++) {
-      const option = ratings[i].replace(/_/g, " ");
+      const option = ratings[i].replace(/_/g, ' ');
       options.push(option);
     }
-    return options.join(", ");
+    return options.join(', ');
   };
 
   return (
-    <div className="map">
+    <div className='map'>
       <Locate panTo={panTo} />
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -67,14 +67,14 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
                 key={i}
                 position={{ lat: marker.latitude, lng: marker.longitude }}
                 icon={{
-                  url: "/good.svg",
+                  url: '/good.svg',
                   origin: new window.google.maps.Point(0, 0),
                   // anchor: new window.google.maps.Point(10, 14),
                   scaledSize: new window.google.maps.Size(20, 28),
                 }}
                 onMouseOver={() => {
                   setSelected(marker);
-                  console.log("selected marker", selected);
+                  console.log('selected marker', selected);
                 }}
                 onClick={() => {
                   setSelected(marker);
@@ -85,10 +85,10 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
 
         {chosenPin ? (
           <Marker
-            key={"1234"}
+            key={'1234'}
             position={{ lat: chosenPin.latitude, lng: chosenPin.longitude }}
             icon={{
-              url: "/selectedPin.svg",
+              url: '/selectedPin.svg',
               origin: new window.google.maps.Point(0, 0),
               // anchor: new window.google.maps.Point(16, 16),
               scaledSize: new window.google.maps.Size(35, 35),
