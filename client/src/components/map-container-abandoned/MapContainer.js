@@ -1,7 +1,6 @@
 import React from 'react';
-import Search from '../search/Search';
 import Map from '../map/Map';
-// import Locate from '../basic-pages/Locate';
+
 
 import './MapContainer.scss';
 

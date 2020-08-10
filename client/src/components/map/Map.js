@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Locate from './Locate';
+import Spinner from '../Spinner/Spinner';
 import './map.scss';
 import {
   GoogleMap,
@@ -34,13 +35,19 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
 
   const [markers, setMarkers] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
+  const [loading, setLoading] = useState(null);
 
   useEffect(() => {
     setMarkers(pins);
   }, [pins]);
 
   if (loadError) return 'Error Loading Maps';
-  if (!isLoaded) return 'Loading Maps';
+  if (!isLoaded) return 'Loading';
+  // if (markers.length === 0) {
+  //   console.log("pin load?",markers)
+  //   setLoading(true);
+  //   return <Spinner loading={setLoading}/>;
+  // } 
 
   const showOptions = (ratings) => {
     const options = [];
@@ -53,6 +60,7 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
 
   return (
     <div className='map'>
+      <Spinner loading={true}/>
       <Locate panTo={panTo} />
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
