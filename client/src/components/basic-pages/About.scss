@@ -1,5 +1,5 @@
 .about {
-  background-image: url("https://images.pexels.com/photos/3009773/pexels-photo-3009773.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-image: url('https://images.pexels.com/photos/3009773/pexels-photo-3009773.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: calc(100vh - 5rem); // 5rem is the height of Navbar
   color: white;
 
   a {

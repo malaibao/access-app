@@ -150,6 +150,20 @@ module.exports = (db) => {
     return db.query(query).then((res) => res.rows[0]);
   };
 
+  const getTypeTotal = (userId) => {
+    const query = {
+      text: `
+      SELECT pins.type, CAST(COUNT(*) AS INTEGER) AS Total
+      FROM pins, ratings
+      WHERE pins.id = ratings.pin_id AND
+            ratings.user_id = $1
+      GROUP BY pins.type;
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows);
+  };
+
   //validation to determine whether someone has an existing email registered
   const isUserRegistered = (email) => {
     const query = {
@@ -210,7 +224,7 @@ module.exports = (db) => {
         WHERE id = $1`,
       values: [ratingId],
     };
-    return db.query(query).then(console.log("deleted"));
+    return db.query(query).then(console.log('deleted'));
   };
 
   const pinExist = (placeId) => {
@@ -241,6 +255,7 @@ module.exports = (db) => {
     addRating,
     getRatings,
     getRatingById,
+    getTypeTotal,
     isUserRegistered,
     getUserByEmail,
     getPinById,
