@@ -7,7 +7,8 @@ import {
   Marker,
   InfoWindow,
 } from '@react-google-maps/api';
-import mapStyles from './mapStyles';
+import Button from '@material-ui/core/Button';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -26,7 +27,7 @@ const options = {
   zoomControl: true,
 };
 
-export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
+export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -36,19 +37,77 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
   const [selected, setSelected] = React.useState(null);
 
   useEffect(() => {
-    setMarkers(pins);
-  }, [pins]);
+    console.log('pins in Profofile_Map', pins);
+    if (pins) {
+      setMarkers(pins);
+    }
+  }, [pins, setMarkers]);
 
   if (loadError) return 'Error Loading Maps';
   if (!isLoaded) return 'Loading Maps';
 
-  const showOptions = (ratings) => {
+  // const showOptions = (ratings) => {
+  //   const options = [];
+  //   for (let i = 0; i < ratings.length; i++) {
+  //     const option = ratings[i].replace(/_/g, ' ');
+  //     options.push(option);
+  //   }
+  //   return options.join(', ');
+  // };
+
+  const showOptions = (rating) => {
     const options = [];
-    for (let i = 0; i < ratings.length; i++) {
-      const option = ratings[i].replace(/_/g, ' ');
-      options.push(option);
+    if (rating.accessible_parking) {
+      options.push('accessible parking');
     }
+    if (rating.accessible_washroom) {
+      options.push('accessible washroom');
+    }
+    if (rating.alternative_entrance) {
+      options.push('alternative entrance');
+    }
+    if (rating.automatic_door) {
+      options.push('automatic door');
+    }
+    if (rating.elevator) {
+      options.push('elevator');
+    }
+    if (rating.braille) {
+      options.push('braille');
+    }
+    if (rating.gender_neutral_washroom) {
+      options.push('gender neutral washroom');
+    }
+    if (rating.large_print) {
+      options.push('large print');
+    }
+    if (rating.outdoor_access_only) {
+      options.push('outdoor access only');
+    }
+    if (rating.quiet) {
+      options.push('quiet');
+    }
+    if (rating.ramp) {
+      options.push('ramp');
+    }
+    if (rating.scent_free) {
+      options.push('scent free');
+    }
+    if (rating.service_animal_friendly) {
+      options.push('service animal friendly');
+    }
+    if (rating.sign_language) {
+      options.push('sign language');
+    }
+    if (rating.spacious) {
+      options.push('spacious');
+    }
+    if (rating.stopgap_ramp) {
+      options.push('stopgap ramp');
+    }
+    console.log('options', options);
     return options.join(', ');
+    // return options;
   };
 
   return (
@@ -106,14 +165,21 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
               setSelected(null);
             }}
           >
-            <div>
-              <strong>{selected.name}</strong>
+            <div style={{ maxWidth: '25vw' }}>
+              <p>
+                <strong>{selected.name}</strong>
+              </p>
+              <p>{selected.address}</p>
+              <p>Accessibility Options: {showOptions(selected)}</p>
+              {/* {showOptions(selected).map((tag) => (
+                <span style={{ marginRight: '1rem' }}>
+                  <ThumbUpIcon style={{ color: '#3b5998' }} /> {tag}
+                </span>
+              ))} */}
               <br />
-              {selected.address}
-              <br />
-              {selected.tags && selected.tags.length > 0
-                ? `Accessibility Options: ${showOptions(selected.tags)}`
-                : null}
+              <Button variant='outlined' color='primary' size='small'>
+                DELETE
+              </Button>
             </div>
           </InfoWindow>
         ) : null}

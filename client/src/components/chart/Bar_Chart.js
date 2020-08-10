@@ -6,7 +6,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  Legend,
+  // Legend,
   CartesianGrid,
 } from 'recharts';
 
@@ -39,7 +39,7 @@ const colors = [
   '#418551',
 ];
 
-const index = ({ data }) => {
+const Bar_Chart = ({ data }) => {
   return (
     <>
       {data ? console.log(typeof data[0].total) : null}
@@ -65,4 +65,4 @@ const index = ({ data }) => {
   );
 };
 
-export default index;
+export default Bar_Chart;

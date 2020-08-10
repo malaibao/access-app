@@ -7,7 +7,8 @@ import React, {
 } from 'react';
 import setAuthToken from '../../utils/setAuthToken';
 import { AuthContext } from '../../context';
-import Chart from '../Chart';
+import Bar_Chart from '../chart/Bar_Chart';
+import Profile_Map from '../map/Profile_Map';
 import { LOGIN } from '../../reducers/action-types';
 
 import axios from 'axios';
@@ -57,59 +58,6 @@ export default function Profile() {
       .catch((err) => console.log('Error in deleting rating', err));
   };
 
-  const showOptions = (rating) => {
-    const options = [];
-    if (rating.accessible_parking) {
-      options.push('accessible parking');
-    }
-    if (rating.accessible_washroom) {
-      options.push('accessible washroom');
-    }
-    if (rating.alternative_entrance) {
-      options.push('alternative entrance');
-    }
-    if (rating.automatic_door) {
-      options.push('automatic door');
-    }
-    if (rating.elevator) {
-      options.push('elevator');
-    }
-    if (rating.braille) {
-      options.push('braille');
-    }
-    if (rating.gender_neutral_washroom) {
-      options.push('gender neutral washroom');
-    }
-    if (rating.large_print) {
-      options.push('large print');
-    }
-    if (rating.outdoor_access_only) {
-      options.push('outdoor access only');
-    }
-    if (rating.quiet) {
-      options.push('quiet');
-    }
-    if (rating.ramp) {
-      options.push('ramp');
-    }
-    if (rating.scent_free) {
-      options.push('scent free');
-    }
-    if (rating.service_animal_friendly) {
-      options.push('service animal friendly');
-    }
-    if (rating.sign_language) {
-      options.push('sign language');
-    }
-    if (rating.spacious) {
-      options.push('spacious');
-    }
-    if (rating.stopgap_ramp) {
-      options.push('stopgap ramp');
-    }
-    return <>{options.join(', ')}</>;
-  };
-
   const mapRef = useRef();
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
@@ -121,9 +69,23 @@ export default function Profile() {
   }, []);
 
   return (
-    <>
-      {userRatings && <Chart data={userRatings.typeTotal} />}
-      {/* {!userRatings && <p>Loading</p>}
+    <div>
+      <div>
+        {userRatings ? <Bar_Chart data={userRatings.typeTotal} /> : null}
+      </div>
+      <div>
+        <Profile_Map
+          pins={userRatings.ratings}
+          onMapLoad={onMapLoad}
+          chosenPin={null}
+          panTo={panTo}
+        />
+      </div>
+    </div>
+    //   <div>hello</di
+    //   <div>{userRatings && <Chart data={userRatings.typeTotal} />}</div>
+
+    /* {!userRatings && <p>Loading</p>}
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
@@ -164,7 +126,6 @@ export default function Profile() {
               ))}
           </TableBody>
         </Table>
-      </TableContainer> */}
-    </>
+      </TableContainer> */
   );
 }
