@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Locate from './Locate';
 import './map.scss';
 import {
@@ -7,6 +7,7 @@ import {
   Marker,
   InfoWindow,
 } from '@react-google-maps/api';
+import Spinner from '../Spinner/Spinner';
 // import mapStyles from './mapStyles';
 
 const libraries = ['places'];
@@ -40,8 +41,7 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
   }, [pins]);
 
   if (loadError) return 'Error Loading Maps';
-  if (!isLoaded) return 'Loading';
- 
+  // if (!isLoaded) return 'Loading';
 
   const showOptions = (ratings) => {
     const options = [];
@@ -54,71 +54,77 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
 
   return (
     <div className='map'>
-      <Locate panTo={panTo} />
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={13}
-        center={center}
-        options={options}
-        onLoad={onMapLoad}
-      >
-        {markers.length > 0
-          ? markers.map((marker, i) => (
+      {!isLoaded ? (
+        <Spinner className='spinner' loading={!isLoaded} />
+      ) : (
+        <>
+          <Locate panTo={panTo} />
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            zoom={13}
+            center={center}
+            options={options}
+            onLoad={onMapLoad}
+          >
+            {markers.length > 0
+              ? markers.map((marker, i) => (
+                  <Marker
+                    key={i}
+                    position={{ lat: marker.latitude, lng: marker.longitude }}
+                    icon={{
+                      url: '/good.svg',
+                      origin: new window.google.maps.Point(0, 0),
+                      // anchor: new window.google.maps.Point(10, 14),
+                      scaledSize: new window.google.maps.Size(20, 28),
+                    }}
+                    onMouseOver={() => {
+                      setSelected(marker);
+                      console.log('selected marker', selected);
+                    }}
+                    onClick={() => {
+                      setSelected(marker);
+                    }}
+                  />
+                ))
+              : null}
+
+            {chosenPin ? (
               <Marker
-                key={i}
-                position={{ lat: marker.latitude, lng: marker.longitude }}
+                key={'1234'}
+                position={{ lat: chosenPin.latitude, lng: chosenPin.longitude }}
                 icon={{
-                  url: '/good.svg',
+                  url: '/selectedPin.svg',
                   origin: new window.google.maps.Point(0, 0),
-                  // anchor: new window.google.maps.Point(10, 14),
-                  scaledSize: new window.google.maps.Size(20, 28),
-                }}
-                onMouseOver={() => {
-                  setSelected(marker);
-                  console.log('selected marker', selected);
+                  // anchor: new window.google.maps.Point(16, 16),
+                  scaledSize: new window.google.maps.Size(35, 35),
                 }}
                 onClick={() => {
-                  setSelected(marker);
+                  setSelected(chosenPin);
                 }}
+                animation={1}
               />
-            ))
-          : null}
-
-        {chosenPin ? (
-          <Marker
-            key={'1234'}
-            position={{ lat: chosenPin.latitude, lng: chosenPin.longitude }}
-            icon={{
-              url: '/selectedPin.svg',
-              origin: new window.google.maps.Point(0, 0),
-              // anchor: new window.google.maps.Point(16, 16),
-              scaledSize: new window.google.maps.Size(35, 35),
-            }}
-            onClick={() => {
-              setSelected(chosenPin);
-            }}
-            animation={1}
-          />
-        ) : null}
-        {selected ? (
-          <InfoWindow
-            position={{ lat: selected.latitude, lng: selected.longitude }}
-            onCloseClick={() => {
-              setSelected(null);
-            }}
-          >
-            <div>
-              <strong>{selected.name}</strong>
-              <br />
-              {selected.address}
-              <br />
-              {selected.tags && selected.tags.length > 0
-                ? `Accessibility Options: ${showOptions(selected.tags)}`
-                : null}
-            </div>
-          </InfoWindow>
-        ) : null}
-      </GoogleMap>
+            ) : null}
+            {selected ? (
+              <InfoWindow
+                position={{ lat: selected.latitude, lng: selected.longitude }}
+                onCloseClick={() => {
+                  setSelected(null);
+                }}
+              >
+                <div>
+                  <strong>{selected.name}</strong>
+                  <br />
+                  {selected.address}
+                  <br />
+                  {selected.tags && selected.tags.length > 0
+                    ? `Accessibility Options: ${showOptions(selected.tags)}`
+                    : null}
+                </div>
+              </InfoWindow>
+            ) : null}
+          </GoogleMap>
+        </>
+      )}
     </div>
   );
 }
