@@ -2,13 +2,24 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 
-module.exports = ({ getUserRatings, getRatingById, deleteRating }) => {
+module.exports = ({
+  getUserRatings,
+  getRatingById,
+  getTypeTotal,
+  deleteRating,
+}) => {
   router.get('/', auth, async (req, res) => {
     const userId = req.user.id;
 
     try {
       const ratings = await getUserRatings(userId);
-      res.status(200).json(ratings);
+      const typeTotal = await getTypeTotal(userId);
+
+      const ratingInfo = {
+        ratings,
+        typeTotal,
+      };
+      res.status(200).json(ratingInfo);
     } catch (err) {
       console.log('Error getting user ratings', err);
     }
