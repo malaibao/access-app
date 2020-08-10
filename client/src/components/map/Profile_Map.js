@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Locate from './Locate';
 import './map.scss';
 import {
@@ -9,6 +9,7 @@ import {
 } from '@react-google-maps/api';
 import Button from '@material-ui/core/Button';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import axios from 'axios';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -35,6 +36,7 @@ export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
 
   const [markers, setMarkers] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
+  const [userRatings, setUserRatings] = useState([]);
 
   useEffect(() => {
     // console.log('pins in Profofile_Map', pins);
@@ -53,6 +55,24 @@ export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
   //     options.push(option);
   //   }
   //   return options.join(', ');
+  // };
+
+  // useEffect(() => {
+  //   setAuthToken(localStorage.token);
+  //   axios.get('/user').then((res) => {
+  //     console.log(res.data);
+  //     setUserRatings(res.data);
+  //   });
+  // }, [setAuthToken, setUserRatings]);
+
+  // const handleDelete = (id) => {
+  //   const url = `/user/${id}`;
+  //   axios
+  //     .post(url)
+  //     .then((res) => {
+  //       setUserRatings(res.data);
+  //     })
+  //     .catch((err) => console.log('Error in deleting rating', err));
   // };
 
   const showOptions = (rating) => {

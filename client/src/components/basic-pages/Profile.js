@@ -23,6 +23,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
 import './Profile.scss';
+import Dashboard from '../layout/Dashboard';
 
 const useStyles = makeStyles({
   table: {
@@ -128,16 +129,21 @@ export default function Profile() {
   return (
     <>
       <div className='chart-map-container'>
-        <div className='chart'>
-          {userRatings ? <Bar_Chart data={userRatings.typeTotal} /> : null}
-          <div></div>
+        <div className='chart-map-container__left'>
+          <div className='chart-map-container__left-chart'>
+            {userRatings ? <Bar_Chart data={userRatings.typeTotal} /> : null}
+          </div>
+          <div className='chart-map-container__left-dashboard'>
+            <Dashboard />
+          </div>
         </div>
-        <Profile_Map
+        <></>
+        {/* <Profile_Map
           pins={userRatings.ratings}
           onMapLoad={onMapLoad}
           chosenPin={null}
           panTo={panTo}
-        />
+        /> */}
       </div>
 
       <TableContainer component={Paper}>
