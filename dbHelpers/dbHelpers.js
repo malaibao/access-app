@@ -207,7 +207,7 @@ module.exports = (db) => {
     */
     const query = {
       text: `
-        SELECT pins.name, pins.address, ratings.*
+        SELECT pins.name, pins.address, pins.longitude, pins.latitude, ratings.*
         FROM pins, ratings
         WHERE pins.id = ratings.pin_id AND
               ratings.user_id = $1

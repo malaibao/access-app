@@ -7,7 +7,8 @@ import React, {
 } from 'react';
 import setAuthToken from '../../utils/setAuthToken';
 import { AuthContext } from '../../context';
-import Chart from '../Chart';
+import Bar_Chart from '../chart/Bar_Chart';
+import Profile_Map from '../map/Profile_Map';
 import { LOGIN } from '../../reducers/action-types';
 
 import axios from 'axios';
@@ -20,6 +21,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+
+import './Profile.scss';
 
 const useStyles = makeStyles({
   table: {
@@ -56,6 +59,16 @@ export default function Profile() {
       })
       .catch((err) => console.log('Error in deleting rating', err));
   };
+
+  const mapRef = useRef();
+  const onMapLoad = React.useCallback((map) => {
+    mapRef.current = map;
+  }, []);
+
+  const panTo = useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(18);
+  }, []);
 
   const showOptions = (rating) => {
     const options = [];
@@ -107,23 +120,26 @@ export default function Profile() {
     if (rating.stopgap_ramp) {
       options.push('stopgap ramp');
     }
-    return <>{options.join(', ')}</>;
+    // console.log('options', options);
+    return options.join(', ');
+    // return options;
   };
-
-  const mapRef = useRef();
-  const onMapLoad = React.useCallback((map) => {
-    mapRef.current = map;
-  }, []);
-
-  const panTo = useCallback(({ lat, lng }) => {
-    mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(18);
-  }, []);
 
   return (
     <>
-      {userRatings && <Chart data={userRatings.typeTotal} />}
-      {/* {!userRatings && <p>Loading</p>}
+      <div className='chart-map-container'>
+        <div className='chart'>
+          {userRatings ? <Bar_Chart data={userRatings.typeTotal} /> : null}
+          <div></div>
+        </div>
+        <Profile_Map
+          pins={userRatings.ratings}
+          onMapLoad={onMapLoad}
+          chosenPin={null}
+          panTo={panTo}
+        />
+      </div>
+
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
@@ -139,8 +155,9 @@ export default function Profile() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userRatings.length > 0 &&
-              userRatings.map((rating) => (
+            {userRatings &&
+              userRatings.ratings &&
+              userRatings.ratings.map((rating) => (
                 <TableRow key={rating.id}>
                   <TableCell component='th' scope='row'>
                     {rating.name}
@@ -164,7 +181,7 @@ export default function Profile() {
               ))}
           </TableBody>
         </Table>
-      </TableContainer> */}
+      </TableContainer>
     </>
   );
 }
