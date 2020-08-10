@@ -47,9 +47,9 @@ const index = ({ data }) => {
         <BarChart width={800} height={500} data={sortedData(data)}>
           <CartesianGrid strokeDasharray='3 3' />
           <XAxis dataKey='type' />
-          {/* <YAxis /> */}
+          <YAxis />
           <Tooltip />
-          <Legend />
+          {/* <Legend /> */}
           <Bar dataKey='total' fill='#8884d8'>
             {data.map((entry, index) => (
               <Cell
