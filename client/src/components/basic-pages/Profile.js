@@ -31,7 +31,6 @@ export default function Profile() {
     axios
       .post(url)
       .then((res) => {
-        console.log(res.data);
         setUserRatings((prev) => ({ ...res.data }));
       })
       .catch((err) => console.log("Error in deleting rating", err));
@@ -40,7 +39,6 @@ export default function Profile() {
   useEffect(() => {
     setAuthToken(localStorage.token);
     axios.get("/user").then((res) => {
-      console.log(res.data);
       setUserRatings(res.data);
     });
   }, [setAuthToken]);
