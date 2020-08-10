@@ -1,8 +1,8 @@
-const express = require("express");
-const fetch = require("node-fetch");
+const express = require('express');
+const fetch = require('node-fetch');
 const router = express.Router();
-const auth = require("../middleware/auth");
-const { categoryMajority, filterType } = require("../dbHelpers/utilities");
+const auth = require('../middleware/auth');
+const { categoryMajority, filterType } = require('../dbHelpers/utilities');
 
 // TODO: change the db
 module.exports = ({
@@ -18,7 +18,7 @@ module.exports = ({
   @desc   GET all pins
   @access public
   */
-  router.get("/", async (req, res) => {
+  router.get('/', async (req, res) => {
     try {
       const allPins = await getPins();
       const allPinsInfo = [];
@@ -35,7 +35,7 @@ module.exports = ({
       // console.log("all pins info", allPinsInfo);
       res.status(200).json(allPinsInfo);
     } catch (err) {
-      console.log("Error in getting pins", err);
+      console.log('Error in getting pins', err);
     }
   });
 
@@ -44,7 +44,7 @@ module.exports = ({
   @access private
   */
 
-  router.post("/", auth, async (req, res) => {
+  router.post('/', auth, async (req, res) => {
     const {
       name,
       address,
@@ -124,12 +124,64 @@ module.exports = ({
 
       res.json(pinInfo);
     } catch (err) {
-      console.log("Error in creating pin and rating", err);
-      res.status(500).json({ error: "Server error" });
+      console.log('Error in creating pin and rating', err);
+      res.status(500).json({ error: 'Server error' });
     }
   });
 
-  router.post("/:id", auth, async (req, res) => {
+  router.post('/ratings', auth, async (req, res) => {
+    const {
+      id,
+      accessible_parking,
+      accessible_washroom,
+      alternative_entrance,
+      automatic_door,
+      elevator,
+      braille,
+      gender_neutral_washroom,
+      large_print,
+      outdoor_access_only,
+      quiet,
+      ramp,
+      scent_free,
+      service_animal_friendly,
+      sign_language,
+      spacious,
+      stopgap_ramp,
+    } = req.body;
+
+    const userId = req.user.id;
+
+    try {
+      const newRating = await addRating(
+        id,
+        userId,
+        accessible_parking,
+        accessible_washroom,
+        alternative_entrance,
+        automatic_door,
+        elevator,
+        braille,
+        gender_neutral_washroom,
+        large_print,
+        outdoor_access_only,
+        quiet,
+        ramp,
+        scent_free,
+        service_animal_friendly,
+        sign_language,
+        spacious,
+        stopgap_ramp
+      );
+
+      res.status(200).json(newRating);
+    } catch (e) {
+      console.log('Error in creating rating for existing pin', err);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+
+  router.post('/:id', auth, async (req, res) => {
     const {
       accessible_parking,
       accessible_washroom,
@@ -185,12 +237,12 @@ module.exports = ({
 
       res.json(pinInfo);
     } catch (err) {
-      console.log("Error in creating rating", err);
-      res.status(500).json({ error: "Server error" });
+      console.log('Error in creating rating', err);
+      res.status(500).json({ error: 'Server error' });
     }
   });
 
-  router.get("/place_id/:id", async (req, res) => {
+  router.get('/place_id/:id', async (req, res) => {
     const placeId = req.params.id;
 
     try {
@@ -231,10 +283,10 @@ module.exports = ({
       }
       res.status(200).json(result);
     } catch (e) {
-      console.log("Error?", e);
+      console.log('Error?', e);
       res
         .status(500)
-        .json({ errMsg: "Server Error in finding pin with placeId" });
+        .json({ errMsg: 'Server Error in finding pin with placeId' });
     }
   });
 
@@ -242,14 +294,14 @@ module.exports = ({
   @desc   GET pin by id
   @access public
   */
-  router.get("/:id", async (req, res) => {
+  router.get('/:id', async (req, res) => {
     const { latitude, longitude } = req.body;
     try {
       const getPinId = await getPinsById(longitude, latitude);
 
       res.status(200).json(getPinId);
     } catch (e) {
-      console.log("Error in getting pin by Id", e);
+      console.log('Error in getting pin by Id', e);
     }
   });
 

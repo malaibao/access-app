@@ -44,7 +44,7 @@ const Bar_Chart = ({ data }) => {
     <>
       {data ? console.log(typeof data[0].total) : null}
       {data ? (
-        <BarChart width={800} height={500} data={sortedData(data)}>
+        <BarChart width={600} height={300} data={sortedData(data)}>
           <CartesianGrid strokeDasharray='3 3' />
           <XAxis dataKey='type' />
           <YAxis />

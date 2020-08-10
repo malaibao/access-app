@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Form({ pin }) {
+export default function Form({ pin, isOldPin }) {
   const [redirect, setRedirect] = useState(false);
   const { setPinInfo } = useContext(PinContext);
 
@@ -100,9 +100,14 @@ export default function Form({ pin }) {
     };
 
     try {
-      console.log('pin info', pinInfo);
-      const res = await axios.post('/pins', pinInfo, config);
-      console.log(res);
+      // console.log('pinInfo', pinInfo);
+      let res;
+      if (isOldPin) {
+        res = await axios.post('/pins/ratings', pinInfo, config);
+      } else {
+        res = await axios.post('/pins', pinInfo, config);
+      }
+      // console.log(res);
       setErrorInfo({ errMsg: '', show: false });
       if (res.status === 200) {
         setPinInfo(null);

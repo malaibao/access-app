@@ -37,7 +37,7 @@ export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
   const [selected, setSelected] = React.useState(null);
 
   useEffect(() => {
-    console.log('pins in Profofile_Map', pins);
+    // console.log('pins in Profofile_Map', pins);
     if (pins) {
       setMarkers(pins);
     }
@@ -105,7 +105,7 @@ export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
     if (rating.stopgap_ramp) {
       options.push('stopgap ramp');
     }
-    console.log('options', options);
+    // console.log('options', options);
     return options.join(', ');
     // return options;
   };

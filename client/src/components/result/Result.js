@@ -4,13 +4,13 @@ import React, {
   useContext,
   useRef,
   useCallback,
-} from "react";
-import { PinContext } from "../../context";
-import Map from "../map/Map";
-import Pin from "./Pin";
-import Form from "../basic-pages/Form";
-import axios from "axios";
-import "./Result.scss";
+} from 'react';
+import { PinContext } from '../../context';
+import Map from '../map/Map';
+import Pin from './Pin';
+import Form from '../basic-pages/Form';
+import axios from 'axios';
+import './Result.scss';
 
 const Result = () => {
   const [pins, setPins] = useState([]);
@@ -32,8 +32,8 @@ const Result = () => {
 
   useEffect(() => {
     if (pinInfo && mapLoaded) {
-      console.log("pin in useEffect", pinInfo);
-      console.log("pin info inside pin info", pinInfo.pin);
+      console.log('pin in useEffect', pinInfo);
+      console.log('pin info inside pin info', pinInfo.pin);
       panTo({ lat: pinInfo.pin.latitude, lng: pinInfo.pin.longitude });
     }
   }, [pinInfo, panTo, mapLoaded]);
@@ -49,19 +49,19 @@ const Result = () => {
   const showOptions = (ratings) => {
     const options = [];
     for (let i = 0; i < ratings.length; i++) {
-      const option = ratings[i].replace(/_/g, " ");
+      const option = ratings[i].replace(/_/g, ' ');
       options.push(option);
     }
-    return options.join(", ");
+    return options.join(', ');
   };
 
   return (
-    <div style={{ display: "flex" }}>
-      <div className="search-result-details">
+    <div style={{ display: 'flex' }}>
+      <div className='search-result-details'>
         <Pin pin={pinInfo ? pinInfo.pin : null} />
         <h3>Something to add?</h3>
         <p>Submit a new rating below:</p>
-        <Form />
+        <Form pin={pinInfo ? pinInfo.pin : null} isOldPin={true} />
       </div>
       <Map
         pins={pins}

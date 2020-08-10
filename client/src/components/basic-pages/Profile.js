@@ -22,6 +22,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
+import './Profile.scss';
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -68,12 +70,68 @@ export default function Profile() {
     mapRef.current.setZoom(18);
   }, []);
 
+  const showOptions = (rating) => {
+    const options = [];
+    if (rating.accessible_parking) {
+      options.push('accessible parking');
+    }
+    if (rating.accessible_washroom) {
+      options.push('accessible washroom');
+    }
+    if (rating.alternative_entrance) {
+      options.push('alternative entrance');
+    }
+    if (rating.automatic_door) {
+      options.push('automatic door');
+    }
+    if (rating.elevator) {
+      options.push('elevator');
+    }
+    if (rating.braille) {
+      options.push('braille');
+    }
+    if (rating.gender_neutral_washroom) {
+      options.push('gender neutral washroom');
+    }
+    if (rating.large_print) {
+      options.push('large print');
+    }
+    if (rating.outdoor_access_only) {
+      options.push('outdoor access only');
+    }
+    if (rating.quiet) {
+      options.push('quiet');
+    }
+    if (rating.ramp) {
+      options.push('ramp');
+    }
+    if (rating.scent_free) {
+      options.push('scent free');
+    }
+    if (rating.service_animal_friendly) {
+      options.push('service animal friendly');
+    }
+    if (rating.sign_language) {
+      options.push('sign language');
+    }
+    if (rating.spacious) {
+      options.push('spacious');
+    }
+    if (rating.stopgap_ramp) {
+      options.push('stopgap ramp');
+    }
+    // console.log('options', options);
+    return options.join(', ');
+    // return options;
+  };
+
   return (
-    <div>
-      <div>
-        {userRatings ? <Bar_Chart data={userRatings.typeTotal} /> : null}
-      </div>
-      <div>
+    <>
+      <div className='chart-map-container'>
+        <div className='chart'>
+          {userRatings ? <Bar_Chart data={userRatings.typeTotal} /> : null}
+          <div></div>
+        </div>
         <Profile_Map
           pins={userRatings.ratings}
           onMapLoad={onMapLoad}
@@ -81,11 +139,7 @@ export default function Profile() {
           panTo={panTo}
         />
       </div>
-    </div>
-    //   <div>hello</di
-    //   <div>{userRatings && <Chart data={userRatings.typeTotal} />}</div>
 
-    /* {!userRatings && <p>Loading</p>}
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
@@ -101,8 +155,9 @@ export default function Profile() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userRatings.length > 0 &&
-              userRatings.map((rating) => (
+            {userRatings &&
+              userRatings.ratings &&
+              userRatings.ratings.map((rating) => (
                 <TableRow key={rating.id}>
                   <TableCell component='th' scope='row'>
                     {rating.name}
@@ -126,6 +181,7 @@ export default function Profile() {
               ))}
           </TableBody>
         </Table>
-      </TableContainer> */
+      </TableContainer>
+    </>
   );
 }

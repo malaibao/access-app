@@ -1,4 +1,12 @@
-#table-head {
-  font-size: 2rem;
-  font-weight: 600;
+// #table-head {
+//   font-size: 2rem;
+//   font-weight: 600;
+// }
+
+.chart-map-container {
+  display: flex;
+
+  .chart {
+    padding: 1rem;
+  }
 }
