@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import Locate from './Locate';
-import './map.scss';
+import React, { useEffect, useState } from "react";
+import Locate from "./Locate";
+import "./map.scss";
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
-} from '@react-google-maps/api';
-import Button from '@material-ui/core/Button';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+} from "@react-google-maps/api";
+import Button from "@material-ui/core/Button";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 
-const libraries = ['places'];
+const libraries = ["places"];
 const mapContainerStyle = {
-  width: '100%',
-  height: '100%',
+  width: "100%",
+  height: "100%",
 };
 
 const center = {
@@ -27,24 +27,22 @@ const options = {
   zoomControl: true,
 };
 
-export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
+export default function Profile_Map({
+  pins,
+  onMapLoad,
+  chosenPin,
+  panTo,
+  handleDeleteInChild,
+}) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
-  const [markers, setMarkers] = React.useState([]);
-  const [selected, setSelected] = React.useState(null);
+  const [selected, setSelected] = useState(null);
 
-  useEffect(() => {
-    // console.log('pins in Profofile_Map', pins);
-    if (pins) {
-      setMarkers(pins);
-    }
-  }, [pins, setMarkers]);
-
-  if (loadError) return 'Error Loading Maps';
-  if (!isLoaded) return 'Loading Maps';
+  if (loadError) return "Error Loading Maps";
+  if (!isLoaded) return "Loading Maps";
 
   // const showOptions = (ratings) => {
   //   const options = [];
@@ -58,60 +56,60 @@ export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
   const showOptions = (rating) => {
     const options = [];
     if (rating.accessible_parking) {
-      options.push('accessible parking');
+      options.push("accessible parking");
     }
     if (rating.accessible_washroom) {
-      options.push('accessible washroom');
+      options.push("accessible washroom");
     }
     if (rating.alternative_entrance) {
-      options.push('alternative entrance');
+      options.push("alternative entrance");
     }
     if (rating.automatic_door) {
-      options.push('automatic door');
+      options.push("automatic door");
     }
     if (rating.elevator) {
-      options.push('elevator');
+      options.push("elevator");
     }
     if (rating.braille) {
-      options.push('braille');
+      options.push("braille");
     }
     if (rating.gender_neutral_washroom) {
-      options.push('gender neutral washroom');
+      options.push("gender neutral washroom");
     }
     if (rating.large_print) {
-      options.push('large print');
+      options.push("large print");
     }
     if (rating.outdoor_access_only) {
-      options.push('outdoor access only');
+      options.push("outdoor access only");
     }
     if (rating.quiet) {
-      options.push('quiet');
+      options.push("quiet");
     }
     if (rating.ramp) {
-      options.push('ramp');
+      options.push("ramp");
     }
     if (rating.scent_free) {
-      options.push('scent free');
+      options.push("scent free");
     }
     if (rating.service_animal_friendly) {
-      options.push('service animal friendly');
+      options.push("service animal friendly");
     }
     if (rating.sign_language) {
-      options.push('sign language');
+      options.push("sign language");
     }
     if (rating.spacious) {
-      options.push('spacious');
+      options.push("spacious");
     }
     if (rating.stopgap_ramp) {
-      options.push('stopgap ramp');
+      options.push("stopgap ramp");
     }
     // console.log('options', options);
-    return options.join(', ');
+    return options.join(", ");
     // return options;
   };
 
   return (
-    <div className='map'>
+    <div className="map">
       <Locate panTo={panTo} />
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -120,23 +118,24 @@ export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
         options={options}
         onLoad={onMapLoad}
       >
-        {markers.length > 0
-          ? markers.map((marker, i) => (
+        {pins && pins.length > 0
+          ? pins.map((marker, i) => (
               <Marker
                 key={i}
                 position={{ lat: marker.latitude, lng: marker.longitude }}
                 icon={{
-                  url: '/good.svg',
+                  url: "/good.svg",
                   origin: new window.google.maps.Point(0, 0),
                   // anchor: new window.google.maps.Point(10, 14),
                   scaledSize: new window.google.maps.Size(20, 28),
                 }}
                 onMouseOver={() => {
                   setSelected(marker);
-                  console.log('selected marker', selected);
+                  console.log("mouseover marker", selected);
                 }}
                 onClick={() => {
                   setSelected(marker);
+                  console.log("click", selected);
                 }}
               />
             ))
@@ -144,10 +143,10 @@ export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
 
         {chosenPin ? (
           <Marker
-            key={'1234'}
+            key={"1234"}
             position={{ lat: chosenPin.latitude, lng: chosenPin.longitude }}
             icon={{
-              url: '/selectedPin.svg',
+              url: "/selectedPin.svg",
               origin: new window.google.maps.Point(0, 0),
               // anchor: new window.google.maps.Point(16, 16),
               scaledSize: new window.google.maps.Size(35, 35),
@@ -165,7 +164,7 @@ export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
               setSelected(null);
             }}
           >
-            <div style={{ maxWidth: '25vw' }}>
+            <div style={{ maxWidth: "25vw" }}>
               <p>
                 <strong>{selected.name}</strong>
               </p>
@@ -177,7 +176,15 @@ export default function Profile_Map({ pins, onMapLoad, chosenPin, panTo }) {
                 </span>
               ))} */}
               <br />
-              <Button variant='outlined' color='primary' size='small'>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="small"
+                onClick={() => {
+                  handleDeleteInChild(selected.id);
+                  setSelected(null);
+                }}
+              >
                 DELETE
               </Button>
             </div>
