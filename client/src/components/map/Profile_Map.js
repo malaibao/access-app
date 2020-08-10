@@ -39,14 +39,7 @@ export default function Profile_Map({
     libraries,
   });
 
-  const [selected, setSelected] = React.useState(null);
-
-  // useEffect(() => {
-  //   // console.log('pins in Profofile_Map', pins);
-  //   if (pins) {
-  //     setMarkers(pins);
-  //   }
-  // }, [pins, setMarkers]);
+  const [selected, setSelected] = useState(null);
 
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";

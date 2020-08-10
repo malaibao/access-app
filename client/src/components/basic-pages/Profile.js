@@ -13,15 +13,6 @@ import { LOGIN } from "../../reducers/action-types";
 
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-// import Table from "@material-ui/core/Table";
-// import TableBody from "@material-ui/core/TableBody";
-// import TableCell from "@material-ui/core/TableCell";
-// import TableContainer from "@material-ui/core/TableContainer";
-// import TableHead from "@material-ui/core/TableHead";
-// import TableRow from "@material-ui/core/TableRow";
-// import Paper from "@material-ui/core/Paper";
-// import Button from "@material-ui/core/Button";
-
 import "./Profile.scss";
 
 const useStyles = makeStyles({
@@ -34,14 +25,17 @@ export default function Profile() {
   const classes = useStyles();
   const { authState, dispatch } = useContext(AuthContext);
   const [userRatings, setUserRatings] = useState([]);
-  // const [markers, setMarkers] = React.useState([]);
 
-  // useEffect(() => {
-  //   if (localStorage.token) {
-  //     setAuthToken(localStorage.token);
-  //     dispatch({ type: LOGIN, payload: localStorage.token });
-  //   }
-  // }, []);
+  const handleDeleteInChild = (ratingId) => {
+    const url = `/user/${ratingId}`;
+    axios
+      .post(url)
+      .then((res) => {
+        console.log(res.data);
+        setUserRatings((prev) => ({ ...res.data }));
+      })
+      .catch((err) => console.log("Error in deleting rating", err));
+  };
 
   useEffect(() => {
     setAuthToken(localStorage.token);
@@ -49,18 +43,7 @@ export default function Profile() {
       console.log(res.data);
       setUserRatings(res.data);
     });
-  }, [setAuthToken, setUserRatings]);
-
-  const handleDeleteInChild = (ratingId) => {
-    const url = `/user/${ratingId}`;
-    axios
-      .post(url)
-      .then((res) => {
-        console.log(res);
-        setUserRatings((prev) => ({ ...prev, ratings: res.data }));
-      })
-      .catch((err) => console.log("Error in deleting rating", err));
-  };
+  }, [setAuthToken]);
 
   const mapRef = useRef();
   const onMapLoad = React.useCallback((map) => {
