@@ -7,7 +7,7 @@ import {
   Marker,
   InfoWindow,
 } from '@react-google-maps/api';
-import mapStyles from './mapStyles';
+// import mapStyles from './mapStyles';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -40,7 +40,8 @@ export default function Map({ pins, onMapLoad, chosenPin, panTo }) {
   }, [pins]);
 
   if (loadError) return 'Error Loading Maps';
-  if (!isLoaded) return 'Loading Maps';
+  if (!isLoaded) return 'Loading';
+ 
 
   const showOptions = (ratings) => {
     const options = [];

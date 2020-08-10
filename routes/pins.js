@@ -22,7 +22,7 @@ module.exports = ({
     try {
       const allPins = await getPins();
       const allPinsInfo = [];
-      // console.log("all pins", allPins);
+      
       for (let i = 0; i < allPins.length; i++) {
         const ratings = await getRatings(allPins[i].id);
         const tags = await categoryMajority(ratings);

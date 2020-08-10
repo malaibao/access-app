@@ -21,7 +21,7 @@ const Landing = () => {
 
       <Grid container justify='center'>
         <Grid item>
-          <Link href='/' variant='body2'>
+          <Link href='/map' variant='body2'>
             SEARCH
           </Link>
         </Grid>
