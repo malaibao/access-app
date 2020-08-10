@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import MapContainer from './components/basic-pages/MapContainer';
 import Landing from './components/basic-pages/Landing';
-import About from './components/basic-pages/About';
 import Register from './components/basic-pages/Register';
 import Login from './components/basic-pages/Login';
 import Profile from './components/basic-pages/Profile';
@@ -23,16 +23,20 @@ const authInitialState = {
   token: localStorage.getItem('token'),
 };
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
+
 const App = () => {
   const [authState, dispatch] = useReducer(authReducer, authInitialState);
   const [pinInfo, setPinInfo] = useState(null);
 
-  useEffect(() => {
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-      dispatch({ type: LOGIN, payload: localStorage.token });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.token) {
+  //     setAuthToken(localStorage.token); // Set headers token
+  //     dispatch({ type: LOGIN, payload: localStorage.token });
+  //   }
+  // }, [setAuthToken, dispatch]);
 
   return (
     <div className='app'>
@@ -47,7 +51,7 @@ const App = () => {
             <Navbar />
             <Route exact path='/' component={Landing} />
             <Switch>
-              <Route exact path='/about' component={About} />
+              <Route exact path='/map' component={MapContainer} />
               <Route exact path='/register' component={Register} />
 
               <Route exact path='/login' component={Login} />
