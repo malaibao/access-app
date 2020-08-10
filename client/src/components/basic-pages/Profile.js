@@ -1,6 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  useContext,
+} from 'react';
 import setAuthToken from '../../utils/setAuthToken';
 import { AuthContext } from '../../context';
+import Chart from '../Chart';
 import { LOGIN } from '../../reducers/action-types';
 
 import axios from 'axios';
@@ -35,6 +42,7 @@ export default function Profile() {
   useEffect(() => {
     setAuthToken(localStorage.token);
     axios.get('/user').then((res) => {
+      console.log(res.data);
       setUserRatings(res.data);
     });
   }, [setAuthToken, setUserRatings]);
@@ -102,9 +110,20 @@ export default function Profile() {
     return <>{options.join(', ')}</>;
   };
 
+  const mapRef = useRef();
+  const onMapLoad = React.useCallback((map) => {
+    mapRef.current = map;
+  }, []);
+
+  const panTo = useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(18);
+  }, []);
+
   return (
     <>
-      {!userRatings && <p>"Loading"</p>}
+      {userRatings && <Chart data={userRatings.typeTotal} />}
+      {/* {!userRatings && <p>Loading</p>}
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
@@ -145,7 +164,7 @@ export default function Profile() {
               ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </>
   );
 }
