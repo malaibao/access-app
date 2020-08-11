@@ -138,12 +138,12 @@ export default function Profile() {
           </div>
         </div>
         <></>
-        {/* <Profile_Map
+        <Profile_Map
           pins={userRatings.ratings}
           onMapLoad={onMapLoad}
           chosenPin={null}
           panTo={panTo}
-        /> */}
+        />
       </div>
 
       <TableContainer component={Paper}>
