@@ -4,7 +4,6 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const { categoryMajority, filterType } = require('../dbHelpers/utilities');
 
-// TODO: change the db
 module.exports = ({
   getPins,
   addPin,
@@ -22,7 +21,7 @@ module.exports = ({
     try {
       const allPins = await getPins();
       const allPinsInfo = [];
-      
+
       for (let i = 0; i < allPins.length; i++) {
         const ratings = await getRatings(allPins[i].id);
         const tags = await categoryMajority(ratings);
@@ -40,7 +39,7 @@ module.exports = ({
   });
 
   /*
-  @desc   CREATE a pin
+  @desc   CREATE a pin and a rating
   @access private
   */
 
@@ -69,15 +68,16 @@ module.exports = ({
       stopgap_ramp,
     } = req.body;
 
-    // TODO: get from req.user.id
     const userId = req.user.id;
 
-    const type = await fetch(
+    const { city, type } = await fetch(
       `https://maps.googleapis.com/maps/api/place/details/json?placeid=${place_id}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
     )
       .then((res) => res.json())
       .then((returnedData) => {
-        return filterType(returnedData.result.types);
+        const city = returnedData.result.address_components[3].long_name;
+        const type = filterType(returnedData.result.types);
+        return { city, type };
       });
 
     try {
@@ -88,6 +88,7 @@ module.exports = ({
         address,
         latitude,
         longitude,
+        city,
         type,
         place_id
       );

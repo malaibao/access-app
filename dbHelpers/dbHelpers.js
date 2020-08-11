@@ -34,15 +34,25 @@ module.exports = (db) => {
     address,
     latitude,
     longitude,
+    city,
     type,
     place_id
   ) => {
     const query = {
       text: `
-        INSERT INTO pins(user_id, name, address, latitude, longitude, type, place_id)
-        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
+        INSERT INTO pins(user_id, name, address, latitude, longitude, city, type, place_id)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;
       `,
-      values: [userId, name, address, latitude, longitude, type, place_id],
+      values: [
+        userId,
+        name,
+        address,
+        latitude,
+        longitude,
+        city,
+        type,
+        place_id,
+      ],
     };
 
     return db.query(query).then((res) => res.rows[0]);

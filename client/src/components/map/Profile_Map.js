@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
-import Locate from "./Locate";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import "./map.scss";
+import React, { useEffect, useState } from 'react';
+import Locate from './Locate';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import './map.scss';
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
-} from "@react-google-maps/api";
-import Button from "@material-ui/core/Button";
+} from '@react-google-maps/api';
+import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 
-const libraries = ["places"];
+const libraries = ['places'];
 const mapContainerStyle = {
-  width: "100%",
-  height: "100%",
+  width: '100%',
+  height: '100%',
 };
 
 const center = {
@@ -48,8 +48,8 @@ export default function Profile_Map({
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = React.useState(false);
 
-  if (loadError) return "Error Loading Maps";
-  if (!isLoaded) return "Loading Maps";
+  if (loadError) return 'Error Loading Maps';
+  if (!isLoaded) return 'Loading Maps';
 
   // const showOptions = (ratings) => {
   //   const options = [];
@@ -80,55 +80,54 @@ export default function Profile_Map({
   const showOptions = (rating) => {
     const options = [];
     if (rating.accessible_parking) {
-      options.push("accessible parking");
+      options.push('accessible parking');
     }
     if (rating.accessible_washroom) {
-      options.push("accessible washroom");
+      options.push('accessible washroom');
     }
     if (rating.alternative_entrance) {
-      options.push("alternative entrance");
+      options.push('alternative entrance');
     }
     if (rating.automatic_door) {
-      options.push("automatic door");
+      options.push('automatic door');
     }
     if (rating.elevator) {
-      options.push("elevator");
+      options.push('elevator');
     }
     if (rating.braille) {
-      options.push("braille");
+      options.push('braille');
     }
     if (rating.gender_neutral_washroom) {
-      options.push("gender neutral washroom");
+      options.push('gender neutral washroom');
     }
     if (rating.large_print) {
-      options.push("large print");
+      options.push('large print');
     }
     if (rating.outdoor_access_only) {
-      options.push("outdoor access only");
+      options.push('outdoor access only');
     }
     if (rating.quiet) {
-      options.push("quiet");
+      options.push('quiet');
     }
     if (rating.ramp) {
-      options.push("ramp");
+      options.push('ramp');
     }
     if (rating.scent_free) {
-      options.push("scent free");
+      options.push('scent free');
     }
     if (rating.service_animal_friendly) {
-      options.push("service animal friendly");
+      options.push('service animal friendly');
     }
     if (rating.sign_language) {
-      options.push("sign language");
+      options.push('sign language');
     }
     if (rating.spacious) {
-      options.push("spacious");
+      options.push('spacious');
     }
     if (rating.stopgap_ramp) {
-      options.push("stopgap ramp");
+      options.push('stopgap ramp');
     }
-    // console.log('options', options);
-    return options.join(", ");
+    return options.join(', ');
     // return options;
   };
 
@@ -139,7 +138,7 @@ export default function Profile_Map({
   };
 
   return (
-    <div className="map">
+    <div className='map'>
       <Locate panTo={panTo} />
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -154,18 +153,18 @@ export default function Profile_Map({
                 key={i}
                 position={{ lat: marker.latitude, lng: marker.longitude }}
                 icon={{
-                  url: "/good.svg",
+                  url: '/good.svg',
                   origin: new window.google.maps.Point(0, 0),
                   // anchor: new window.google.maps.Point(10, 14),
                   scaledSize: new window.google.maps.Size(20, 28),
                 }}
                 onMouseOver={() => {
                   setSelected(marker);
-                  console.log("mouseover marker", selected);
+                  console.log('mouseover marker', selected);
                 }}
                 onClick={() => {
                   setSelected(marker);
-                  console.log("click", selected);
+                  console.log('click', selected);
                 }}
               />
             ))
@@ -173,10 +172,10 @@ export default function Profile_Map({
 
         {chosenPin ? (
           <Marker
-            key={"1234"}
+            key={'1234'}
             position={{ lat: chosenPin.latitude, lng: chosenPin.longitude }}
             icon={{
-              url: "/selectedPin.svg",
+              url: '/selectedPin.svg',
               origin: new window.google.maps.Point(0, 0),
               // anchor: new window.google.maps.Point(16, 16),
               scaledSize: new window.google.maps.Size(35, 35),
@@ -194,7 +193,7 @@ export default function Profile_Map({
               setSelected(null);
             }}
           >
-            <div style={{ maxWidth: "25vw" }}>
+            <div style={{ maxWidth: '25vw' }}>
               <p>
                 <strong>{selected.name}</strong>
               </p>
@@ -207,9 +206,9 @@ export default function Profile_Map({
               ))} */}
               <br />
               <Button
-                variant="outlined"
-                color="primary"
-                size="small"
+                variant='outlined'
+                color='primary'
+                size='small'
                 onClick={() => {
                   setOpen(true);
                 }}
@@ -219,19 +218,19 @@ export default function Profile_Map({
               <Dialog
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
+                aria-labelledby='alert-dialog-title'
+                aria-describedby='alert-dialog-description'
               >
-                <DialogTitle id="alert-dialog-title">
-                  {"Delete Confirmation"}
+                <DialogTitle id='alert-dialog-title'>
+                  {'Delete Confirmation'}
                 </DialogTitle>
                 <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
+                  <DialogContentText id='alert-dialog-description'>
                     Are you sure you want to delete this rating?
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleClose} color="primary">
+                  <Button onClick={handleClose} color='primary'>
                     Delete
                   </Button>
                 </DialogActions>
