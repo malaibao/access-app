@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
 
-import './About.scss';
+import "./About.scss";
 
 const Landing = () => {
   return (
-    <div className='about'>
+    <div className="about">
       <h2>Our Mission</h2>
       <p>
         Access for You focuses on sharing accessibility information on places in
@@ -19,9 +19,9 @@ const Landing = () => {
         answers to the people that need it.
       </p>
 
-      <Grid container justify='center'>
+      <Grid container justify="center">
         <Grid item>
-          <Link href='/map' variant='body2'>
+          <Link href="/map" variant="body2">
             SEARCH
           </Link>
         </Grid>
