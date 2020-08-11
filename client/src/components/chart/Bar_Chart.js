@@ -42,7 +42,7 @@ const colors = [
 const Bar_Chart = ({ data }) => {
   return (
     <>
-      {data ? console.log(typeof data[0].total) : null}
+      {/* {data && data[0] ? console.log(typeof data[0].total) : null} */}
       {data ? (
         <BarChart width={600} height={300} data={sortedData(data)}>
           <CartesianGrid strokeDasharray="3 3" />
