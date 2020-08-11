@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext, PinContext } from '../../context';
 
 import axios from 'axios';
@@ -11,6 +11,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import SuccessAlertTag from "../layout/SuccessAlert";
+
 import './Form.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -60,13 +62,24 @@ export default function Form({ pin, isOldPin }) {
   });
 
   const [errorInfo, setErrorInfo] = useState({ errMsg: '', show: false });
+  const [successInfo, setSuccessInfo] = useState({ successMsg: '', show: false });
+
+  useEffect(() => {
+    let timeout = null;
+    timeout = setTimeout(() => {
+      if (successInfo.show) {
+        setRedirect(true);
+      }
+    }, 2000);
+    return () => timeout ? clearTimeout(timeout) : null;
+  }, [successInfo.show])
   
-  if (redirect) {
-    return <Redirect to='/map' />;
-  }
+  // if (redirect) {
+  //   return <Redirect to='/map' />;
+  // }
 
   if (submit) {
-    return <Redirect to = '/register' /> ;
+    return <Redirect to= '/register' />;
   }
 
   const handleChange = (event) => {
@@ -75,15 +88,19 @@ export default function Form({ pin, isOldPin }) {
 
   const handleCloseAlert = () => {
     setErrorInfo((prev) => ({ ...prev, show: false }));
+    setSuccessInfo((prev) => ({
+      ...prev,
+      show: false
+    }));
+
   };
 
-  console.log('authstate', authState)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // check if input is empty
     const filled = Object.values(rating).includes(true);
-    console.log(filled);
+
 
     if (filled === false) {
       setErrorInfo((prev) => ({
@@ -106,21 +123,27 @@ export default function Form({ pin, isOldPin }) {
     };
 
     try {
-
       let res;
       if (isOldPin) {
         res = await axios.post('/pins/ratings', pinInfo, config);
       } else {
         res = await axios.post('/pins', pinInfo, config);
       }
-
       setErrorInfo({ errMsg: '', show: false });
+      
       if (res.status === 200) {
         setPinInfo(null);
-        setRedirect(true);
+        const successMsg = 'Success: Pin Added!'
+        setSuccessInfo((prev) => ({
+        ...prev,
+        successMsg,
+        show: true
+      }));
+        // setRedirect(true); uncomment if we remove the useEffect
       }
     } catch (err) {
       if (err.message.match(/401/)) {
+        console.log("received 401")
         setSubmit(true); //if a user isn't authorized (401 is true) setState to true and redirect outside of submit handler
       }
       const errMsg = err.response.data.errMsg;
@@ -168,6 +191,12 @@ export default function Form({ pin, isOldPin }) {
     ].filter((v) => v).length < 1;
 
   return (
+    <>
+    { submit && <Redirect to= '/register' />}
+    {
+      redirect && <Redirect to= '/map' /> 
+    }
+    {!redirect && 
     <div className='form'>
       {pin ? (
         <>
@@ -177,6 +206,13 @@ export default function Form({ pin, isOldPin }) {
         </>
       ) : null}
       <form className={classes.form} id='rating-form' onSubmit={handleSubmit}>
+        {successInfo.show && (
+          <SuccessAlertTag
+            isOpen={successInfo.show}
+            msg={successInfo.successMsg}
+            onClose={handleCloseAlert}
+          />
+        )}
         <FormControl component='fieldset' className={classes.formControl}>
           <FormLabel component='legend'>Select all that apply:</FormLabel>
           <FormGroup>
@@ -354,5 +390,8 @@ export default function Form({ pin, isOldPin }) {
         </Button>
       </form>
     </div>
+    } 
+   </> 
   );
+
 }
