@@ -1,7 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+// import { Link } from "react-router-dom";
+import AnimatedButton from "./AnimatedButton";
 import "./About.scss";
+const styleLink = document.createElement("link");
+styleLink.rel = "stylesheet";
+styleLink.href =
+  "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
+document.head.appendChild(styleLink);
 
 const Landing = () => {
   return (
@@ -16,7 +21,8 @@ const Landing = () => {
         place accessible, we advocate the need for accessibility while providing
         answers to the people that need it.
       </p>
-      <Link to="/map">SEARCH</Link>
+      {/* <Link to="/map">SEARCH</Link> */}
+      <AnimatedButton />
     </div>
   );
 };
