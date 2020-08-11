@@ -26,12 +26,17 @@ module.exports = ({
 
       // percentContribution,
 
+      percentContribution = Math.round(
+        (percentContribution.count / percentContribution.total_count) * 100
+      );
+
       const ratingInfo = {
         ratings,
         typeTotal,
-        totalContribution,
-        totalPins,
-        totalRatings,
+        ...totalContribution,
+        percent_contribution: percentContribution,
+        ...totalPins,
+        ...totalRatings,
       };
       res.status(200).json(ratingInfo);
     } catch (err) {

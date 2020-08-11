@@ -68,12 +68,18 @@ export default function Profile() {
     <>
       <div className='chart-map-container'>
         <div className='chart-map-container__left'>
+          <div className='chart-map-container__left-dashboard'>
+            {userRatings ? (
+              <Dashboard
+                totalContribution={userRatings.total_contribution}
+                percentContribution={userRatings.percent_contribution}
+                totalPins={userRatings.total_pins_in_30days}
+                totalRatings={userRatings.total_ratings_in_30days}
+              />
+            ) : null}
+          </div>
           <div className='chart-map-container__left-chart'>
             {userRatings ? <Bar_Chart data={userRatings.typeTotal} /> : null}
-          </div>
-          <div className='chart-map-container__left-dashboard'>
-            {/* <Dashboard /> */}
-            {/* {userRatings ? <Dashboard data={ {userRatings.totalContribution} /> : null} */}
           </div>
         </div>
         <></>

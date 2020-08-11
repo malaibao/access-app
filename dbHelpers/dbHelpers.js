@@ -262,7 +262,7 @@ module.exports = (db) => {
   const getTotalContribution = (userId) => {
     const query = {
       text: `
-      SELECT COUNT(*) AS totalContribution
+      SELECT COUNT(*) AS total_contribution
       FROM ratings
       WHERE user_id=$1
       `,
@@ -288,7 +288,7 @@ module.exports = (db) => {
   const getPinsAdded = (userId) => {
     const query = {
       text: `
-      SELECT COUNT(*) 
+      SELECT COUNT(*) AS total_pins_in_30days
       FROM pins
       WHERE user_id=$1 AND
       date > current_date - interval '30' day;
@@ -301,7 +301,7 @@ module.exports = (db) => {
   const getRatingsAdded = (userId) => {
     const query = {
       text: `
-      SELECT COUNT(*) 
+      SELECT COUNT(*) AS total_ratings_in_30days
       FROM ratings
       WHERE user_id=$1 AND
       date > current_date - interval '30' day;
