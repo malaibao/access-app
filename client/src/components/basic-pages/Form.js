@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Form({ pin, isOldPin }) {
   const [redirect, setRedirect] = useState(false);
   const { setPinInfo } = useContext(PinContext);
+  const { authState, dispatch } = useContext(AuthContext);
+  const [submit, setSubmit] = useState(false); 
 
   const classes = useStyles();
   const [rating, setRating] = useState({
@@ -57,11 +59,14 @@ export default function Form({ pin, isOldPin }) {
     stopgap_ramp: false,
   });
 
-  // const { pinInfo } = useContext(PinContext);
   const [errorInfo, setErrorInfo] = useState({ errMsg: '', show: false });
-
+  
   if (redirect) {
     return <Redirect to='/map' />;
+  }
+
+  if (submit) {
+    return <Redirect to = '/register' /> ;
   }
 
   const handleChange = (event) => {
@@ -72,6 +77,7 @@ export default function Form({ pin, isOldPin }) {
     setErrorInfo((prev) => ({ ...prev, show: false }));
   };
 
+  console.log('authstate', authState)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -100,20 +106,23 @@ export default function Form({ pin, isOldPin }) {
     };
 
     try {
-      // console.log('pinInfo', pinInfo);
+
       let res;
       if (isOldPin) {
         res = await axios.post('/pins/ratings', pinInfo, config);
       } else {
         res = await axios.post('/pins', pinInfo, config);
       }
-      // console.log(res);
+
       setErrorInfo({ errMsg: '', show: false });
       if (res.status === 200) {
         setPinInfo(null);
         setRedirect(true);
       }
     } catch (err) {
+      if (err.message.match(/401/)) {
+        setSubmit(true); //if a user isn't authorized (401 is true) setState to true and redirect outside of submit handler
+      }
       const errMsg = err.response.data.errMsg;
       setErrorInfo((prev) => ({ ...prev, errMsg, show: true }));
     }
