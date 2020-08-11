@@ -1,26 +1,26 @@
-import React, { useState, useReducer, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { useState, useReducer } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
-import MapContainer from './components/basic-pages/MapContainer';
-import Landing from './components/basic-pages/Landing';
-import Register from './components/basic-pages/Register';
-import Login from './components/basic-pages/Login';
-import Profile from './components/basic-pages/Profile';
-import New from './components/new/New';
-import Result from './components/result/Result';
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import MapContainer from "./components/basic-pages/MapContainer";
+import Landing from "./components/basic-pages/Landing";
+import Register from "./components/basic-pages/Register";
+import Login from "./components/basic-pages/Login";
+import Profile from "./components/basic-pages/Profile";
+import New from "./components/new/New";
+import Result from "./components/result/Result";
 
-import setAuthToken from './utils/setAuthToken';
-import { AuthContext, PinContext } from './context';
-import { authReducer } from './reducers/reducer';
+import setAuthToken from "./utils/setAuthToken";
+import { AuthContext, PinContext } from "./context";
+import { authReducer } from "./reducers/reducer";
 
-import './App.css';
-import { LOGIN } from './reducers/action-types';
+import "./App.css";
+import { LOGIN } from "./reducers/action-types";
 
 const authInitialState = {
   isAuthenticated: false,
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem("token"),
 };
 
 if (localStorage.token) {
@@ -39,7 +39,7 @@ const App = () => {
   // }, [setAuthToken, dispatch]);
 
   return (
-    <div className='app'>
+    <div className="app">
       <AuthContext.Provider
         value={{
           authState,
@@ -49,15 +49,15 @@ const App = () => {
         <PinContext.Provider value={{ pinInfo, setPinInfo }}>
           <Router>
             <Navbar />
-            <Route exact path='/' component={Landing} />
+            <Route exact path="/" component={Landing} />
             <Switch>
-              <Route exact path='/map' component={MapContainer} />
-              <Route exact path='/register' component={Register} />
+              <Route exact path="/map" component={MapContainer} />
+              <Route exact path="/register" component={Register} />
 
-              <Route exact path='/login' component={Login} />
-              <Route exact path='/profile' component={Profile} />
-              <Route exact path='/new' component={New} />
-              <Route exact path='/result' component={Result} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/new" component={New} />
+              <Route exact path="/result" component={Result} />
             </Switch>
             {/* <Footer /> */}
           </Router>
