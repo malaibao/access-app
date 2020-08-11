@@ -14,6 +14,8 @@ import {
 } from "@react-google-maps/api";
 import Button from "@material-ui/core/Button";
 
+import axios from 'axios';
+
 const libraries = ["places"];
 const mapContainerStyle = {
   width: "100%",
@@ -49,6 +51,32 @@ export default function Profile_Map({
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
 
+  // const showOptions = (ratings) => {
+  //   const options = [];
+  //   for (let i = 0; i < ratings.length; i++) {
+  //     const option = ratings[i].replace(/_/g, ' ');
+  //     options.push(option);
+  //   }
+  //   return options.join(', ');
+  // };
+
+  // useEffect(() => {
+  //   setAuthToken(localStorage.token);
+  //   axios.get('/user').then((res) => {
+  //     console.log(res.data);
+  //     setUserRatings(res.data);
+  //   });
+  // }, [setAuthToken, setUserRatings]);
+
+  // const handleDelete = (id) => {
+  //   const url = `/user/${id}`;
+  //   axios
+  //     .post(url)
+  //     .then((res) => {
+  //       setUserRatings(res.data);
+  //     })
+  //     .catch((err) => console.log('Error in deleting rating', err));
+  // };
   const showOptions = (rating) => {
     const options = [];
     if (rating.accessible_parking) {

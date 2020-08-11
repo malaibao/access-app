@@ -5,8 +5,14 @@
 
 .chart-map-container {
   display: flex;
+  height: calc(100vh - 5rem);
 
-  .chart {
+  &__left {
     padding: 1rem;
+
+    &-chart,
+    &-dashboard {
+      height: 50%;
+    }
   }
 }
