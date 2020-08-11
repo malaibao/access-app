@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
-import Locate from "./Locate";
-import "./map.scss";
+
+import React, { useEffect, useState } from 'react';
+import Locate from './Locate';
+import './map.scss';
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
-} from "@react-google-maps/api";
-import Button from "@material-ui/core/Button";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+} from '@react-google-maps/api';
+import Button from '@material-ui/core/Button';
+import axios from 'axios';
+
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -51,6 +53,24 @@ export default function Profile_Map({
   //     options.push(option);
   //   }
   //   return options.join(', ');
+  // };
+
+  // useEffect(() => {
+  //   setAuthToken(localStorage.token);
+  //   axios.get('/user').then((res) => {
+  //     console.log(res.data);
+  //     setUserRatings(res.data);
+  //   });
+  // }, [setAuthToken, setUserRatings]);
+
+  // const handleDelete = (id) => {
+  //   const url = `/user/${id}`;
+  //   axios
+  //     .post(url)
+  //     .then((res) => {
+  //       setUserRatings(res.data);
+  //     })
+  //     .catch((err) => console.log('Error in deleting rating', err));
   // };
 
   const showOptions = (rating) => {

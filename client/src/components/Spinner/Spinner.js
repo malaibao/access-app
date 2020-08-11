@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { css } from '@emotion/core';
 import FadeLoader from 'react-spinners/FadeLoader';
+import CircleLoader from 'react-spinners/CircleLoader';
 
 const override = css`
   margin: 0 auto;
