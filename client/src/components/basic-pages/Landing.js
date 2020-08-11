@@ -1,7 +1,5 @@
 import React from "react";
-
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
+import { Link } from "react-router-dom";
 
 import "./About.scss";
 
@@ -18,14 +16,7 @@ const Landing = () => {
         place accessible, we advocate the need for accessibility while providing
         answers to the people that need it.
       </p>
-
-      <Grid container justify="center">
-        <Grid item>
-          <Link href="/map" variant="body2">
-            SEARCH
-          </Link>
-        </Grid>
-      </Grid>
+      <Link to="/map">SEARCH</Link>
     </div>
   );
 };
