@@ -1,16 +1,20 @@
-
-import React, { useEffect, useState } from 'react';
-import Locate from './Locate';
-import './map.scss';
+import React, { useEffect, useState } from "react";
+import Locate from "./Locate";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import "./map.scss";
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
-} from '@react-google-maps/api';
-import Button from '@material-ui/core/Button';
-import axios from 'axios';
+} from "@react-google-maps/api";
+import Button from "@material-ui/core/Button";
 
+import axios from 'axios';
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -42,6 +46,7 @@ export default function Profile_Map({
   });
 
   const [selected, setSelected] = useState(null);
+  const [open, setOpen] = React.useState(false);
 
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
@@ -72,7 +77,6 @@ export default function Profile_Map({
   //     })
   //     .catch((err) => console.log('Error in deleting rating', err));
   // };
-
   const showOptions = (rating) => {
     const options = [];
     if (rating.accessible_parking) {
@@ -126,6 +130,12 @@ export default function Profile_Map({
     // console.log('options', options);
     return options.join(", ");
     // return options;
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    handleDeleteInChild(selected.id);
+    setSelected(null);
   };
 
   return (
@@ -201,12 +211,31 @@ export default function Profile_Map({
                 color="primary"
                 size="small"
                 onClick={() => {
-                  handleDeleteInChild(selected.id);
-                  setSelected(null);
+                  setOpen(true);
                 }}
               >
                 DELETE
               </Button>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete Confirmation"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this rating?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color="primary">
+                    Delete
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </InfoWindow>
         ) : null}
