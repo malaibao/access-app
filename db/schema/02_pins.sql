@@ -9,5 +9,6 @@ CREATE TABLE pins (
   latitude FLOAT NOT NULL,
   city VARCHAR(255) NOT NULL,
   type VARCHAR(255) NOT NULL,
-  place_id VARCHAR(255) NOT NULL
+  place_id VARCHAR(255) NOT NULL,
+  date TIMESTAMP default NOW()
  )

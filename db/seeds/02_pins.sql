@@ -472,3 +472,9 @@ INSERT INTO pins (user_id, name, address, longitude, latitude, city, type, place
 INSERT INTO pins (user_id, name, address, longitude, latitude, city, type, place_id) VALUES (3, 'Bell (Swift Current Mall)', '1 SPRINGS DR, Swift Current, SK S9H 3X6, Canada', -107.780573, 50.3071775, 'Swift Current', 'Shopping', 'ChIJm52iXiTeEFMRp_RBAMf-nIM');
 INSERT INTO pins (user_id, name, address, longitude, latitude, city, type, place_id) VALUES (4, 'Maxamillion''s Gentlemen''s Quarters Barber Parlor', '2035 Chestnut St, Philadelphia, PA 19103, USA', -75.1747539, 39.952363, 'US', 'Restaurant', 'ChIJVeFzCTfGxokRDJmjriCHiuM');
 INSERT INTO pins (user_id, name, address, longitude, latitude, city, type, place_id) VALUES (5, 'Cape Saint Mary Lighthouse Park', 'Lighthouse Rd, Cape Saint Marys, NS B5A 5B4, Canada', -66.2107195, 44.0857634, 'Cape Saint Marys', 'Park', 'ChIJJXIrXYbYqUwRZ4fshPCYYfc');
+
+
+UPDATE pins
+SET date = '2020-07-01 02:00:00'::timestamp AT TIME ZONE 'America/Toronto'
+WHERE id < 200;
+
