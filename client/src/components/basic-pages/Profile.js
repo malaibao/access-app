@@ -4,13 +4,12 @@ import React, {
   useCallback,
   useEffect,
   useContext,
-} from "react";
-import setAuthToken from "../../utils/setAuthToken";
-import { AuthContext } from "../../context";
-import Bar_Chart from "../chart/Bar_Chart";
-import Profile_Map from "../map/Profile_Map";
-import { LOGIN } from "../../reducers/action-types";
-
+} from 'react';
+import setAuthToken from '../../utils/setAuthToken';
+import { AuthContext } from '../../context';
+import Bar_Chart from '../chart/Bar_Chart';
+import Profile_Map from '../map/Profile_Map';
+import { LOGIN } from '../../reducers/action-types';
 
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
@@ -44,12 +43,13 @@ export default function Profile() {
       .then((res) => {
         setUserRatings((prev) => ({ ...res.data }));
       })
-      .catch((err) => console.log("Error in deleting rating", err));
+      .catch((err) => console.log('Error in deleting rating', err));
   };
 
   useEffect(() => {
     setAuthToken(localStorage.token);
-    axios.get("/user").then((res) => {
+    axios.get('/user').then((res) => {
+      console.log(res.data);
       setUserRatings(res.data);
     });
   }, [setAuthToken]);
@@ -66,16 +66,15 @@ export default function Profile() {
 
   return (
     <>
-
       <div className='chart-map-container'>
         <div className='chart-map-container__left'>
           <div className='chart-map-container__left-chart'>
             {userRatings ? <Bar_Chart data={userRatings.typeTotal} /> : null}
           </div>
           <div className='chart-map-container__left-dashboard'>
-            <Dashboard />
+            {/* <Dashboard /> */}
+            {/* {userRatings ? <Dashboard data={ {userRatings.totalContribution} /> : null} */}
           </div>
-    
         </div>
         <></>
         <Profile_Map

@@ -259,6 +259,58 @@ module.exports = (db) => {
     return db.query(query).then((res) => res.rows[0]);
   };
 
+  const getTotalContribution = (userId) => {
+    const query = {
+      text: `
+      SELECT COUNT(*) AS totalContribution
+      FROM ratings
+      WHERE user_id=$1
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
+  const getPercentContribution = (userId) => {
+    const query = {
+      text: `
+      SELECT x.* FROM 
+      (SELECT user_id, count(user_id) as count, sum(count(user_id)) over() as total_count 
+      FROM ratings 
+      GROUP BY user_id ) AS x
+      WHERE x.user_id=$1
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
+  const getPinsAdded = (userId) => {
+    const query = {
+      text: `
+      SELECT COUNT(*) 
+      FROM pins
+      WHERE user_id=$1 AND
+      date > current_date - interval '30' day;
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
+  const getRatingsAdded = (userId) => {
+    const query = {
+      text: `
+      SELECT COUNT(*) 
+      FROM ratings
+      WHERE user_id=$1 AND
+      date > current_date - interval '30' day;
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
   return {
     getPins,
     addPin,
@@ -275,5 +327,9 @@ module.exports = (db) => {
     deleteRating,
     pinExist,
     getByPlaceId,
+    getTotalContribution,
+    getPercentContribution,
+    getPinsAdded,
+    getRatingsAdded,
   };
 };

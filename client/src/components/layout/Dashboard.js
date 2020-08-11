@@ -27,27 +27,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = () => {
+const Dashboard = ({ data }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper} elevation={3}>
-        <div className={classes.number}>68</div>
-        <div className={classes.title}>Total Contribution</div>
-      </Paper>
-      <Paper className={classes.paper} elevation={3}>
-        <div className={classes.number}>68</div>
-        <div className={classes.title}>% of contribution to Access For You</div>
-      </Paper>
-      <Paper className={classes.paper} elevation={3}>
-        <div className={classes.number}>68</div>
-        <div className={classes.title}>Pins added in the last 30 days</div>
-      </Paper>
-      <Paper className={classes.paper} elevation={3}>
-        <div className={classes.number}>68</div>
-        <div className={classes.title}>Total Contribution</div>
-      </Paper>
+      {data ? (
+        <>
+          <Paper className={classes.paper} elevation={3}>
+            <div className={classes.number}>{data.totalContrbution}</div>
+            <div className={classes.title}>Total Contribution</div>
+          </Paper>
+          <Paper className={classes.paper} elevation={3}>
+            <div className={classes.number}>{'68'}</div>
+            <div className={classes.title}>
+              % of contribution to Access For You
+            </div>
+          </Paper>
+          <Paper className={classes.paper} elevation={3}>
+            <div className={classes.number}>{'68'}</div>
+            <div className={classes.title}>Pins added in the last 30 days</div>
+          </Paper>
+          <Paper className={classes.paper} elevation={3}>
+            <div className={classes.number}>68</div>
+            <div className={classes.title}>Total Contribution</div>
+          </Paper>
+        </>
+      ) : null}
     </div>
   );
 };
