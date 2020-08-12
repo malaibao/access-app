@@ -14,7 +14,7 @@ import {
 } from '@react-google-maps/api';
 import Button from '@material-ui/core/Button';
 
-import axios from 'axios';
+import axios from "axios";
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -131,9 +131,14 @@ export default function Profile_Map({
     // return options;
   };
 
-  const handleClose = () => {
+  const handleDelete = () => {
     setOpen(false);
     handleDeleteInChild(selected.id);
+    setSelected(null);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
     setSelected(null);
   };
 
@@ -230,7 +235,10 @@ export default function Profile_Map({
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleClose} color='primary'>
+                  <Button onClick={handleClose} color="primary">
+                    Cancel
+                  </Button>
+                  <Button onClick={handleDelete} color="primary">
                     Delete
                   </Button>
                 </DialogActions>

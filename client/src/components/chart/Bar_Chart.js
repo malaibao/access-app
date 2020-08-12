@@ -43,7 +43,7 @@ const colors = [
 const Bar_Chart = ({ data }) => {
   return (
     <>
-      {data ? console.log(typeof data[0].total) : null}
+      {/* {data && data[0] ? console.log(typeof data[0].total) : null} */}
       {data ? (
         <>
           <h3 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>

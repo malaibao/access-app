@@ -20,6 +20,7 @@
   }
 
   a:hover {
+    color: white;
   }
 }
 
@@ -31,4 +32,37 @@
 .logo {
   display: flex;
   flex-direction: row;
+  position: relative;
+  color: white;
+  overflow: hidden;
+  background: linear-gradient(to right, black, black 50%, white 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+  background-position: 100%;
+  transition: background-position 275ms ease;
+}
+
+.logo:hover {
+  background-position: 0 100%;
+}
+
+.bounce {
+  animation-name: bounce;
+  animation-timing-function: ease;
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-100px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
