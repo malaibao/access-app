@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext, PinContext } from '../../context';
 
-import axios from "axios";
-import { Redirect } from "react-router-dom";
-
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -12,13 +11,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import SuccessAlertTag from "../layout/SuccessAlert";
+import SuccessAlertTag from '../layout/SuccessAlert';
 
 import './Form.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: 'flex',
     width: 0.25,
   },
   formControl: {
@@ -30,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    backgroundColor: "#1660ff",
-    color: "white",
+    backgroundColor: '#1660ff',
+    color: 'white',
     marginLeft: 20,
   },
 }));
@@ -40,7 +39,7 @@ export default function Form({ pin, isOldPin }) {
   // const { authState, dispatch } = useContext(AuthContext);
   const { setPinInfo } = useContext(PinContext);
   const [redirect, setRedirect] = useState(false);
-  const [submit, setSubmit] = useState(false); 
+  const [submit, setSubmit] = useState(false);
   const { authState, dispatch } = useContext(AuthContext);
 
   const classes = useStyles();
@@ -63,9 +62,11 @@ export default function Form({ pin, isOldPin }) {
     stopgap_ramp: false,
   });
 
-
   const [errorInfo, setErrorInfo] = useState({ errMsg: '', show: false });
-  const [successInfo, setSuccessInfo] = useState({ successMsg: '', show: false });
+  const [successInfo, setSuccessInfo] = useState({
+    successMsg: '',
+    show: false,
+  });
 
   useEffect(() => {
     let timeout = null;
@@ -74,15 +75,15 @@ export default function Form({ pin, isOldPin }) {
         setRedirect(true);
       }
     }, 2000);
-    return () => timeout ? clearTimeout(timeout) : null;
-  }, [successInfo.show])
-  
+    return () => (timeout ? clearTimeout(timeout) : null);
+  }, [successInfo.show]);
+
   // if (redirect) {
   //   return <Redirect to='/map' />;
   // }
 
   if (submit) {
-    return <Redirect to= '/register' />;
+    return <Redirect to='/register' />;
   }
 
   const handleChange = (event) => {
@@ -93,9 +94,8 @@ export default function Form({ pin, isOldPin }) {
     setErrorInfo((prev) => ({ ...prev, show: false }));
     setSuccessInfo((prev) => ({
       ...prev,
-      show: false
+      show: false,
     }));
-
   };
 
   const handleSubmit = async (e) => {
@@ -104,11 +104,10 @@ export default function Form({ pin, isOldPin }) {
     // check if input is empty
     const filled = Object.values(rating).includes(true);
 
-
     if (filled === false) {
       setErrorInfo((prev) => ({
         ...prev,
-        errMsg: "Select at least 1 option",
+        errMsg: 'Select at least 1 option',
         show: true,
       }));
       return;
@@ -121,32 +120,32 @@ export default function Form({ pin, isOldPin }) {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 
     try {
       let res;
       if (isOldPin) {
-        res = await axios.post("/pins/ratings", pinInfo, config);
+        res = await axios.post('/pins/ratings', pinInfo, config);
       } else {
-        res = await axios.post("/pins", pinInfo, config);
+        res = await axios.post('/pins', pinInfo, config);
       }
 
-      setErrorInfo({ errMsg: "", show: false });
+      setErrorInfo({ errMsg: '', show: false });
       if (res.status === 200) {
         setPinInfo(null);
-        const successMsg = 'Success: Pin Added!'
+        const successMsg = 'Success: Pin Added!';
         setSuccessInfo((prev) => ({
-        ...prev,
-        successMsg,
-        show: true
-      }));
+          ...prev,
+          successMsg,
+          show: true,
+        }));
         // setRedirect(true); uncomment if we remove the useEffect
       }
     } catch (err) {
       if (err.message.match(/401/)) {
-        console.log("received 401")
+        console.log('received 401');
         setSubmit(true); //if a user isn't authorized (401 is true) setState to true and redirect outside of submit handler
       }
       const errMsg = err.response.data.errMsg;
@@ -195,206 +194,215 @@ export default function Form({ pin, isOldPin }) {
 
   return (
     <>
-    { submit && <Redirect to= '/register' />}
-    {
-      redirect && <Redirect to= '/map' /> 
-    }
-    {!redirect && 
-    <div className='form'>
-      {pin ? (
-        <>
-          <h3>{pin.name}</h3>
-          <p>{pin.address}</p>
-          <p>Type: {pin.type}</p>
-        </>
-      ) : null}
-      <form className={classes.form} id='rating-form' onSubmit={handleSubmit}>
-        {successInfo.show && (
-          <SuccessAlertTag
-            isOpen={successInfo.show}
-            msg={successInfo.successMsg}
-            onClose={handleCloseAlert}
-          />
-        )}
-        <FormControl component='fieldset' className={classes.formControl}>
-          <FormLabel component='legend'>Select all that apply:</FormLabel>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={accessible_parking}
-                  onChange={handleChange}
-                  name="accessible_parking"
+      {submit && <Redirect to='/register' />}
+      {redirect && <Redirect to='/map' />}
+      {!redirect && (
+        <div className='form'>
+          {isOldPin && pin ? (
+            <>
+              <h3>{pin.name}</h3>
+              <p>{pin.address}</p>
+              <p>Type: {pin.type}</p>
+            </>
+          ) : null}
+          <form
+            className={classes.form}
+            id='rating-form'
+            onSubmit={handleSubmit}
+          >
+            {successInfo.show && (
+              <SuccessAlertTag
+                isOpen={successInfo.show}
+                msg={successInfo.successMsg}
+                onClose={handleCloseAlert}
+              />
+            )}
+            <FormControl component='fieldset' className={classes.formControl}>
+              <FormLabel component='legend'>Select all that apply:</FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={accessible_parking}
+                      onChange={handleChange}
+                      name='accessible_parking'
+                    />
+                  }
+                  label='accessible parking'
                 />
-              }
-              label="accessible parking"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={accessible_washroom}
-                  onChange={handleChange}
-                  name="accessible_washroom"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={accessible_washroom}
+                      onChange={handleChange}
+                      name='accessible_washroom'
+                    />
+                  }
+                  label='accessible washroom'
                 />
-              }
-              label="accessible washroom"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={alternative_entrance}
-                  onChange={handleChange}
-                  name="alternative_entrance"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={alternative_entrance}
+                      onChange={handleChange}
+                      name='alternative_entrance'
+                    />
+                  }
+                  label='alternative entrance'
                 />
-              }
-              label="alternative entrance"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={automatic_door}
-                  onChange={handleChange}
-                  name="automatic_door"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={automatic_door}
+                      onChange={handleChange}
+                      name='automatic_door'
+                    />
+                  }
+                  label='automatic door'
                 />
-              }
-              label="automatic door"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={elevator}
-                  onChange={handleChange}
-                  name="elevator"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={elevator}
+                      onChange={handleChange}
+                      name='elevator'
+                    />
+                  }
+                  label='elevator'
                 />
-              }
-              label="elevator"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={braille}
-                  onChange={handleChange}
-                  name="braille"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={braille}
+                      onChange={handleChange}
+                      name='braille'
+                    />
+                  }
+                  label='braille'
                 />
-              }
-              label="braille"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={gender_neutral_washroom}
-                  onChange={handleChange}
-                  name="gender_neutral_washroom"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={gender_neutral_washroom}
+                      onChange={handleChange}
+                      name='gender_neutral_washroom'
+                    />
+                  }
+                  label='gender neutral washroom'
                 />
-              }
-              label="gender neutral washroom"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={large_print}
-                  onChange={handleChange}
-                  name="large_print"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={large_print}
+                      onChange={handleChange}
+                      name='large_print'
+                    />
+                  }
+                  label='large print'
                 />
-              }
-              label="large print"
-            />
-          </FormGroup>
-        </FormControl>
-        <FormControl
-          required
-          error={error}
-          component="fieldset"
-          className={classes.formControl}
-          style={{ paddingTop: 18 }}
-        >
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={outdoor_access_only}
-                  onChange={handleChange}
-                  name="outdoor_access_only"
+              </FormGroup>
+            </FormControl>
+            <FormControl
+              required
+              error={error}
+              component='fieldset'
+              className={classes.formControl}
+              style={{ paddingTop: 18 }}
+            >
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={outdoor_access_only}
+                      onChange={handleChange}
+                      name='outdoor_access_only'
+                    />
+                  }
+                  label='outdoor access only'
                 />
-              }
-              label="outdoor access only"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={quiet}
-                  onChange={handleChange}
-                  name="quiet"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={quiet}
+                      onChange={handleChange}
+                      name='quiet'
+                    />
+                  }
+                  label='quiet'
                 />
-              }
-              label="quiet"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox checked={ramp} onChange={handleChange} name="ramp" />
-              }
-              label="ramp"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={scent_free}
-                  onChange={handleChange}
-                  name="scent_free"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={ramp}
+                      onChange={handleChange}
+                      name='ramp'
+                    />
+                  }
+                  label='ramp'
                 />
-              }
-              label="scent free"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={service_animal_friendly}
-                  onChange={handleChange}
-                  name="service_animal_friendly"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={scent_free}
+                      onChange={handleChange}
+                      name='scent_free'
+                    />
+                  }
+                  label='scent free'
                 />
-              }
-              label="service animal friendly"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={sign_language}
-                  onChange={handleChange}
-                  name="sign_language"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={service_animal_friendly}
+                      onChange={handleChange}
+                      name='service_animal_friendly'
+                    />
+                  }
+                  label='service animal friendly'
                 />
-              }
-              label="sign language"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={spacious}
-                  onChange={handleChange}
-                  name="spacious"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={sign_language}
+                      onChange={handleChange}
+                      name='sign_language'
+                    />
+                  }
+                  label='sign language'
                 />
-              }
-              label="spacious"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={stopgap_ramp}
-                  onChange={handleChange}
-                  name="stopgap_ramp"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={spacious}
+                      onChange={handleChange}
+                      name='spacious'
+                    />
+                  }
+                  label='spacious'
                 />
-              }
-              label="stopgap ramp"
-            />
-          </FormGroup>
-        </FormControl>
-        <br />
-        <Button type="submit" variant="contained" className={classes.submit}>
-          Add Rating
-        </Button>
-      </form>
-    </div>
-    } 
-   </> 
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={stopgap_ramp}
+                      onChange={handleChange}
+                      name='stopgap_ramp'
+                    />
+                  }
+                  label='stopgap ramp'
+                />
+              </FormGroup>
+            </FormControl>
+            <br />
+            <Button
+              type='submit'
+              variant='contained'
+              className={classes.submit}
+            >
+              Add Rating
+            </Button>
+          </form>
+        </div>
+      )}
+    </>
   );
-
 }
