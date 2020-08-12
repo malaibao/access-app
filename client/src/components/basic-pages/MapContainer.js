@@ -35,6 +35,7 @@ const MapContainer = () => {
     axios
       .get('/pins')
       .then((res) => {
+        console.log('in MapContainer', res.data);
         setPins(res.data);
         setLoading(false);
       })

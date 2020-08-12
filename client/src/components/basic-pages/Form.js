@@ -36,9 +36,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form({ pin, isOldPin }) {
-  const [redirect, setRedirect] = useState(false);
+  // const { authState, dispatch } = useContext(AuthContext);
   const { setPinInfo } = useContext(PinContext);
-  const { authState, dispatch } = useContext(AuthContext);
+  const [redirect, setRedirect] = useState(false);
   const [submit, setSubmit] = useState(false); 
 
   const classes = useStyles();

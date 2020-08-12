@@ -26,9 +26,12 @@ module.exports = ({
       for (let i = 0; i < allPins.length; i++) {
         const ratings = await getRatings(allPins[i].id);
         const tags = await categoryMajority(ratings);
+        if(tags.length === 0) {
+          console.log('empty --- pinId',allPins[i].id );
+        }
         const pinInfo = {
           ...allPins[i],
-          tags,
+          tags: tags,
         };
         allPinsInfo.push(pinInfo);
       }
