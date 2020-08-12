@@ -73,7 +73,7 @@ export default function Profile() {
               <Dashboard
                 totalContribution={userRatings.total_contribution}
                 percentContribution={userRatings.percent_contribution}
-                totalPins={userRatings.total_pins_in_30days}
+                mostRatedType={userRatings.most_rated_type}
                 totalRatings={userRatings.total_ratings_in_30days}
               />
             ) : null}

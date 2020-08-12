@@ -311,6 +311,23 @@ module.exports = (db) => {
     return db.query(query).then((res) => res.rows[0]);
   };
 
+  const getMostRatedType = (userId) => {
+    const query = {
+      text: `
+      SELECT x.type AS most_rated_type
+      FROM (     
+           SELECT type, COUNT(*) AS total
+           FROM pins
+           WHERE user_id=$1
+           GROUP BY type
+           ORDER BY total DESC) AS x
+      LIMIT 1
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
   return {
     getPins,
     addPin,
@@ -331,5 +348,6 @@ module.exports = (db) => {
     getPercentContribution,
     getPinsAdded,
     getRatingsAdded,
+    getMostRatedType,
   };
 };

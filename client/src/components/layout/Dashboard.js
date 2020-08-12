@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = ({
   totalContribution,
   percentContribution,
-  totalPins,
+  mostRatedType,
   totalRatings,
 }) => {
   const classes = useStyles();
@@ -41,28 +41,30 @@ const Dashboard = ({
         {totalContribution ? (
           <Paper className={classes.paper} elevation={3}>
             <div className={classes.number}>{totalContribution}</div>
-            <div className={classes.title}>Total Contribution</div>
+            <div className={classes.title}>
+              Total Contribution of Pins and Ratings
+            </div>
           </Paper>
         ) : null}
         {percentContribution ? (
           <Paper className={classes.paper} elevation={3}>
             <div className={classes.number}>{percentContribution}</div>
             <div className={classes.title}>
-              % of contribution to Access For You
+              % of Contribution to Access For You
             </div>
           </Paper>
         ) : null}
-        {totalPins ? (
+        {mostRatedType ? (
           <Paper className={classes.paper} elevation={3}>
-            <div className={classes.number}>{totalPins}</div>
-            <div className={classes.title}>Pins added in the last 30 days</div>
+            <div className={classes.number}>{mostRatedType}</div>
+            <div className={classes.title}>Most Rated Type</div>
           </Paper>
         ) : null}
         {totalRatings ? (
           <Paper className={classes.paper} elevation={3}>
             <div className={classes.number}>{totalRatings}</div>
             <div className={classes.title}>
-              Ratings added in the last 30 days
+              Ratings Added in the Last 30 Days
             </div>
           </Paper>
         ) : null}

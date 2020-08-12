@@ -11,6 +11,7 @@ module.exports = ({
   getPercentContribution,
   getPinsAdded,
   getRatingsAdded,
+  getMostRatedType,
 }) => {
   router.get('/', auth, async (req, res) => {
     const userId = req.user.id;
@@ -23,19 +24,22 @@ module.exports = ({
       let percentContribution = await getPercentContribution(userId);
       const totalPins = await getPinsAdded(userId);
       const totalRatings = await getRatingsAdded(userId);
+      const mostRatedType = await getMostRatedType(userId);
 
       // percentContribution,
 
-      percentContribution = Math.round(
-        (percentContribution.count / percentContribution.total_count) * 100
-      );
+      percentContribution = (
+        (percentContribution.count / percentContribution.total_count) *
+        100
+      ).toFixed(2);
 
       const ratingInfo = {
         ratings,
         typeTotal,
         ...totalContribution,
         percent_contribution: percentContribution,
-        ...totalPins,
+        // ...totalPins,
+        ...mostRatedType,
         ...totalRatings,
       };
       res.status(200).json(ratingInfo);
@@ -55,8 +59,26 @@ module.exports = ({
         await deleteRating(ratingId);
         const ratings = await getUserRatings(userId);
         const typeTotal = await getTypeTotal(userId);
+        const totalContribution = await getTotalContribution(userId);
 
-        res.status(200).json({ ratings, typeTotal });
+        let percentContribution = await getPercentContribution(userId);
+        percentContribution = (
+          (percentContribution.count / percentContribution.total_count) *
+          100
+        ).toFixed(2);
+        const totalPins = await getPinsAdded(userId);
+        const totalRatings = await getRatingsAdded(userId);
+        const mostRatedType = await getMostRatedType(userId);
+
+        res.status(200).json({
+          ratings,
+          typeTotal,
+          ...mostRatedType,
+          ...totalContribution,
+          // ...totalPins,
+          ...totalRatings,
+          percent_contribution: percentContribution,
+        });
       } else {
         res.status(400).send('Not your rating. Cannot delete.');
       }
