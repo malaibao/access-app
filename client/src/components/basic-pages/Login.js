@@ -54,6 +54,7 @@ const Login = () => {
 
   const handleCloseAlert = () => {
     setErrorInfo((prev) => ({ ...prev, show: false }));
+
   };
 
   const handleSubmit = async (e) => {
