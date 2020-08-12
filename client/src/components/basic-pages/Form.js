@@ -198,7 +198,7 @@ export default function Form({ pin, isOldPin }) {
       {redirect && <Redirect to='/map' />}
       {!redirect && (
         <div className='form'>
-          {isOldPin && pin ? (
+          {!isOldPin && pin ? (
             <>
               <h3>{pin.name}</h3>
               <p>{pin.address}</p>
