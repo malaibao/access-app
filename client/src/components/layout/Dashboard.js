@@ -27,27 +27,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = () => {
+const Dashboard = ({
+  totalContribution,
+  percentContribution,
+  mostRatedType,
+  totalRatings,
+}) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper} elevation={3}>
-        <div className={classes.number}>68</div>
-        <div className={classes.title}>Total Contribution</div>
-      </Paper>
-      <Paper className={classes.paper} elevation={3}>
-        <div className={classes.number}>68</div>
-        <div className={classes.title}>% of contribution to Access For You</div>
-      </Paper>
-      <Paper className={classes.paper} elevation={3}>
-        <div className={classes.number}>68</div>
-        <div className={classes.title}>Pins added in the last 30 days</div>
-      </Paper>
-      <Paper className={classes.paper} elevation={3}>
-        <div className={classes.number}>68</div>
-        <div className={classes.title}>Total Contribution</div>
-      </Paper>
+      <>
+        {totalContribution ? (
+          <Paper className={classes.paper} elevation={3}>
+            <div className={classes.number}>{totalContribution}</div>
+            <div className={classes.title}>
+              Total Contribution of Pins and Ratings
+            </div>
+          </Paper>
+        ) : null}
+        {percentContribution ? (
+          <Paper className={classes.paper} elevation={3}>
+            <div className={classes.number}>{percentContribution}</div>
+            <div className={classes.title}>
+              % of Contribution to Access For You
+            </div>
+          </Paper>
+        ) : null}
+        {mostRatedType ? (
+          <Paper className={classes.paper} elevation={3}>
+            <div className={classes.number}>{mostRatedType}</div>
+            <div className={classes.title}>Most Rated Type</div>
+          </Paper>
+        ) : null}
+        {totalRatings ? (
+          <Paper className={classes.paper} elevation={3}>
+            <div className={classes.number}>{totalRatings}</div>
+            <div className={classes.title}>
+              Ratings Added in the Last 30 Days
+            </div>
+          </Paper>
+        ) : null}
+      </>
     </div>
   );
 };
