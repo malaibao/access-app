@@ -19,5 +19,6 @@ CREATE TABLE ratings(
   service_animal_friendly BOOLEAN DEFAULT FALSE,
   sign_language BOOLEAN DEFAULT FALSE,
   spacious BOOLEAN DEFAULT FALSE,
-  stopgap_ramp BOOLEAN DEFAULT FALSE
+  stopgap_ramp BOOLEAN DEFAULT FALSE,
+  date TIMESTAMP DEFAULT NOW()
 )

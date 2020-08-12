@@ -73,12 +73,14 @@ export default function Search({ panTo }) {
   return (
     <div className="search">
       <Combobox onSelect={handleSelect} className="combo-box">
+        <p>Search</p>
         <ComboboxInput
           className="combo-box__input"
           value={value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder={`Search for location`}
+          placeholder={`Find by name or addresss`}
+          autoFocus={true}
         />
         <ComboboxPopover>
           <ComboboxList>

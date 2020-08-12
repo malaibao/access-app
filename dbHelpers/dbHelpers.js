@@ -34,15 +34,25 @@ module.exports = (db) => {
     address,
     latitude,
     longitude,
+    city,
     type,
     place_id
   ) => {
     const query = {
       text: `
-        INSERT INTO pins(user_id, name, address, latitude, longitude, type, place_id)
-        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
+        INSERT INTO pins(user_id, name, address, latitude, longitude, city, type, place_id)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;
       `,
-      values: [userId, name, address, latitude, longitude, type, place_id],
+      values: [
+        userId,
+        name,
+        address,
+        latitude,
+        longitude,
+        city,
+        type,
+        place_id,
+      ],
     };
 
     return db.query(query).then((res) => res.rows[0]);
@@ -249,6 +259,75 @@ module.exports = (db) => {
     return db.query(query).then((res) => res.rows[0]);
   };
 
+  const getTotalContribution = (userId) => {
+    const query = {
+      text: `
+      SELECT COUNT(*) AS total_contribution
+      FROM ratings
+      WHERE user_id=$1
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
+  const getPercentContribution = (userId) => {
+    const query = {
+      text: `
+      SELECT x.* FROM 
+      (SELECT user_id, count(user_id) as count, sum(count(user_id)) over() as total_count 
+      FROM ratings 
+      GROUP BY user_id ) AS x
+      WHERE x.user_id=$1
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
+  const getPinsAdded = (userId) => {
+    const query = {
+      text: `
+      SELECT COUNT(*) AS total_pins_in_30days
+      FROM pins
+      WHERE user_id=$1 AND
+      date > current_date - interval '30' day;
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
+  const getRatingsAdded = (userId) => {
+    const query = {
+      text: `
+      SELECT COUNT(*) AS total_ratings_in_30days
+      FROM ratings
+      WHERE user_id=$1 AND
+      date > current_date - interval '30' day;
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
+  const getMostRatedType = (userId) => {
+    const query = {
+      text: `
+      SELECT x.type AS most_rated_type
+      FROM (     
+           SELECT type, COUNT(*) AS total
+           FROM pins
+           WHERE user_id=$1
+           GROUP BY type
+           ORDER BY total DESC) AS x
+      LIMIT 1
+      `,
+      values: [userId],
+    };
+    return db.query(query).then((res) => res.rows[0]);
+  };
+
   return {
     getPins,
     addPin,
@@ -265,5 +344,10 @@ module.exports = (db) => {
     deleteRating,
     pinExist,
     getByPlaceId,
+    getTotalContribution,
+    getPercentContribution,
+    getPinsAdded,
+    getRatingsAdded,
+    getMostRatedType,
   };
 };

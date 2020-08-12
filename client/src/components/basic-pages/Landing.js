@@ -1,13 +1,16 @@
-import React from 'react';
-
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-
-import './About.scss';
+import React from "react";
+// import { Link } from "react-router-dom";
+import AnimatedButton from "./AnimatedButton";
+import "./About.scss";
+const styleLink = document.createElement("link");
+styleLink.rel = "stylesheet";
+styleLink.href =
+  "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
+document.head.appendChild(styleLink);
 
 const Landing = () => {
   return (
-    <div className='about'>
+    <div className="about">
       <h2>Our Mission</h2>
       <p>
         Access for You focuses on sharing accessibility information on places in
@@ -18,14 +21,8 @@ const Landing = () => {
         place accessible, we advocate the need for accessibility while providing
         answers to the people that need it.
       </p>
-
-      <Grid container justify='center'>
-        <Grid item>
-          <Link href='/map' variant='body2'>
-            SEARCH
-          </Link>
-        </Grid>
-      </Grid>
+      {/* <Link to="/map">SEARCH</Link> */}
+      <AnimatedButton />
     </div>
   );
 };

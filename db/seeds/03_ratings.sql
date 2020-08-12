@@ -472,3 +472,7 @@ INSERT INTO ratings (pin_id, user_id, accessible_parking, accessible_washroom, a
 INSERT INTO ratings (pin_id, user_id, accessible_parking, accessible_washroom, alternative_entrance, automatic_door, elevator, braille, gender_neutral_washroom, large_print, outdoor_access_only, quiet, ramp, scent_free,service_animal_friendly, sign_language, spacious, stopgap_ramp) VALUES (472, 3, False, True, False, True, False, False, False, False, False, False, False, False, False, False, False, False);
 INSERT INTO ratings (pin_id, user_id, accessible_parking, accessible_washroom, alternative_entrance, automatic_door, elevator, braille, gender_neutral_washroom, large_print, outdoor_access_only, quiet, ramp, scent_free,service_animal_friendly, sign_language, spacious, stopgap_ramp) VALUES (473, 4, False, True, False, True, False, False, False, False, False, False, False, False, False, False, False, False);
 INSERT INTO ratings (pin_id, user_id, accessible_parking, accessible_washroom, alternative_entrance, automatic_door, elevator, braille, gender_neutral_washroom, large_print, outdoor_access_only, quiet, ramp, scent_free,service_animal_friendly, sign_language, spacious, stopgap_ramp) VALUES (474, 5, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True);
+
+UPDATE ratings
+SET date = '2020-07-01 02:00:00'::timestamp AT TIME ZONE 'America/Toronto'
+WHERE id < 200;

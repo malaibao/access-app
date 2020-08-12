@@ -1,5 +1,5 @@
 .about {
-  background-image: url('https://images.pexels.com/photos/3009773/pexels-photo-3009773.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+  background-image: url("https://images.pexels.com/photos/3009773/pexels-photo-3009773.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -34,13 +34,11 @@
     padding: 50px;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.25);
-    // background-color: rgba(0, 0, 0, 0.5);
   }
 }
 
-// .about-content {
-//   margin: 0;
-//   padding: 50px;
-//   width: fit-content;
-//   padding-bottom: 40px;
-// }
+.animated-button {
+  color: white;
+  background-color: white;
+  width: 300%;
+}
