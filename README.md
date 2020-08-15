@@ -2,8 +2,8 @@
 
 ## Final Product
 
-!["Home"]()
-!["Results View"]()
+!["Home"](https://github.com/malaibao/access-app/blob/master/client/public/landingPage.png)
+!["Results View"](https://github.com/malaibao/access-app/blob/master/client/public/results.png)
 
 ## Setup
 
